@@ -1,0 +1,17 @@
+{
+  "name": "codetabs",
+  "version": "0.0.1",
+  "description": "codetabs.com online tools",
+  "main": "codetabs.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jolav",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "express": "^4.16.1",
+    "js2xmlparser": "^3.0.0",
+    "request": "^2.83.0"
+  }
+}

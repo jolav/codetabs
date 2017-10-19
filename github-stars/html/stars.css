@@ -1,0 +1,174 @@
+/*  BIG SMALL */
+
+@media only screen and (max-width: 681px) {
+  .big {
+    display: none
+  }
+  .small {
+    display: block;
+  }
+  .actionBtns {
+    margin-top: 15px;
+  }
+}
+
+@media only screen and (min-width: 681px) {
+  .big {
+    display: block
+  }
+  .small {
+    display: none;
+  }
+}
+
+body {
+  font-family: 'arial', sans-serif;
+  line-height: 1.05em;
+  background-color: #eee;
+  color: #404040;
+  font-size: 1em;
+  margin: 0px auto;
+  max-width: 960px;
+  -webkit-user-select: none;
+  /* Chrome all / Safari all */
+  -moz-user-select: none;
+  /* Firefox all */
+  -ms-user-select: none;
+  /* IE 10+ */
+  user-select: none;
+}
+
+
+/* HEADER */
+
+h1 {
+  font-family: 'Titillium Web', 'arial', sans-serif;
+  font-weight: bold;
+  padding: 0px;
+  text-align: center;
+  color: #b42c5f
+}
+
+
+/*   GENERICs */
+
+a {
+  color: #375EAB;
+  text-decoration: none;
+}
+
+.centerText {
+  text-align: center;
+}
+
+.verticalImage {
+  vertical-align: middle;
+}
+
+
+/* HR */
+
+hr {
+  margin: 10px 10% 10px 10%;
+  border: 0;
+  height: 1px;
+  background: #333;
+  background-image: linear-gradient(to right, #ccc, #888, #ccc);
+}
+
+
+/* ADD FORM STARS */
+
+.container {
+  margin: 0px auto 0px auto;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.addRepo {
+  margin: 0px auto 10px auto;
+}
+
+.addRepo .action, .upload .action {
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #fafafa;
+  cursor: pointer;
+}
+
+.addRepo input {
+  padding: 5px;
+  margin-right: 10px;
+  vertical-align: middle;
+  font-size: 0.9em;
+}
+
+#addRepo, #addRepo2, #upload {
+  border: 1px solid #6f96ff;
+  background-color: #6f96ff;
+}
+
+#clearAll, #clearAll2 {
+  margin-left: 10px;
+  border: 1px solid #ff6565;
+  background-color: #ff6565;
+}
+
+#addForm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#addForm .loader {
+  margin-left: 20px;
+}
+
+
+/* GOHOME */
+
+.goHome img {
+  vertical-align: middle;
+  margin-bottom: 3px;
+}
+
+
+/* LOADER */
+
+.loader {
+  border: 16px solid #eee;
+  border-radius: 50%;
+  border-top: 16px solid #6b6be7;
+  border-bottom: 16px solid #6b6be7;
+  width: 24px;
+  height: 24px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+  margin-bottom: 15px;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* FOOTER */
+
+.footer {
+  text-align: center;
+}

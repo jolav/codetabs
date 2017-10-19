@@ -1,0 +1,19 @@
+#Ignore these directories
+_aux/
+node_modules/
+
+#Ignore these files
+.DS_Store
+config.json
+private.json
+secret.json
+hits.json
+stats.json
+
+# golang binaries
+*/server/server
+
+#third party binaries
+*/server/loc
+*/server/locMac
+
