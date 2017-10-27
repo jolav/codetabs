@@ -1,6 +1,7 @@
 #Ignore these directories
 _aux/
 node_modules/
+tmp/
 
 #Ignore these files
 .DS_Store
