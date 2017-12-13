@@ -2,6 +2,7 @@
 _aux/
 node_modules/
 tmp/
+alexa/data/
 
 #Ignore these files
 .DS_Store
