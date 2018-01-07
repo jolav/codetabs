@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <title>CORS Proxy - CodeTabs</title>
+
+  <!--Head -->
+  <!--#include file="/_public/templates/head.html" -->
+
+</head>
+
+<body>
+
+  <header class="header">
+    <h1 class="big">
+      <img class="verticalImage" alt="Logo" src="/_public/icons/server32.png">
+      <span>CORS Proxy</span>
+    </h1>
+    <h1 class="small">
+      <img class="verticalImage" alt="Logo" src="/_public/icons/server32.png">
+      <span>CORS Proxy</span>
+    </h1>
+  </header>
+
+  <div class="container">
+
+    <div class="endpoint">
+      <div class="api">
+        <span>
+          Free CORS proxy server that allows access resources from any website
+        </span>
+        <br>
+        <span>
+          You can use to prevent mixed content of images and JSON data proxying the resources to serve them under https.
+        </span>
+        <br>
+        <span>
+          Each request is limited to 2mb size download to avoid abuse
+        </span>
+        <br>
+        <span>
+          For now it only suppports GET request
+        </span>
+        <br>
+        <span>
+          Petitions are limited to 5 per second. You will get a 503 error if you exceed
+        </span>
+        <br>
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <div class="use">
+        <span>
+          <strong>How do i use it?</strong>
+        </span>
+        <br>
+        <span>
+          You only need to append the url with the resource you want to "https://api.codetabs.com/cors-proxy/"
+        </span>
+        <br>
+        <pre>
+https://api.codetabs.com/cors-proxy/domain.com/desired/resource/
+https://api.codetabs.com/cors-proxy/https://domain.com/desired/resource/
+        </pre>
+      </div>
+      <br>
+      <div class="example">
+        <span class="center">
+          <strong>Examples</strong>
+        </span>
+        <br>
+        <strong>Access resources from other website : </strong>
+        <br>
+        <span class="center">
+          <code>  
+            <a href="https://api.codetabs.com/cors-proxy/apis-v1-jolav.glitch.me/time/"> https://api.codetabs.com/cors-proxy/&lturl_to_http_resource></a> 
+          </code>
+        </span>
+        <br>
+        <strong>Serve an http image as https preventing mixed content : </strong>
+        <br>
+        <span class="center">
+          <code>  
+            <a href="https://api.codetabs.com/cors-proxy/cdn.pcwallart.com/images/cosmos-wallpaper-4.jpg"> https://api.codetabs.com/cors-proxy/&lturl_to_http_resource></a> 
+          </code>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  </div>
+
+  <br>
+
+  <section class="centerText">
+    <span>
+      <strong>version 0.2.0</strong>
+    </span>
+  </section>
+  <br>
+
+  <section class="goHome centerText">
+    <a href="//codetabs.com">
+      <img class="alignImage" alt="goHome" src="/_public/icons/home24.png"> Home
+    </a>
+  </section>
+
+  <hr>
+
+  <!-- Footer -->
+  <!--#include file="/_public/templates/footer.html" -->
+
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="./cors.css">
+
+  <!-- google-analytics -->
+  <!--#include file="/_public/templates/analyticstracking.html" -->
+  <!-- cookie Law -->
+  <!--#include file="/_public/templates/cookieLaw.html" -->
+
+  <!-- Open Sans + Titillium Web -->
+  <link href="https://fonts.googleapis.com/css?family=Titillium+Web:400,700|Open+Sans" rel="stylesheet">
+
+</body>
+
+</html>

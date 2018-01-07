@@ -1,0 +1,127 @@
+/*  BIG SMALL */
+
+@media only screen and (max-width: 681px) {
+  .big {
+    display: none
+  }
+  .small {
+    display: block;
+  }
+  pre, .adjustLeft {
+    margin-left: 5%;
+  }
+}
+
+@media only screen and (min-width: 681px) {
+  .big {
+    display: block
+  }
+  .small {
+    display: none;
+  }
+  pre, .adjustLeft {
+    margin-left: 15%;
+  }
+}
+
+body {
+  font-family: 'arial', sans-serif;
+  line-height: 1.05em;
+  background-color: #eee;
+  color: #404040;
+  font-size: 1em;
+  margin: 0px auto;
+  max-width: 960px;
+  -webkit-user-select: none;
+  /* Chrome all / Safari all */
+  -moz-user-select: none;
+  /* Firefox all */
+  -ms-user-select: none;
+  /* IE 10+ */
+  user-select: none;
+}
+
+
+/* HEADER */
+
+h1 {
+  font-family: 'Titillium Web', 'arial', sans-serif;
+  font-weight: bold;
+  padding: 0px;
+  text-align: center;
+  color: #b42c5f
+}
+
+
+/*   GENERICs */
+
+a {
+  color: #375EAB;
+  text-decoration: none;
+}
+
+.centerText {
+  text-align: center;
+}
+
+.verticalImage {
+  vertical-align: middle;
+}
+
+
+/* HR */
+
+hr {
+  margin: 10px 10% 10px 10%;
+  border: 0;
+  height: 1px;
+  background: #333;
+  background-image: linear-gradient(to right, #ccc, #888, #ccc);
+}
+
+
+/* FOOTER */
+
+.footer {
+  font-family: "Arial", sans-serif;
+  text-align: center;
+}
+
+
+/* GOHOME */
+
+.goHome img {
+  vertical-align: middle;
+  margin-bottom: 3px;
+}
+
+
+/* DOC */
+
+.container {
+  max-width: 800px;
+  margin: 0px auto 0px auto;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.endpoint {
+  text-align: center;
+  width: 100%;
+  font-size: 0.9em;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+code, pre {
+  font-size: 1.2em;
+}
+
+pre, .adjustLeft {
+  text-align: left;
+  margin-top: 5px;
+  margin-bottom: 0px;
+}

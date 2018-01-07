@@ -5,7 +5,9 @@ tmp/
 alexa/data/
 
 #Ignore these files
+.env
 .DS_Store
+config.js
 config.json
 private.json
 secret.json
