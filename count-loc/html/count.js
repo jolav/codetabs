@@ -1,18 +1,20 @@
 /*jshint node: true */
+/* global Chart */
 
 const stars = (function () {
   'use strict';
   /* code here */
 
   const urlBase = 'https://api.codetabs.com/count-loc/';
-  // const urlBase = 'http://localhost:3000/v1'
+  // const urlBase = 'http://localhost:3000/'
+
   const ctx = document.getElementById('myPie');
   const pointsPerLine = 70;
   let myChart;
   let repo = '';
 
   function init () {
-    console.log('Init GitHub Star History');
+    console.log('Init Count Loc');
     document.getElementById('addRepo').addEventListener('click', addRepo);
     document.getElementById('upload').addEventListener('click', upload);
     document.getElementsByClassName('loader')[0].style.visibility = 'hidden';
@@ -27,7 +29,8 @@ const stars = (function () {
     }
     document.getElementsByClassName('loader')[0].style.visibility = 'visible';
     let urlData = urlBase + 'get?repo=' + repo;
-    console.log(urlData);
+    // console.log(urlData)
+    // console.log('1', myChart)
     if (myChart !== undefined) {
       myChart.destroy();
     }
@@ -36,7 +39,9 @@ const stars = (function () {
 
   function upload (e) {
     e.preventDefault();
-    let urlData = urlBase + '/upload';
+    let urlData = urlBase + 'upload';
+    // console.log(urlData)
+    // console.log('2', myChart)
     if (myChart !== undefined) {
       myChart.destroy();
     }
@@ -65,6 +70,7 @@ const stars = (function () {
   }
 
   function prepareData (dataRepo) {
+    // console.log('RECEIVE => ', dataRepo.length)
     if (dataRepo.length === 1) {
       if (dataRepo[0].linesOfCode === 0 || dataRepo[0].linesOfCode === undefined) {
         alert('Not a valid file');

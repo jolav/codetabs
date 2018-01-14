@@ -28,11 +28,12 @@ Petitions are limited to 1 every 5 secs. You will get a 503 error if you exceed
 ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/count32.png?raw=true)  
 ## **COUNT LOC ONLINE** 
 
-version 0.3.2
+version 0.4.0
 
 ### **[DEMO and DOCS online](https://codetabs.com/count-loc/count-loc-online.html)**
 
 Enter user/repo , then click add or select a zipped folder and upload it
+File max size 20mb;
 
 Petitions are limited to 1 every 5 secs. You will get a 503 error if you exceed 
 
@@ -112,6 +113,8 @@ Supported formats, json and xml
 
 ## **ALEXA**
 
+version 0.2.0
+
 Tool for know Alexa Ranking Top 1 million about a website.  
 
 [Get Alexa Ranking Online](https://codetabs.com/alexa/alexa-ranking.html)
@@ -123,6 +126,8 @@ Petitions are limited to 5 per second. You will get a 503 error if you exceed
 ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/tetris32.png?raw=true)
 
 ## **TETRIS**
+
+version 0.2.0
 
 [Play now](https://codetabs.com/tetris-game/tetris.html) the great classic game
 

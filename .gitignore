@@ -2,7 +2,7 @@
 _aux/
 node_modules/
 tmp/
-alexa/data/
+*/alexa/data/
 
 #Ignore these files
 .env
@@ -13,9 +13,6 @@ private.json
 secret.json
 hits.json
 stats.json
-
-# golang binaries
-*/server/server
 
 #third party binaries
 */server/loc
