@@ -2,7 +2,7 @@
 _aux/
 node_modules/
 tmp/
-*/alexa/data/
+basic/server/alexa/data
 
 #Ignore these files
 .env
@@ -17,4 +17,3 @@ stats.json
 #third party binaries
 */server/loc
 */server/locMac
-

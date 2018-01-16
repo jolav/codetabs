@@ -13,7 +13,7 @@
 
 ## **GITHUB STARS GRAPHICAL HISTORY**
 
-version 0.3.6
+version 0.4.0
 
 ### **[DEMO online](https://codetabs.com/github-stars/github-star-history.html)**
 

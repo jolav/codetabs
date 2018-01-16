@@ -1,11 +1,11 @@
-/*jshint node: true */
+/* global Chart */
 
 const stars = (function () {
   'use strict';
   /* code here */
 
-  const urlBase = 'https://api.codetabs.com/github-stars/';
-  // const urlBase = 'http://localhost:3000'
+  // const urlBase = 'https://api.codetabs.com/github-stars/'
+  const urlBase = 'http://localhost:3000/';
   const ctx = document.getElementById('myChart');
   const pointsPerLine = 70;
   let myChart;
@@ -77,6 +77,7 @@ const stars = (function () {
   }
 
   function showData (dataRepo) {
+    console.log('Receive .......... => ', dataRepo);
     document.getElementsByClassName('loader')[0].style.visibility = 'hidden';
     let newDataRepo = {};
     newDataRepo.label = repo;
