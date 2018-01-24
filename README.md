@@ -32,8 +32,9 @@ version 0.4.0
 
 ### **[DEMO and DOCS online](https://codetabs.com/count-loc/count-loc-online.html)**
 
-Enter user/repo , then click add or select a zipped folder and upload it
-File max size 20mb;
+Enter user/repo , then click add or select a zipped folder and upload it  
+
+File max size 100mb;
 
 Petitions are limited to 1 every 5 secs. You will get a 503 error if you exceed 
 

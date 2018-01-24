@@ -3,7 +3,7 @@
 
 <head>
 
-  <title>API docs</title>
+  <title>Weather docs</title>
 
   <!--Head -->
   <!--#include file="/_public/templates/head.html" -->
@@ -14,12 +14,12 @@
 
   <header class="header">
     <h1 class="big">
-      <img class="verticalImage" alt="Logo" src="/_public/icons/hub32.png">
-      <span>API docs</span>
+      <img class="verticalImage" alt="Logo" src="/_public/icons/weather48.png">
+      <span>Weather docs</span>
     </h1>
     <h1 class="small">
-      <img class="verticalImage" alt="Logo" src="/_public/icons/hub32.png">
-      <span>API docs</span>
+      <img class="verticalImage" alt="Logo" src="/_public/icons/weather48.png">
+      <span>Weather docs</span>
     </h1>
   </header>
 
@@ -27,13 +27,18 @@
 
     <div class="endpoint">
       <div class="api">
-        <span> CORS is enabled allowing Javascript make requests across domain boundaries</span><br>
+        <span> CORS is enabled allowing Javascript make requests across domain boundaries</span>
+        <br>
         <span>
-        API URL ==> <code>https://api.codetabs.com/api/weather/temp/</code>
-        </span><br>
+          API URL ==>
+          <code>https://api.codetabs.com/api/weather/temp/</code>
+        </span>
+        <br>
         <span>
-        JSON format is used by default. To get data in XML set up <code>format=xml</code> .
-        </span><br>
+          JSON format is used by default. To get data in XML set up
+          <code>format=xml</code> .
+        </span>
+        <br>
         <span>
           Petitions are limited to 5 per second. You will get a 503 error if you exceed
         </span>
@@ -53,16 +58,19 @@
         </span>
       </div>
       <div class="parameters">
-        <strong>Query Parameters : </strong><br>
+        <strong>Query Parameters : </strong>
+        <br>
         <span>
           <strong>"&format="</strong> values are json(by default or if parameter is empty) or xml
-        </span><br>
+        </span>
+        <br>
         <span>
           <pre>
   https://api.codetabs.com/api/weather/temp/
   https://api.codetabs.com/api/weather/temp?format=xml
           </pre>
-        </span> </div>
+        </span>
+      </div>
       <div class="response">
         <strong>Response : </strong>
         <span class="center">
@@ -89,19 +97,23 @@
         </span>
       </div>
       <div class="parameters">
-        <strong>Query Parameters : </strong><br>
+        <strong>Query Parameters : </strong>
+        <br>
         <span>
           <strong>"&format="</strong> values are json(by default or if parameter is empty) or xml
-        </span><br>
+        </span>
+        <br>
         <span>
           <strong>"&city="</strong> city i want to know the temperature.
-        </span><br>
-        <span>          
+        </span>
+        <br>
+        <span>
           <pre>
   https://api.codetabs.com/api/weather/temp?city=paris
   https://api.codetabs.com/api/weather/temp?city=paris&format=xml
           </pre>
-        </span> </div>
+        </span>
+      </div>
       <div class="response">
         <strong>Response : </strong>
         <span class="center">
@@ -121,15 +133,14 @@
 
   <section class="centerText">
     <span>
-           <strong>version 0.2.0</strong>
-        </span>
+      <strong>version 0.2.0</strong>
+    </span>
   </section>
   <br>
 
   <section class="goHome centerText">
-    <a href="//codetabs.com"> 
-      <img class="alignImage" alt="goHome" src="/_public/icons/home24.png">
-      Home
+    <a href="//codetabs.com">
+      <img class="alignImage" alt="goHome" src="/_public/icons/home24.png"> Home
     </a>
   </section>
 

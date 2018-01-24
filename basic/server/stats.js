@@ -1,8 +1,8 @@
+/* */
+
 const lib = require(__dirname + '/lib.js');
 const mongo = require('mongodb');
-const connection = process.env.DB_STATS;
-
-// testDB(connection)
+const connection = 'mongodb://' + process.env.DBUSER + ':' + encodeURIComponent(process.env.PASS) + '@' + process.env.URL + '/' + process.env.DBNAME;
 
 function testDB (connection) {
   mongo.connect(connection, function (err, db) {
@@ -31,7 +31,7 @@ function updateStats (req, res, next) {
   let dbData = {
     'ip': lib.getIP(req),
     'service': service,
-    'time': new Date().toUTCString()
+    'time': new Date().toISOString().split('T')[0]
   };
   try {
     saveDataToDB(dbData);
@@ -46,7 +46,7 @@ function saveDataToDB (dbData) {
   mongo.connect(connection, function (err, db) {
     if (err) throw err;
     const database = db.db('stats');
-    const collection = database.collection('codetabs');
+    const collection = database.collection('codetabs-hits');
     collection.insert(dbData, function (err, result) {
       if (err) throw err;
       db.close();
