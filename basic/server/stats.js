@@ -27,6 +27,9 @@ function updateStats (req, res, next) {
     case 'games':
       service = 'tetris';
       break;
+    case 'http-headers':
+      service = 'headers';
+      break;
   }
   let dbData = {
     'ip': lib.getIP(req),

@@ -4,8 +4,9 @@
 2. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
 3. [CORS proxy](#cors-proxy)
 4. [API / weather temp](#api)  
-5. [Alexa Ranking](#alexa)
-6. [Tetris](#tetris)  
+5. [HTTP Headers](#headers)
+6. [Alexa Ranking](#alexa)
+7. [Tetris](#tetris)  
 
 <hr>
 
@@ -118,19 +119,33 @@ version 0.2.0
 
 Tool for know Alexa Ranking Top 1 million about a website.  
 
-[Get Alexa Ranking Online](https://codetabs.com/alexa/alexa-ranking.html)
+### **[Get Alexa Ranking Online](https://codetabs.com/alexa/alexa-ranking.html)**
 
 Petitions are limited to 5 per second. You will get a 503 error if you exceed  
 
 <hr>
 
-![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/tetris32.png?raw=true)
+![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/headers32.png?raw=true)
+
+## **HEADERS**
+
+version 0.1.0
+
+Tool to get list of response headers including redirect chain of a HTTP connection
+
+### **[DEMO and DOCS online](https://codetabs.com/http-headers/headers.html)**
+
+Petitions are limited to 1 per second. You will get a 503 error if you exceed
+
+<hr>
+
+![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/tetris32.png?raw=true) 
 
 ## **TETRIS**
 
 version 0.2.0
 
-[Play now](https://codetabs.com/tetris-game/tetris.html) the great classic game
+### **[Play now](https://codetabs.com/tetris-game/tetris.html)** the great classic game
 
 <hr>
 

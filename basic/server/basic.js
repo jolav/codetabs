@@ -9,6 +9,7 @@ const tetris = require('./tetris-game/tetris.js');
 const api = require('./api/api.js');
 const corsproxy = require('./cors-proxy/proxy.js');
 const alexa = require('./alexa/alexa.js');
+const headers = require('./http-headers/headers.js');
 
 const port = process.env.PORT_BASIC || 3000;
 
@@ -20,8 +21,7 @@ app.use('/games/tetris', tetris);
 app.use('/api', api);
 app.use('/cors-proxy', corsproxy);
 app.use('/alexa', alexa);
-// app.use('/count-loc', loc)
-// app.use('/github-stars', stars)
+app.use('/http-headers', headers);
 
 app.get('*', function (req, res) {
   res.redirect('https://codetabs.com/notFound');

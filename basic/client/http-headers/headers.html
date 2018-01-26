@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <title>HTTP Headers</title>
+
+  <!--Head -->
+  <!--#include file="/_public/templates/head.html" -->
+
+</head>
+
+<body>
+
+  <header class="header">
+    <h1 class="big">
+      <img class="verticalImage" alt="Logo" src="/_public/icons/headers48.png">
+      <span>HTTP Headers</span>
+    </h1>
+    <h1 class="small">
+      <img class="verticalImage" alt="Logo" src="/_public/icons/headers48.png">
+      <span>HTTP Headers</span>
+    </h1>
+  </header>
+
+  <div class="container">
+
+    <section id="addForm">
+      <form class="addUrl" onsubmit="return false">
+        <input type="text" required id="urlName" placeholder="Enter url">
+        <span id="addUrl" class="action">View Headers</span>
+      </form>
+    </section>
+
+    <div class="result" id="result">
+    </div>
+
+    <div class="endpoint first">
+      <div class="api">
+        Tool to get list of response headers including redirect chain of a HTTP connection
+        <br> Petitions are limited to 1 per second. You will get a 503 error if you exceed
+      </div>
+    </div>
+
+    <div class="endpoint">
+      <div class="title">
+        <strong>Get list of response headers</strong> : This endpoint retrieves list of response headers including redirect chain
+        of a HTTP connection in JSON format </div>
+      <div class="request">
+        <strong>HTTP Request : </strong>
+        <br>
+        <code> GET
+         https://api.codetabs.com/http-headers/get/urlToScan
+          </code>
+      </div>
+      <div class="example">
+        <span class="center">
+          <strong>Example</strong>
+        </span>
+        <br>
+        <span class="center">
+          <code>  
+              <a href="https://api.codetabs.com/http-headers/get/codetabs.com"> https://api.codetabs.com/http-headers/get/codetabs.com</a> 
+            </code>
+        </span>
+        <br>
+      </div>
+      <div class="response">
+        <strong>Response : </strong>
+        <pre>
+[
+  {
+      "HTTP/1.1": "301",
+      "Server": "nginx",
+      "Date": "Thu, 25 Jan 2018 17:54:21 GMT",
+      "Content-Type": "text/html",
+      "Content-Length": "178",
+      "Connection": "keep-alive",
+      "Location": "https://codetabs.com/"
+  },
+  {
+      "HTTP/2": "200",
+      "server": "nginx",
+      "date": "Thu, 25 Jan 2018 17:54:21 GMT",
+      "content-type": "text/html",
+      "vary": "Accept-Encoding",
+      "expires": "Thu, 01 Jan 1970 00:00:01 GMT",
+      "cache-control": "no-cache",
+      "strict-transport-security": "max-age=15768000; includeSubDomains",
+      "x-frame-options": "DENY",
+      "x-content-type-options": "nosniff",
+      "x-xss-protection": "1; mode=block"
+  }
+]     
+          </pre>
+      </div>
+    </div>
+
+  </div>
+
+  <br>
+
+  <section class="centerText">
+    <span>
+      <strong>version 0.1.0</strong>
+    </span>
+  </section>
+  <br>
+
+  <section class="goHome centerText">
+    <a href="//codetabs.com">
+      <img class="alignImage" alt="goHome" src="/_public/icons/home24.png"> Home
+    </a>
+  </section>
+
+  <hr>
+
+  <!-- Footer -->
+  <!--#include file="/_public/templates/footer.html" -->
+
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="./headers.css">
+
+
+  <!-- google-analytics -->
+  <!--#include file="/_public/templates/analyticstracking.html" -->
+  <!-- cookie Law -->
+  <!--#include file="/_public/templates/cookieLaw.html" -->
+
+  <script async src="./headers.js"></script>
+
+  <!-- Titillium Web -->
+  <link href="https://fonts.googleapis.com/css?family=Titillium+Web:400,700" rel="stylesheet">
+</body>
+
+</html>

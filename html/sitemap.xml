@@ -6,104 +6,112 @@
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
 
+
 <url>
   <loc>https://codetabs.com/</loc>
-  <lastmod>2018-01-11T11:48:47+00:00</lastmod>
+  <lastmod>2018-01-25T19:49:11+00:00</lastmod>
   <priority>1.00</priority>
 </url>
 <url>
   <loc>https://codetabs.com/github-stars/github-star-history.html</loc>
-  <lastmod>2018-01-11T11:48:47+00:00</lastmod>
+  <lastmod>2018-01-25T19:49:11+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://codetabs.com/count-loc/count-loc-online.html</loc>
-  <lastmod>2018-01-11T11:48:47+00:00</lastmod>
+  <lastmod>2018-01-25T19:49:11+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://codetabs.com/cors-proxy/cors-proxy.html</loc>
-  <lastmod>2018-01-11T11:48:47+00:00</lastmod>
+  <lastmod>2018-01-25T19:49:11+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://codetabs.com/api/api.html</loc>
-  <lastmod>2018-01-11T11:48:47+00:00</lastmod>
+  <lastmod>2018-01-25T19:49:11+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://codetabs.com/tetris-game/tetris.html</loc>
-  <lastmod>2018-01-11T11:48:47+00:00</lastmod>
+  <loc>https://codetabs.com/http-headers/headers.html</loc>
+  <lastmod>2018-01-25T19:49:11+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://codetabs.com/notes/</loc>
-  <lastmod>2018-01-11T11:48:47+00:00</lastmod>
+  <lastmod>2018-01-25T19:49:11+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://codetabs.com/alexa/alexa-ranking.html</loc>
-  <lastmod>2018-01-11T11:48:47+00:00</lastmod>
+  <lastmod>2018-01-25T19:49:11+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://codetabs.com/tetris-game/tetris.html</loc>
+  <lastmod>2018-01-25T19:49:11+00:00</lastmod>
   <priority>0.80</priority>
 </url>
 <url>
   <loc>https://codetabs.com/notes/.</loc>
-  <lastmod>2018-01-11T11:48:47+00:00</lastmod>
+  <lastmod>2018-01-25T19:49:11+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://codetabs.com/notes/html/</loc>
-  <lastmod>2018-01-11T11:48:47+00:00</lastmod>
+  <lastmod>2018-01-25T19:49:11+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://codetabs.com/notes/css/</loc>
-  <lastmod>2018-01-11T11:48:47+00:00</lastmod>
+  <lastmod>2018-01-25T19:49:11+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://codetabs.com/notes/javascript/</loc>
-  <lastmod>2018-01-11T11:48:47+00:00</lastmod>
+  <lastmod>2018-01-25T19:49:11+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://codetabs.com/notes/javascript-snippets/</loc>
-  <lastmod>2018-01-11T11:48:47+00:00</lastmod>
+  <lastmod>2018-01-25T19:49:11+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://codetabs.com/notes/reactjs/</loc>
-  <lastmod>2018-01-11T11:48:47+00:00</lastmod>
+  <lastmod>2018-01-25T19:49:11+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://codetabs.com/notes/frontend/</loc>
-  <lastmod>2018-01-11T11:48:47+00:00</lastmod>
+  <lastmod>2018-01-25T19:49:11+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://codetabs.com/notes/nodejs-expressjs/</loc>
-  <lastmod>2018-01-11T11:48:47+00:00</lastmod>
+  <lastmod>2018-01-25T19:49:11+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://codetabs.com/notes/nodejs-snippets/</loc>
-  <lastmod>2018-01-11T11:48:47+00:00</lastmod>
+  <lastmod>2018-01-25T19:49:11+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://codetabs.com/notes/database/</loc>
-  <lastmod>2018-01-11T11:48:47+00:00</lastmod>
+  <lastmod>2018-01-25T19:49:11+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://codetabs.com/notes/debian/</loc>
-  <lastmod>2018-01-11T11:48:47+00:00</lastmod>
+  <lastmod>2018-01-25T19:49:11+00:00</lastmod>
   <priority>0.64</priority>
 </url>
 <url>
   <loc>https://codetabs.com/notes/third-party/</loc>
-  <lastmod>2018-01-11T11:48:47+00:00</lastmod>
+  <lastmod>2018-01-25T19:49:11+00:00</lastmod>
   <priority>0.64</priority>
 </url>
+
+
 </urlset>
