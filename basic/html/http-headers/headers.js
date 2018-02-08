@@ -4,7 +4,7 @@ const stars = (function () {
   'use strict';
   /* code here */
 
-  // const baseUrl = 'http://localhost:3503/http-headers/'
+  // const baseUrl = 'http://localhost:3000/http-headers/'
   const baseUrl = 'https://api.codetabs.com/http-headers/';
 
   function init () {

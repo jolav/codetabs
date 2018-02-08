@@ -1,21 +1,23 @@
-require('dotenv').config();
-
+/* */
 const express = require('express');
 const app = express();
+require('dotenv').config();
 
 const stars = require(__dirname + '/doStars.js');
 const stats = require(__dirname + '/stats.js');
 const lib = require(__dirname + '/lib');
 
 let port = 3000;
-if (process.env.ENV === 'prod') {
-  port = process.env.PORT;
+if (process.env.NODE_ENV === 'production') {
+  port = process.env.PORT_STARS;
 }
 
-stats.testDB();
-app.use(stats.updateStats);
-
 app.disable('x-powered-by');
+
+app.use(function (req, res, next) {
+  res.locals.service = 'stars';
+  stats.updateStats(req, res, next);
+});
 
 app.get('/get', function (req, res) {
   stars.getRepoHistory(req, res, function (response, status) {
@@ -32,7 +34,9 @@ app.get('*', function (req, res) {
 });
 
 app.listen(port, function () {
-  console.log('Express server listening on port ' + port);
+  const time = new Date().toUTCString().split(',')[1];
+  console.log('Express server on port ' + port + ' - ' + time);
+  stats.testDB();
 });
 
 module.exports = app;

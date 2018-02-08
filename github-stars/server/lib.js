@@ -1,7 +1,6 @@
+/* */
 const fs = require('fs');
 const https = require('https');
-const url = require('url');
-const exec = require('child_process').exec;
 
 function sendResult (req, res, data, status) {
   res.setHeader('Content-Type', 'application/json');
@@ -58,10 +57,17 @@ function getRandomNumber (min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+function getIP (req) {
+  return (req.headers['x-forwarded-for'] ||
+  req.connection.remoteAddress || req.socket.remoteAddress ||
+  req.connection.socket.remoteAddress).split(',')[0];
+}
+
 module.exports = {
   sendResult: sendResult,
   loadJSONfile: loadJSONfile,
   writeJSONtoFile: writeJSONtoFile,
   getRandomNumber: getRandomNumber,
-  makeRequest: makeRequest
+  makeRequest: makeRequest,
+  getIP: getIP
 };

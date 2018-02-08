@@ -1,7 +1,8 @@
+/* */
 require('dotenv').config();
-
+const lib = require(__dirname + '/lib.js');
 const mongo = require('mongodb');
-const connection = 'mongodb://' + process.env.DBUSER + ':' + encodeURIComponent(process.env.PASS) + '@' + process.env.URL + '/' + process.env.DBNAME;
+const connection = process.env.DB_STATS;
 
 function testDB () {
   mongo.connect(connection, function (err, db) {
@@ -12,21 +13,47 @@ function testDB () {
 }
 
 function updateStats (req, res, next) {
+  let service = '';
+  if (res.locals.service) {
+    service = res.locals.service;
+  } else {
+    switch (req.originalUrl.split('/')[1]) {
+      case 'alexa':
+        service = 'alexa';
+        break;
+      case 'api':
+        service = 'weather';
+        break;
+      case 'cors-proxy':
+        service = 'proxy';
+        break;
+      case 'games':
+        service = 'tetris';
+        break;
+      case 'http-headers':
+        service = 'headers';
+        break;
+    }
+  }
   let dbData = {
-    'ip': getIP(req),
-    'service': 'loc',
+    'ip': lib.getIP(req),
+    'service': service,
     'time': new Date().toISOString().split('T')[0]
   };
-  try {
-    saveDataToDB(dbData);
-  } catch (e) {
-    console.log(e);
+  if (dbData.service) {
+    try {
+      // console.log('SAVING...', dbData)
+      saveDataToDB(dbData);
+    } catch (e) {
+      console.log(e);
+    }
+  } else {
+    console.log('Not Service');
   }
   next();
 }
 
 function saveDataToDB (dbData) {
-  // console.log('SAVING...', dbData, connection)
   mongo.connect(connection, function (err, db) {
     if (err) throw err;
     const database = db.db('stats');
@@ -36,12 +63,6 @@ function saveDataToDB (dbData) {
       db.close();
     });
   });
-}
-
-function getIP (req) {
-  return (req.headers['x-forwarded-for'] ||
-  req.connection.remoteAddress || req.socket.remoteAddress ||
-  req.connection.socket.remoteAddress).split(',')[0];
 }
 
 module.exports = {

@@ -84,7 +84,7 @@ async function repoLoc(req, res, folderID, cb) {
     doCommand(destroyTemporalFolder);
     return;
   }
-  // console.log("AQUI",locs);
+  //console.log("AQUI",locs);
   //console.log('********** END **********');
   cb({locs }, 200); 
   doCommand(destroyTemporalFolder);

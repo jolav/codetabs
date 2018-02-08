@@ -1,6 +1,6 @@
 {
   "name": "count-loc",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "count-loc-online",
   "main": "countloc.js",
   "scripts": {
@@ -12,6 +12,6 @@
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "formidable": "^1.1.1",
-    "mongodb": "^3.0.1"
+    "mongodb": "^3.0.2"
   }
 }

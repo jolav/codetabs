@@ -1,10 +1,10 @@
+/* */
 const exec = require('child_process').exec;
 const https = require('https');
 const fs = require('fs');
 const lib = require(__dirname + '/../lib.js');
 
 function initAlexa () {
-  console.log('ALEXA');
   // downloadDataFile(dataFileURL, desFile, decompress)
   onceADayTask();
 }
@@ -117,12 +117,3 @@ module.exports = {
   initAlexa: initAlexa,
   getRankByDomain: getRankByDomain
 };
-
-/*
-
-head -10000 top-1million-sites.csv will display top 10,000. it will be faster than iterating through all the list.
-To find a specific domain cat top-1million-sites.csv | grep github.com.
-
-sed -n "5,10 p" top-1m.csv // shows file 5 to 10
-
-*/

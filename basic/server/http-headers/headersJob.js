@@ -1,5 +1,4 @@
 /* */
-
 const lib = require('./../lib.js');
 const exec = require('child_process').exec;
 

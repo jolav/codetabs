@@ -1,5 +1,4 @@
 /* */
-
 const express = require('express');
 
 const job = require(__dirname + '/headersJob.js');

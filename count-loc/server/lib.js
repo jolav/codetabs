@@ -1,3 +1,4 @@
+/* */
 const fs = require('fs');
 const https = require('https');
 const url = require('url');
@@ -99,6 +100,12 @@ function downloadFile (url, where, cb) {
   });
 }
 
+function getIP (req) {
+  return (req.headers['x-forwarded-for'] ||
+  req.connection.remoteAddress || req.socket.remoteAddress ||
+  req.connection.socket.remoteAddress).split(',')[0];
+}
+
 module.exports = {
   sendResult: sendResult,
   loadJSONfile: loadJSONfile,
@@ -106,5 +113,6 @@ module.exports = {
   makeHttpsRequest: makeHttpsRequest,
   checkUrlExists: checkUrlExists,
   linuxCommand: linuxCommand,
-  downloadFile: downloadFile
+  downloadFile: downloadFile,
+  getIP: getIP
 };

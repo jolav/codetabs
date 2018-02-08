@@ -5,8 +5,8 @@ const stars = (function () {
   'use strict';
   /* code here */
 
-  const urlBase = 'https://api.codetabs.com/count-loc/';
   // const urlBase = 'http://localhost:3000/'
+  const urlBase = 'https://api.codetabs.com/count-loc/';
 
   const ctx = document.getElementById('myPie');
   const pointsPerLine = 70;

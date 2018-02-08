@@ -18,20 +18,20 @@ async function getRepoHistory(req, res, cb) {
   }
 
   const totalStars = await getTotalStars(repo);
-  console.log('TOTALSTARS => ', totalStars);
+  // console.log('TOTALSTARS => ', totalStars);
   if (totalStars === -1) { // repo not exists
-    console.log(repo ,' not exists');
+    // console.log(repo ,' not exists');
     cb({ 'Error': (repo + " doesn't exist") }, 400);
     return;
   } else if (totalStars === 0) {
-    console.log(repo ,' has no stars');
+    // console.log(repo ,' has no stars');
     cb({ data: [] }, 200);
     return;
   }
 
   const rate = await getApiLimit();
   const limit = rate.resources.core.remaining;
-  console.log('LIMITS ==> ', limit);
+  // console.log('LIMITS ==> ', limit);
   
   if (limit < 402) {
     cb({ 'Error': "GitHub API Limit Exceeded, Please wait ..." }, 400);
@@ -45,10 +45,10 @@ async function getRepoHistory(req, res, cb) {
     await doLinksRequests(links);
   }
 
-  console.log('STARS = >', stars.length);
+  // console.log('STARS = >', stars.length);
   await sortStarsByDate();
   await convertStarsToPoints();
-  console.log('LAST', points[points.length-1]);
+  // console.log('LAST', points[points.length-1]);
   if (totalStars > 40000) { // draw points unreachable through api limit
     if (points[points.length - 1].x === today) { // fcc exception ???
       points[points.length - 1].y = totalStars;
@@ -57,15 +57,15 @@ async function getRepoHistory(req, res, cb) {
         'x': today,
         'y': totalStars
       };
-      console.log('NEW LAST', points[points.length - 1]);
-      console.log('ADDING LAST SPECIAL', point);
+      // console.log('NEW LAST', points[points.length - 1]);
+      // console.log('ADDING LAST SPECIAL', point);
       points.push(point);
     }
   }  
-  console.log('POINTS = >', points.length);
+  //console.log('POINTS = >', points.length);
   
   cb({ data: points }, 200);
-  console.log('************* END ***********');
+  // console.log('************* END ***********');
 }
 
 function getApiLimit() {
@@ -104,7 +104,7 @@ function doLinksRequests(links) {
   return new Promise((resolve, reject) => {
     let responsePool = [];
     let calls = links.length;
-    console.log('CALLS => ', calls);
+    //console.log('CALLS => ', calls);
     for (let i = 0; i < calls; i++) {
       const options = {
         hostname: 'api.github.com',
@@ -169,7 +169,7 @@ function parseHeadersLink(link, totalStars) {
   let end = "/stargazers?per_page=100&page=";
   let pages = Math.ceil((totalStars - 100) / 100) + 1;
   if (pages > 400) pages = 400;
-  console.log('PAGES => ', pages,link);
+  //console.log('PAGES => ', pages,link);
   const number = link.slice(37).split("/")[0];
   //console.log('number = ', number);
   for (let page = 2; page <= pages; page++) {
@@ -209,7 +209,7 @@ function getTotalStars (repo) {
   });
 }
 function convertStarsToPoints() {
-  console.log("CONVERT STARS TO POINTS");
+  //console.log("CONVERT STARS TO POINTS");
   let point = {
     'x': stars[0].starredAt, // when
     'y': 0                    // qty

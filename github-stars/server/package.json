@@ -1,6 +1,6 @@
 {
   "name": "github-stars",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "github stars graphical history",
   "main": "history.js",
   "scripts": {
@@ -12,6 +12,6 @@
     "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "graphql-request": "^1.4.1",
-    "mongodb": "^3.0.1"
+    "mongodb": "^3.0.2"
   }
 }

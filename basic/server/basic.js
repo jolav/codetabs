@@ -1,7 +1,7 @@
-require('dotenv').config();
-
+/* */
 const express = require('express');
 const app = express();
+require('dotenv').config();
 
 const stats = require(__dirname + '/stats.js');
 
@@ -11,7 +11,10 @@ const corsproxy = require('./cors-proxy/proxy.js');
 const alexa = require('./alexa/alexa.js');
 const headers = require('./http-headers/headers.js');
 
-const port = process.env.PORT_BASIC || 3000;
+let port = 3000;
+if (process.env.NODE_ENV === 'production') {
+  port = process.env.PORT_BASIC;
+}
 
 app.disable('x-powered-by');
 
@@ -29,12 +32,9 @@ app.get('*', function (req, res) {
 });
 
 app.listen(port, function () {
-  console.log('Express server listening on port ' + port);
-// initApp()
+  const time = new Date().toUTCString().split(',')[1];
+  console.log('Express server on port ' + port + ' - ' + time);
+  stats.testDB();
 });
-
-function initApp () {
-  console.log('INIT APP');
-}
 
 module.exports = app;

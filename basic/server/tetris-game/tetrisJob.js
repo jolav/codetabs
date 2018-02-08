@@ -1,3 +1,4 @@
+/* */
 const lib = require(__dirname + '/../lib.js');
 
 const filePath = __dirname + '/tetris.json';

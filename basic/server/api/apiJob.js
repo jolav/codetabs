@@ -1,3 +1,4 @@
+/* */
 const lib = require(__dirname + '/../lib.js');
 const json2xml = require('js2xmlparser');
 

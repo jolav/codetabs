@@ -1,3 +1,4 @@
+/* */
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -16,8 +17,8 @@ app.post('/hs', (req, res) => {
 });
 
 app.use('*', (req, res) => {
-  // res.redirect('https://codetabs.com/notFound')
-  res.status(404).send('Not Found');
+  res.redirect('https://codetabs.com/notFound');
+// res.status(404).send('Not Found')
 });
 
 module.exports = app;

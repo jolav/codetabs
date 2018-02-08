@@ -14,7 +14,7 @@
 
 ## **GITHUB STARS GRAPHICAL HISTORY**
 
-version 0.4.0
+version 0.4.1
 
 ### **[DEMO online](https://codetabs.com/github-stars/github-star-history.html)**
 
@@ -29,7 +29,7 @@ Petitions are limited to 1 every 5 secs. You will get a 503 error if you exceed
 ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/count32.png?raw=true)  
 ## **COUNT LOC ONLINE** 
 
-version 0.4.0
+version 0.4.1
 
 ### **[DEMO and DOCS online](https://codetabs.com/count-loc/count-loc-online.html)**
 
@@ -79,7 +79,7 @@ Response (JSON) :
 
 ## **CORS-PROXY**
 
-version 0.2.0
+version 0.2.1
 
 ### **[Read DOCS online](https://codetabs.com/cors-proxy/cors-proxy.html)**
 
@@ -99,7 +99,7 @@ For now it only suppports GET request
 
 ## **API** 
 
-version 0.2.0
+version 0.2.1
 
 ### **[Read DOCS online](https://codetabs.com/api/api.html)**
 
@@ -115,7 +115,7 @@ Supported formats, json and xml
 
 ## **ALEXA**
 
-version 0.2.0
+version 0.2.1
 
 Tool for know Alexa Ranking Top 1 million about a website.  
 
@@ -129,7 +129,7 @@ Petitions are limited to 5 per second. You will get a 503 error if you exceed
 
 ## **HEADERS**
 
-version 0.1.0
+version 0.1.1
 
 Tool to get list of response headers including redirect chain of a HTTP connection
 
@@ -143,7 +143,7 @@ Petitions are limited to 1 per second. You will get a 503 error if you exceed
 
 ## **TETRIS**
 
-version 0.2.0
+version 0.2.1
 
 ### **[Play now](https://codetabs.com/tetris-game/tetris.html)** the great classic game
 

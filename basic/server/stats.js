@@ -1,10 +1,10 @@
 /* */
-
+require('dotenv').config();
 const lib = require(__dirname + '/lib.js');
 const mongo = require('mongodb');
-const connection = 'mongodb://' + process.env.DBUSER + ':' + encodeURIComponent(process.env.PASS) + '@' + process.env.URL + '/' + process.env.DBNAME;
+const connection = process.env.DB_STATS;
 
-function testDB (connection) {
+function testDB () {
   mongo.connect(connection, function (err, db) {
     if (err) throw err;
     console.log('Connected correctly to server');
@@ -14,38 +14,46 @@ function testDB (connection) {
 
 function updateStats (req, res, next) {
   let service = '';
-  switch (req.originalUrl.split('/')[1]) {
-    case 'alexa':
-      service = 'alexa';
-      break;
-    case 'api':
-      service = 'weather';
-      break;
-    case 'cors-proxy':
-      service = 'proxy';
-      break;
-    case 'games':
-      service = 'tetris';
-      break;
-    case 'http-headers':
-      service = 'headers';
-      break;
+  if (res.locals.service) {
+    service = res.locals.service;
+  } else {
+    switch (req.originalUrl.split('/')[1]) {
+      case 'alexa':
+        service = 'alexa';
+        break;
+      case 'api':
+        service = 'weather';
+        break;
+      case 'cors-proxy':
+        service = 'proxy';
+        break;
+      case 'games':
+        service = 'tetris';
+        break;
+      case 'http-headers':
+        service = 'headers';
+        break;
+    }
   }
   let dbData = {
     'ip': lib.getIP(req),
     'service': service,
     'time': new Date().toISOString().split('T')[0]
   };
-  try {
-    saveDataToDB(dbData);
-  } catch (e) {
-    console.log(e);
+  if (dbData.service) {
+    try {
+      // console.log('SAVING...', dbData)
+      saveDataToDB(dbData);
+    } catch (e) {
+      console.log(e);
+    }
+  } else {
+    console.log('Not Service');
   }
   next();
 }
 
 function saveDataToDB (dbData) {
-  // console.log('SAVING...', dbData)
   mongo.connect(connection, function (err, db) {
     if (err) throw err;
     const database = db.db('stats');
@@ -58,5 +66,6 @@ function saveDataToDB (dbData) {
 }
 
 module.exports = {
-  updateStats: updateStats
+  updateStats: updateStats,
+  testDB: testDB
 };
