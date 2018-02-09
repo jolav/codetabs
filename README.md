@@ -3,41 +3,36 @@
 1. [Github Stars graphical history](#github-stars-graphical-history)  
 2. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
 3. [CORS proxy](#cors-proxy)
-4. [API / weather temp](#api)  
-5. [HTTP Headers](#headers)
-6. [Alexa Ranking](#alexa)
-7. [Tetris](#tetris)  
+4. [Geolocation IP](#geoip)
+5. [API / weather temp](#api)  
+6. [HTTP Headers](#headers)
+7. [Alexa Ranking](#alexa)
+8. [Tetris](#tetris)  
 
 <hr>
 
-![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/stars32.png?raw=true) 
-
-## **GITHUB STARS GRAPHICAL HISTORY**
+## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/stars32.png?raw=true) **GITHUB STARS GRAPHICAL HISTORY**
 
 version 0.4.1
 
 ### **[DEMO online](https://codetabs.com/github-stars/github-star-history.html)**
 
-Enter user/repo , then click add.
-
-Petitions are limited to 1 every 5 secs. You will get a 503 error if you exceed 
+- Enter user/repo , then click add.
+- Petitions are limited to 1 every 5 secs. You will get a 503 error if you exceed 
 
 ![Example](https://github.com/jolav/codetabs/blob/master/_public/images/starExample.png?raw=true)
 
 <hr>
 
-![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/count32.png?raw=true)  
-## **COUNT LOC ONLINE** 
+## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/count32.png?raw=true)  **COUNT LOC ONLINE** 
 
 version 0.4.1
 
 ### **[DEMO and DOCS online](https://codetabs.com/count-loc/count-loc-online.html)**
 
-Enter user/repo , then click add or select a zipped folder and upload it  
-
-File max size 100mb;
-
-Petitions are limited to 1 every 5 secs. You will get a 503 error if you exceed 
+- Enter user/repo , then click add or select a zipped folder and upload it  
+- File max size 100mb;
+- Petitions are limited to 1 every 5 secs. You will get a 503 error if you exceed 
 
 ![Example](https://github.com/jolav/codetabs/blob/master/_public/images/locExample.png?raw=true)
 
@@ -75,45 +70,61 @@ Response (JSON) :
 
 <hr>
 
-![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/server32.png?raw=true)
-
-## **CORS-PROXY**
+## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/server32.png?raw=true)  **CORS-PROXY**
 
 version 0.2.1
 
 ### **[Read DOCS online](https://codetabs.com/cors-proxy/cors-proxy.html)**
 
-Petitions are limited to 5 per sec. You will get a 503 error if you exceed 
-
-Free CORS proxy server that allows access resources from any website
-
-You can use to prevent mixed content of images and JSON data proxying the resources to serve them under https.
-
-Each request is limited to 2mb size download to avoid abuse
-
-For now it only suppports GET request
+- Petitions are limited to 5 per sec. You will get a 503 error if you exceed 
+- Free CORS proxy server that allows access resources from any website
+- You can use to prevent mixed content of images and JSON data proxying the resources to serve them under https.
+- Each request is limited to 2mb size download to avoid abuse
+- Only suppports GET request
 
 <hr>
 
-![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/hub32.png?raw=true) 
+## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/geoip32.png?raw=true)  **GEOLOCATION IP**
 
-## **API** 
+version 0.1.7
+
+### **[Read API DOCS online](https://codetabs.com/geolocation-ip/geolocation-ip.html)**
+
+- Free GeoIP service that provides a public HTTPS (SSL access) API to retrieve geolocation from any IPv4, IPv6 or hostname  
+- Supported formats, json and xml  
+- 120 requests per minute. Once reached subsequent requests will result in error 503 (Service unavailable) until your quota is cleared  
+- API requires no key or signup.
+
+```json
+{   
+  "ip": "94.168.50.200",
+  "country_code": "GB",
+  "country_name": "United Kingdom",
+  "region_code": "ENG",
+  "region_name": "England",
+  "city": "London",
+  "zip_code": "SL1",
+  "time_zone": "Europe/London",
+  "latitude": 50.0500,
+  "longitude": 0.6172   
+}
+```
+
+<hr>
+
+## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/hub32.png?raw=true)  **API** 
 
 version 0.2.1
 
 ### **[Read DOCS online](https://codetabs.com/api/api.html)**
 
-Petitions are limited to 5 per sec. You will get a 503 error if you exceed 
-
-CORS is enabled allowing Javascript make requests across domain boundaries
-       
-Supported formats, json and xml  
+- Petitions are limited to 5 per sec. You will get a 503 error if you exceed 
+- CORS is enabled allowing Javascript make requests across domain boundaries
+- Supported formats, json and xml  
 
 <hr>
 
-![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/podium32.png?raw=true)
-
-## **ALEXA**
+## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/podium32.png?raw=true)  **ALEXA**
 
 version 0.2.1
 
@@ -121,13 +132,11 @@ Tool for know Alexa Ranking Top 1 million about a website.
 
 ### **[Get Alexa Ranking Online](https://codetabs.com/alexa/alexa-ranking.html)**
 
-Petitions are limited to 5 per second. You will get a 503 error if you exceed  
+- Petitions are limited to 5 per second. You will get a 503 error if you exceed  
 
 <hr>
 
-![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/headers32.png?raw=true)
-
-## **HEADERS**
+## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/headers32.png?raw=true)  **HEADERS**
 
 version 0.1.1
 
@@ -135,13 +144,11 @@ Tool to get list of response headers including redirect chain of a HTTP connecti
 
 ### **[DEMO and DOCS online](https://codetabs.com/http-headers/headers.html)**
 
-Petitions are limited to 1 per second. You will get a 503 error if you exceed
+- Petitions are limited to 1 per second. You will get a 503 error if you exceed
 
 <hr>
 
-![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/tetris32.png?raw=true) 
-
-## **TETRIS**
+## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/tetris32.png?raw=true)  **TETRIS**
 
 version 0.2.1
 

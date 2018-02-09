@@ -19,6 +19,7 @@ app.use(function (req, res, next) {
   res.locals.service = 'loc';
   stats.updateStats(req, res, next);
 });
+
 app.get('/get', function (req, res) {
   folderID++;
   count.repoLoc(req, res, folderID, function (response, status) {

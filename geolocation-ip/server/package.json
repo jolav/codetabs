@@ -1,0 +1,20 @@
+{
+  "name": "geoip",
+  "version": "0.1.7",
+  "description": "geoip location service",
+  "main": "geoip.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "jolav",
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "dotenv": "^5.0.0",
+    "express": "^4.16.2",
+    "js2xmlparser": "^3.0.0",
+    "json2csv": "^3.11.5",
+    "maxmind": "^2.4.0",
+    "mongodb": "^3.0.2"
+  },
+  "devDependencies": {}
+}
