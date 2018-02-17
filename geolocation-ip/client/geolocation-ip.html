@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <title>Geolocation IP</title>
+
+  <!--Head -->
+  <!--#include file="/_public/templates/head.html" -->
+
+</head>
+
+<body>
+
+  <header class="header">
+    <h1 class="big centerText">
+      <img class="verticalImage" alt="ct" src="/_public/icons/geoip128.png"> Geolocation IP
+    </h1>
+    <h1 class="small centerText">
+      <img class="verticalImage" alt="ct" src="/_public/icons/geoip48.png"> Geolocation IP
+    </h1>
+    <span>
+      Welcome to
+      <a href="https://codetabs.com">codetabs.com/geolocation-ip</a> API, a free GeoIP service that provides a public HTTPS (SSL access) API to retrieve
+      geolocation from any IPv4, IPv6 or hostname.
+    </span>
+  </header>
+
+  <section class="data">
+    <div class="data1">
+      <form class="form">
+        <input type="text" id="q" name="q" class="qInput" placeholder="IP or hostname" autofocus>
+      </form>
+      <table class="table">
+        <tr class="row">
+          <td class="key">IP</td>
+          <td class="value" id="value1"></td>
+        </tr>
+        <tr class="row">
+          <td class="key">City</td>
+          <td class="value" id="value2"></td>
+        </tr>
+        <tr class="row">
+          <td class="key">Region/Code</td>
+          <td class="value" id="value3"></td>
+        </tr>
+        <tr class="row">
+          <td class="key">Country/Code</td>
+          <td class="value" id="value4"></td>
+        </tr>
+        <tr class="row">
+          <td class="key">Zip Code</td>
+          <td class="value" id="value5"></td>
+        </tr>
+        <tr class="row">
+          <td class="key">Time Zone</td>
+          <td class="value" id="value6"></td>
+        </tr>
+        <tr class="row">
+          <td class="key">Lat/Lon</td>
+          <td class="value" id="value7"></td>
+        </tr>
+      </table>
+    </div>
+    <div class="data2">
+      <div class="map">
+        <div id="mapid"></div>
+      </div>
+    </div>
+  </section>
+
+  <header>
+    <h2 class="centerText">
+      API doc
+      <small>
+        <small>(version 0.1.8)</small>
+      </small>
+    </h2>
+  </header>
+
+  <section class="docs">
+    <div class="docs1">
+      <span>
+        <strong>HTTP Request template:</strong>
+      </span>
+      <br>
+      <span>GET
+        <span class="red">https://api.codetabs.com/geoip/{format}?q={IP-or-hostname}.</span>
+      </span>
+      <br>
+      <span>Supported formats :
+        <span class="red">json</span>,
+        <span class="red">xml</span>
+      </span> and
+      <span class="red">csv.</span>
+      <br>
+      <span>If no IP or hostname is provided it retrieves your own IP.</span>
+      <br>
+      <span>IPv4 and IPv6 supported.</span>
+      <br>
+      <span>CORS support.</span>
+      <br>
+      <br>
+
+      <span>
+        <strong>Examples:</strong>
+      </span>
+      <br>
+      <code>-<a class="hard" href="https://api.codetabs.com/geoip/json"> https://api.codetabs.com/geoip/json</a></code>
+      <br>
+      <code>-<a class="hard" href="https://api.codetabs.com/geoip/json?q=codetabs.com"> https://api.codetabs.com/geoip/json?q=codetabs.com</a></code>
+      <br>
+      <code>-<a class="hard" href="https://api.codetabs.com/geoip/xml?q=212.24.108.85"> https://api.codetabs.com/geoip/xml?q=212.24.108.85</a></code>
+      <br>
+      <code>-<a class="hard" href="https://api.codetabs.com/geoip/xml?q=2a00:1450:4006:803::200e"> https://api.codetabs.com/geoip/xml?q=2a00:1450:4006:803::200e</a></code>
+      <br>
+      <br>
+
+      <span>
+        <strong>Usage Limits: </strong>
+      </span>
+      <br>
+      <span>120 requests per minute. Once reached subsequent requests will result in error 503 (Service unavailable) until your
+        quota is cleared.</span>
+      <br>
+      <span>If you need more quota contact us.</span>
+      <br>
+      <span>Our API requires no key or signup.</span>
+      <br>
+      <br>
+
+    </div>
+    <div class="docs2">
+      <span>
+        <strong>JSON response example</strong>
+      </span>
+      <pre>
+{   
+  "ip": "94.168.50.200",
+  "country_code": "GB",
+  "country_name": "United Kingdom",
+  "region_code": "ENG",
+  "region_name": "England",
+  "city": "London",
+  "zip_code": "SL1",
+  "time_zone": "Europe/London",
+  "latitude": 50.0500,
+  "longitude": 0.6172   
+}
+      </pre>
+    </div>
+  </section>
+
+  <hr>
+
+  <section class="centerText">
+
+  </section>
+
+  <!-- Begin Footer-->
+  <footer class="footer">
+    <a class="hard" href=mailto:web@codetabs.com>
+      <strong>Contact Us</strong>
+    </a>
+    <br>
+    <small>
+      <span>You can submit your questions, feedbacks, and feature requests by email. We are looking forward to hearing from you!</span>
+      <br>
+      <span>
+        This site includes GeoLite2 data created by MaxMind, available from
+        <a href="http://www.maxmind.com">maxmind.com</a>.
+      </span>
+      <br>
+      <img class="logo" style="max-height:24px; vertical-align:middle" alt="" src="/_public/icons/jolav32.png">
+      <span></span> Jolav &copy; 2018 -
+      <strong>
+        <a class="hard" href="https://github.com/jolav/codetabs">View on GitHub</a>
+      </strong>
+      </span>
+      <br>
+    </small>
+  </footer>
+  <hr>
+  <br>
+  <!-- End -->
+
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="./geoip.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" integrity="sha512-Rksm5RenBEKSKFjgI3a41vrjkw4EVPlJ3+OiI65vTjIdo9brlAacEuKOiQ5OFh7cOI1bkDwLqdLw3Zg0cRJAAQ=="
+    crossorigin="" />
+
+  <!-- google-analytics -->
+  <!--#include file="/_public/templates/analyticstracking.html" -->
+  <!-- cookie Law -->
+  <!--#include file="/_public/templates/cookieLaw.html" -->
+
+  <script async src="./geoip.js"></script>
+  <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js" integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
+    crossorigin=""></script>
+  <!-- Open Sans -->
+  <link href="https://fonts.googleapis.com/css?family=Varela|Titillium+Web:700" rel="stylesheet">
+
+</body>
+
+</html>

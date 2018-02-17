@@ -1,11 +1,11 @@
 /* */
 const express = require('express');
 const app = express();
-require('dotenv').config();
 
-const stars = require(__dirname + '/doStars.js');
-const stats = require(__dirname + '/stats.js');
-const lib = require(__dirname + '/lib');
+require('dotenv').config({ path: __dirname + '/../../_lib/.env' });
+const stats = require(__dirname + '/../../_lib/stats.js');
+const lib = require(__dirname + '/../../_lib/lib.js');
+const job = require(__dirname + '/starsTask.js');
 
 let port = 3000;
 if (process.env.NODE_ENV === 'production') {
@@ -20,7 +20,8 @@ app.use(function (req, res, next) {
 });
 
 app.get('/get', function (req, res) {
-  stars.getRepoHistory(req, res, function (response, status) {
+  console.log('1');
+  job.getRepoHistory(req, res, function (response, status) {
     if (response.data) {
       response = response.data;
     }

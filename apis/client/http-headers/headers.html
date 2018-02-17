@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <title>Http Headers</title>
+
+  <!--Head -->
+  <!--#include file="/_public/templates/head.html" -->
+
+</head>
+
+<body>
+
+  <header class="header">
+    <h1 class="small">
+      <img class="verticalImage" alt="Logo" src="/_public/icons/headers32.png">
+      <span> Http Headers</span>
+    </h1>
+    <h1 class="big">
+      <img class="verticalImage" alt="Logo" src="/_public/icons/headers48.png">
+      <span> Http Headers</span>
+    </h1>
+  </header>
+
+  <section class="form" id="addForm">
+    <form class="addUrl" onsubmit="return false">
+      <input type="text" required id="urlName" placeholder="Enter url">
+      <span id="addUrl" class="action">Get Headers</span>
+    </form>
+  </section>
+
+  <div class="result" id="result">
+  </div>
+
+  <br>
+
+  <h2 class="centerText">
+    API doc
+    <small>
+      <small>(version 0.2.2)</small>
+    </small>
+  </h2>
+
+  <section class="description">
+    <div class="centerText">
+      <strong>Description</strong>
+    </div>
+    <div class="leftText">
+      <span>
+        - Tool to get list of response headers including redirect chain of a http connection.
+      </span>
+      <br>
+      <span>
+        -
+        <span class="red">Limit</span> : 5 requests per second. Once reached subsequent requests will result in error 503 (Service unavailable)
+        until your quota is cleared.
+        <br>
+      </span>
+      <span>
+        - Quota is shared among services [Alexa, Cors Proxy, Weather, Http Headers].
+      </span>
+    </div>
+  </section>
+
+  <section class="endpoint">
+    <div class="centerText">
+      <strong>Endpoint - Get list of response headers</strong>
+      <br>This endpoint retrieves list of response headers including redirect chain of a Http connection in JSON format
+    </div>
+    <div class="leftText">
+      <strong>http Request : </strong>
+      <code class="red"> 
+          GET https://api.codetabs.com/http-headers/get/urlToScan 
+        </code>
+      <br>
+      <strong>examples : </strong>
+      <br>
+      <code>
+          <a href="https://api.codetabs.com/http-headers/get/codetabs.com"> https://api.codetabs.com/http-headers/get/codetabs.com</a> 
+          <br>
+          <a href="https://api.codetabs.com/http-headers/get/https://www.codetabs.com"> https://api.codetabs.com/http-headers/get/https://www.codetabs.com</a> 
+            </code>
+      <br>
+      <strong>response : </strong>
+      <pre class="marginLeft">
+[{
+  "HTTP/1.1": "301",
+  "Server": "nginx",
+  "Date": "Thu, 25 Jan 2018 17:54:21 GMT",
+  "Content-Type": "text/html",
+  "Content-Length": "178",
+  "Connection": "keep-alive",
+  "Location": "https://codetabs.com/"
+},
+{
+  "HTTP/2": "200",
+  "server": "nginx",
+  "date": "Thu, 25 Jan 2018 17:54:21 GMT",
+  "content-type": "text/html",
+  "vary": "Accept-Encoding",
+  "expires": "Thu, 01 Jan 1970 00:00:01 GMT",
+  "cache-control": "no-cache",
+  "strict-transport-security": "max-age=15768000,
+  "x-frame-options": "DENY",
+  "x-content-type-options": "nosniff",
+  "x-xss-protection": "1; mode=block"
+}]       
+            </pre>
+    </div>
+  </section>
+
+  <br>
+
+  <!-- Footer -->
+  <!--#include file="/_public/templates/footer.html" -->
+
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="./../apis.css">
+
+
+  <!-- google-analytics -->
+  <!--#include file="/_public/templates/analyticstracking.html" -->
+  <!-- cookie Law -->
+  <!--#include file="/_public/templates/cookieLaw.html" -->
+
+  <script async src="./headers.js"></script>
+
+  <!-- Titillium Web + Varela-->
+  <link href="https://fonts.googleapis.com/css?family=Varela|Titillium+Web:400,700" rel="stylesheet">
+
+</body>
+
+</html>

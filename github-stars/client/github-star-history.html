@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <title>GitHub Star History</title>
+
+  <!--Head -->
+  <!--#include file="/_public/templates/head.html" -->
+
+</head>
+
+<body>
+
+  <header class="header">
+    <h1 class="small">
+      <img class="verticalImage" alt="Logo" src="/_public/icons/stars32.png">
+      <span>Star History</span>
+    </h1>
+    <h1 class="big">
+      <img class="verticalImage" alt="Logo" src="/_public/icons/stars48.png">
+      <span>GitHub Star History</span>
+    </h1>
+  </header>
+
+  <section class="container">
+    <div id="addForm">
+      <form class="addRepo big" onsubmit="return false">
+        <input type="text" required id="repoName" placeholder="user/repo">
+        <span id="addRepo" class="action">ADD</span>
+        <span id="clearAll" class="action">CLEAR</span>
+      </form>
+      <form class="addRepo small" onsubmit="return false">
+        <div>
+          <input type="text" required id="repoName" placeholder="user/repo">
+        </div>
+        <div class="actionBtns">
+          <span id="addRepo2" class="action">ADD2</span>
+          <span id="clearAll2" class="action">CLEAR2</span>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <div class="loader"></div>
+  <canvas id="myChart" height="150">
+  </canvas>
+
+  <br>
+
+  <section class="description">
+    <div class="centerText">
+      <strong>Rate Limit</strong>
+    </div>
+    <div class="leftText">
+      <span>
+        - 1 request every 5 seconds. Once reached subsequent requests will result in error 503 (Service unavailable) until your quota
+        is cleared.
+        <br>
+      </span>
+      <div class="centerText">
+        <strong>Version 0.4.2</strong>
+      </div>
+    </div>
+  </section>
+
+  <br>
+
+  <!-- Footer -->
+  <!--#include file="/_public/templates/footer.html" -->
+
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="./stars.css">
+
+  <!-- google-analytics -->
+  <!--#include file="/_public/templates/analyticstracking.html" -->
+  <!-- cookie Law -->
+  <!--#include file="/_public/templates/cookieLaw.html" -->
+
+  <!-- 2.6.0 -->
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.min.js"></script>
+
+  <script async src="./stars.js"></script>
+
+  <!-- Open Sans + Titillium Web -->
+  <link href="https://fonts.googleapis.com/css?family=Titillium+Web:400,700" rel="stylesheet">
+
+</body>
+
+</html>

@@ -5,6 +5,9 @@
 
   <title>CodeTabs</title>
 
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
   <!--Head -->
   <!--#include file="/_public/templates/head.html" -->
 
@@ -26,9 +29,8 @@
       </div>
     </h1>
     <div class="headerText centerText">
-      <span>Welcome to
-        <a href="https://codetabs.com">codetabs</a> website. Here you will find our open source online tools and miscellaneus stuff as well as some third
-        party services</span>
+      <span>Welcome to codetabs.com website. Here you will find our open source free online tools for developers.
+        <br> Most of our services offer a public API without key or signup.</span>
     </div>
   </header>
 
@@ -42,7 +44,7 @@
             <strong>GitHub Star History</strong>
           </div>
           <p>
-            Allows showing star history graph of multiple github repositories
+            Allows showing star history graph of multiple github repositories.
           </p>
         </div>
       </a>
@@ -55,8 +57,12 @@
             <div class="count32 verticalImage"></div>
             <strong>Count LOC online</strong>
           </div>
-          <p>Online tool for counting lines of code from github repositories or you can upload a zipped folder
+          <p>Online tool for counting lines of code from github repositories or uploaded zipped folders.
           </p>
+          <div class="justifyRight">
+            <small>API</small>
+            <div class="check verticalImage"></div>
+          </div>
         </div>
       </a>
     </div>
@@ -70,8 +76,12 @@
           </div>
           <p>
             To bypass same-origin policy related to AJAX requests to third party services allowing access resources from any website.
-            You can use to prevent mixed content of images and JSON data proxying the resources to serve them under https.
+            <br> You can use to prevent mixed content of images and JSON data proxying the resources to serve them under https.
           </p>
+          <div class="justifyRight">
+            <small>API</small>
+            <div class="check verticalImage"></div>
+          </div>
         </div>
       </a>
     </div>
@@ -83,23 +93,34 @@
             <div class="geoip32 verticalImage"></div>
             <strong>Geolocation IP</strong>
           </div>
-          <p>Free geolocation service that provides a public API to retrieve geolocation from any IPv4, IPv6 or hostname
+          <p>
+            GeoIP Service that retrieves geolocation information from any IPv4, IPv6 or hostname.
+            <br> Support json, xml and csv
+
           </p>
+          <div class="justifyRight">
+            <small>API</small>
+            <div class="check verticalImage"></div>
+          </div>
         </div>
       </a>
     </div>
 
 
     <div class="tool service">
-      <a href="/api/api.html">
+      <a href="/weather/weather.html">
         <div class="toolTile">
           <div class="title centerText">
             <div class="weather32 verticalImage"></div>
             <strong>Weather API</strong>
           </div>
-          <p>CORS enabled API retrieves actual temperature based on your public IP geolocation or from the city passed as a
-            parameter. Read the docs.
+          <p>
+            CORS enabled API retrieves actual temperature based on your public IP geolocation or from the city passed as a parameter.
           </p>
+          <div class="justifyRight">
+            <small>API</small>
+            <div class="check verticalImage"></div>
+          </div>
         </div>
       </a>
     </div>
@@ -112,7 +133,13 @@
             <strong>HTTP Headers</strong>
           </div>
           <p>
-            Inspect the HTTP headers that server returns when requesting a URL. </p>
+            Inspect the HTTP headers that server returns when requesting a URL.
+            <br>Follow redirects included.
+          </p>
+          <div class="justifyRight">
+            <small>API</small>
+            <div class="check verticalImage"></div>
+          </div>
         </div>
       </a>
     </div>
@@ -126,24 +153,26 @@
           </div>
           <p>
             Notes and snippets about web development (javascript, react, nodejs, express, mongodb, mysql) and debian VPS management for
-            quick reference when memory fails </p>
+            quick reference when memory fails.</p>
         </div>
       </a>
     </div>
 
     <div class="tool thirdParty">
-      <a href="https://datasilo.org">
+      <a href="https://handytabs.com">
         <div class="toolTile">
           <div class="title centerText">
-            <div class="datasilo32 verticalImage"></div>
-            <strong class="party3">DataSilo</strong>
+            <div class="handytabs32 verticalImage"></div>
+            <strong class="party3">HandyTabs</strong>
           </div>
           <p>
-            A website to share all kinds of data everywhere for everyone
+            Open source online handy tools :
+            <br> - Standard & Poors 500 stock data real time.
           </p>
         </div>
       </a>
     </div>
+
 
     <div class="tool service">
       <a href="/alexa/alexa-ranking.html">
@@ -153,41 +182,18 @@
             <strong>Alexa ranking</strong>
           </div>
           <p>
-            Check website position in Alexa Top 1m Ranking
+            Check any website position in Alexa Top 1 million Ranking.
+            <br>Daily Updates.
           </p>
-        </div>
-      </a>
-    </div>
-
-    <div class="tool stuff">
-      <a href="/tetris-game/tetris.html">
-        <div class="toolTile">
-          <div class="title centerText">
-            <div class="tetris32 verticalImage"></div>
-            <strong class="ctStuff">Tetris</strong>
+          <div class="justifyRight">
+            <small>API</small>
+            <div class="check verticalImage"></div>
           </div>
-          <p>The great "classic" game, not a tool but fun. Play Now
-          </p>
         </div>
       </a>
     </div>
 
   </section>
-
-  <section class="legends">
-    <div class="legend service">
-      <span>codetabs service</span>
-    </div>
-    <div class="legend thirdParty">
-      <span>third party service</span>
-    </div>
-    <div class="legend stuff">
-      <span>codetabs stuff</span>
-    </div>
-  </section>
-
-  <br>
-  <hr>
 
   <!-- Footer -->
   <!--#include file="/_public/templates/footer.html" -->
@@ -200,8 +206,8 @@
   <!-- cookie Law -->
   <!--#include file="/_public/templates/cookieLaw.html" -->
 
-  <!-- Titillium Web -->
-  <link href="https://fonts.googleapis.com/css?family=Titillium+Web:400,700" rel="stylesheet">
+  <!-- Titillium Web + Varela-->
+  <link href="https://fonts.googleapis.com/css?family=Varela|Titillium+Web:400,700" rel="stylesheet">
 
 </body>
 

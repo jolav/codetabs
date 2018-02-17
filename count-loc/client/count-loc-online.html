@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <title>Count LOC online</title>
+
+  <!--Head -->
+  <!--#include file="/_public/templates/head.html" -->
+
+</head>
+
+<body>
+
+  <header class="header">
+    <h1 class="small">
+      <img class="verticalImage" alt="Logo" src="/_public/icons/count32.png">
+      <span> Count LOC</span>
+    </h1>
+    <h1 class="big">
+      <img class="verticalImage" alt="Logo" src="/_public/icons/count48.png">
+      <span> Count LOC</span>
+    </h1>
+  </header>
+
+  <div class="container">
+
+    <section id="fileForm">
+      <form class="upload" method="post" enctype="multipart/form-data">
+        <input type="file" class="input" id="inputFile" name="inputFile">
+        <button type="submit" id="upload" class="action">UPLOAD</button>
+      </form>
+    </section>
+
+    <section id="addForm">
+      <form class="addRepo" onsubmit="return false">
+        <input type="text" required id="repoName" placeholder="user/repo">
+        <span id="addRepo" class="action">ADD</span>
+      </form>
+    </section>
+
+    <div class="loader"></div>
+
+    <div class="pie">
+      <canvas id="myPie" width="250" height="250">
+      </canvas>
+    </div>
+
+  </div>
+
+  <h2 class="centerText">
+    API doc
+    <small>
+      <small>(version 0.4.2)</small>
+    </small>
+  </h2>
+
+  <section class="description">
+    <div class="centerText">
+      <strong>Description</strong>
+    </div>
+    <div class="leftText">
+      <span>
+        - Tool for counting lines of code from github repositories.
+        <br> - File max size 100mb
+      </span>
+      <br>
+      <span>
+        -
+        <span class="red">Limit</span> : 1 request every 5 seconds. Once reached subsequent requests will result in error 503 (Service unavailable)
+        until your quota is cleared.
+        <br>
+      </span>
+    </div>
+  </section>
+
+  <section class="endpoint">
+    <div class="centerText">
+      <strong>Endpoint - Get Lines of Code from GitHub repo</strong>
+      <br> This endpoint retrieves LOC from any github repo based on programming language.
+    </div>
+    <div class="leftText">
+      <strong>http Request : </strong>
+      <code class="red"> GET https://api.codetabs.com/count-loc/get?repo=username/reponame 
+      </code>
+      <br>
+      <strong>example : </strong>
+      <br>
+      <code>
+        <a href="https://api.codetabs.com/count-loc/get?repo=jolav/codetabs  
+        ">https://api.codetabs.com/count-loc/get?repo=jolav/codetabs</a>  
+      </code>
+      <br>
+      <strong>response :</strong>
+      <pre class="marginLeft">
+[{
+  "language": "JavaScript",
+  "files": 1,
+  "lines": 176,
+  "blanks": 14,
+  "comments": 6,
+  "linesOfCode": 156
+},   
+... more languages
+{
+  "language": "Total",
+  "files": 8,
+  "lines": 921,
+  "blanks": 148,
+  "comments": 46,
+  "linesOfCode": 743
+}] 
+      </pre>
+    </div>
+  </section>
+
+  <section class="endpoint">
+    <div class="centerText">
+      <strong>Endpoint - Get Lines of Code from an zipped directory</strong>
+      <br> This endpoint retrieves LOC from any zipped directory
+    </div>
+    <div class="leftText">
+      <strong>http Request : </strong>
+      <code class="red"> POST https://api.codetabs.com/count-loc/upload</code>
+      <br>
+      <strong>parameter : Form Data</strong>
+      <br>
+      <code class="red">Content-Disposition: form-data; name="inputFile"; filename="yourRarZipFolder.zip"</code>
+      <br>
+      <strong>response :</strong> Same as Endpoint - Get Lines of Code from GitHub repo
+    </div>
+  </section>
+
+  <br>
+
+  <!-- Footer -->
+  <!--#include file="/_public/templates/footerLoc.html" -->
+
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="./count.css">
+
+
+  <!-- google-analytics -->
+  <!--#include file="/_public/templates/analyticstracking.html" -->
+  <!-- cookie Law -->
+  <!--#include file="/_public/templates/cookieLaw.html" -->
+
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
+
+  <script async src="./count.js"></script>
+
+  <!-- Open Sans + Titillium Web -->
+  <link href="https://fonts.googleapis.com/css?family=Titillium+Web:400,700" rel="stylesheet">
+</body>
+
+</html>

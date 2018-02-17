@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <title>CORS Proxy</title>
+
+  <!--Head -->
+  <!--#include file="/_public/templates/head.html" -->
+
+</head>
+
+<body>
+
+  <header class="header">
+    <h1 class="small">
+      <img class="verticalImage" alt="Logo" src="/_public/icons/server32.png">
+      <span>CORS Proxy</span>
+    </h1>
+    <h1 class="big">
+      <img class="verticalImage" alt="Logo" src="/_public/icons/server48.png">
+      <span>CORS Proxy</span>
+    </h1>
+  </header>
+
+  <h2 class="centerText">
+    API doc
+    <small>
+      <small>(version 0.2.2)</small>
+    </small>
+  </h2>
+
+  <section class="description">
+    <div class="centerText">
+      <strong>Description</strong>
+    </div>
+    <div class="leftText">
+      <span>
+        - Free CORS proxy server that allows access resources from any website. You can use to prevent mixed content of images and
+        JSON data proxying the resources to serve them under https.
+      </span>
+      <br>
+      <span>
+        - API URL => append the url with the resource you want to
+        <code class="red">"https://api.codetabs.com/cors-proxy/"</code>
+      </span>
+      <br>
+      <span>
+        - Each request is limited to 2mb size download to avoid abuse.
+      </span>
+      <br>
+      <span>
+        - Only suppports GET request.
+      </span>
+      <br>
+      <span>
+        -
+        <span class="red">Limit</span> : 5 requests per second. Once reached subsequent requests will result in error 503 (Service unavailable)
+        until your quota is cleared.
+        <br>
+      </span>
+      <span>
+        - Quota is shared among services [Alexa, Cors Proxy, Weather, Http Headers].
+      </span>
+    </div>
+  </section>
+
+  <section class="endpoint">
+    <div class="centerText">
+      <strong>Endpoint - Do cors proxy</strong>
+    </div>
+    <div class="leftText">
+      <strong>http Request : </strong>
+      <br>
+      <code class="red"> 
+    GET https://api.codetabs.com/cors-proxy/domain.com/desired/resource/  
+        <br>
+    GET https://api.codetabs.com/cors-proxy/https://domain.com/desired/resource/
+      </code>
+      <br>
+      <strong>Examples</strong>
+      <br>Access resources from other website :
+      <br>
+      <span>
+        <code>  
+  <a href="https://api.codetabs.com/cors-proxy/apis-v1-jolav.glitch.me/time/"> https://api.codetabs.com/cors-proxy/&lturl_to_http_resource></a> 
+        </code>
+      </span>
+      <br>Serve an http image as https preventing mixed content :
+      <br>
+      <span>
+        <code>  
+<a href="https://api.codetabs.com/cors-proxy/cdn.pcwallart.com/images/cosmos-wallpaper-4.jpg"> https://api.codetabs.com/cors-proxy/&lturl_to_http_resource></a> 
+        </code>
+      </span>
+    </div>
+    </div>
+  </section>
+
+  <br>
+
+  <!-- Footer -->
+  <!--#include file="/_public/templates/footer.html" -->
+
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="./../apis.css">
+
+  <!-- google-analytics -->
+  <!--#include file="/_public/templates/analyticstracking.html" -->
+  <!-- cookie Law -->
+  <!--#include file="/_public/templates/cookieLaw.html" -->
+
+  <!-- Titillium Web + Varela-->
+  <link href="https://fonts.googleapis.com/css?family=Varela|Titillium+Web:400,700" rel="stylesheet">
+
+</body>
+
+</html>

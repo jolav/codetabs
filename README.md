@@ -2,18 +2,17 @@
 
 1. [Github Stars graphical history](#github-stars-graphical-history)  
 2. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
-3. [CORS proxy](#cors-proxy)
-4. [Geolocation IP](#geoip)
-5. [API / weather temp](#api)  
+3. [Geolocation IP](#geoip)
+4. [CORS proxy](#cors-proxy)
+5. [API weather temp](#weather)  
 6. [HTTP Headers](#headers)
 7. [Alexa Ranking](#alexa)
-8. [Tetris](#tetris)  
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/stars32.png?raw=true) **GITHUB STARS GRAPHICAL HISTORY**
+## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/stars32.png?raw=true)  **GITHUB STARS GRAPHICAL HISTORY**
 
-version 0.4.1
+version 0.4.2
 
 ### **[DEMO online](https://codetabs.com/github-stars/github-star-history.html)**
 
@@ -24,9 +23,10 @@ version 0.4.1
 
 <hr>
 
+
 ## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/count32.png?raw=true)  **COUNT LOC ONLINE** 
 
-version 0.4.1
+version 0.4.2
 
 ### **[DEMO and DOCS online](https://codetabs.com/count-loc/count-loc-online.html)**
 
@@ -36,7 +36,7 @@ version 0.4.1
 
 ![Example](https://github.com/jolav/codetabs/blob/master/_public/images/locExample.png?raw=true)
 
-### **API LOC**
+**API LOC**
 
 *  Make a GET HTTP Request   
 `https://api.codetabs.com/count-loc/get?repo=USERNAME/REPONAME`
@@ -70,23 +70,9 @@ Response (JSON) :
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/server32.png?raw=true)  **CORS-PROXY**
-
-version 0.2.1
-
-### **[Read DOCS online](https://codetabs.com/cors-proxy/cors-proxy.html)**
-
-- Petitions are limited to 5 per sec. You will get a 503 error if you exceed 
-- Free CORS proxy server that allows access resources from any website
-- You can use to prevent mixed content of images and JSON data proxying the resources to serve them under https.
-- Each request is limited to 2mb size download to avoid abuse
-- Only suppports GET request
-
-<hr>
-
 ## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/geoip32.png?raw=true)  **GEOLOCATION IP**
 
-version 0.1.7
+version 0.1.8
 
 ### **[Read API DOCS online](https://codetabs.com/geolocation-ip/geolocation-ip.html)**
 
@@ -112,11 +98,26 @@ version 0.1.7
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/hub32.png?raw=true)  **API** 
+## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/server32.png?raw=true)  **CORS-PROXY**
 
-version 0.2.1
+version 0.2.2
 
-### **[Read DOCS online](https://codetabs.com/api/api.html)**
+### **[Read DOCS online](https://codetabs.com/cors-proxy/cors-proxy.html)**
+
+- Petitions are limited to 5 per sec. You will get a 503 error if you exceed 
+- Free CORS proxy server that allows access resources from any website
+- You can use to prevent mixed content of images and JSON data proxying the resources to serve them under https.
+- Each request is limited to 2mb size download to avoid abuse
+- Only suppports GET request
+
+
+<hr>
+
+## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/weather32.png?raw=true)  **WEATHER** 
+
+version 0.2.2
+
+### **[Read DOCS online](https://codetabs.com/weather/weather.html)**
 
 - Petitions are limited to 5 per sec. You will get a 503 error if you exceed 
 - CORS is enabled allowing Javascript make requests across domain boundaries
@@ -126,7 +127,7 @@ version 0.2.1
 
 ## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/podium32.png?raw=true)  **ALEXA**
 
-version 0.2.1
+version 0.2.2
 
 Tool for know Alexa Ranking Top 1 million about a website.  
 
@@ -138,7 +139,7 @@ Tool for know Alexa Ranking Top 1 million about a website.
 
 ## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/headers32.png?raw=true)  **HEADERS**
 
-version 0.1.1
+version 0.2.2
 
 Tool to get list of response headers including redirect chain of a HTTP connection
 
@@ -148,15 +149,9 @@ Tool to get list of response headers including redirect chain of a HTTP connecti
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/tetris32.png?raw=true)  **TETRIS**
-
-version 0.2.1
-
-### **[Play now](https://codetabs.com/tetris-game/tetris.html)** the great classic game
-
-<hr>
-
 ## **Acknowledgment**
 
 * This site includes Curtis Gagliardi <a href="https://github.com/cgag/loc">cgag/loc</a> for counting lines of code.
+
+* This site includes GeoLite2 data created by MaxMind, available from  [maxmind.com](http://maxmind.com)
 

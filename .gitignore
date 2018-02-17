@@ -2,7 +2,7 @@
 _aux/
 node_modules/
 tmp/
-basic/server/alexa/data
+apis/server/alexa/data
 geolocation-ip/server/db
 
 #Ignore these files

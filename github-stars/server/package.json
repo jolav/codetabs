@@ -1,17 +1,25 @@
 {
   "name": "github-stars",
-  "version": "0.4.1",
-  "description": "github stars graphical history",
-  "main": "history.js",
+  "version": "0.4.2",
+  "description": "API, show repo graphical github stars history",
+  "main": "stars.js",
+  "keywords": [],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jolav/codetabs.git"
+  },
   "author": "jolav",
   "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/jolav/codetabs/issues"
+  },
+  "homepage": "https://github.com/jolav/codetabs#readme",
   "dependencies": {
-    "dotenv": "^4.0.0",
+    "dotenv": "^5.0.0",
     "express": "^4.16.2",
-    "graphql-request": "^1.4.1",
-    "mongodb": "^3.0.2"
+    "graphql-request": "^1.4.1"
   }
 }
