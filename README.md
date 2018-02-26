@@ -17,7 +17,7 @@ version 0.4.2
 ### **[DEMO online](https://codetabs.com/github-stars/github-star-history.html)**
 
 - Enter user/repo , then click add.
-- Petitions are limited to 1 every 5 secs. You will get a 503 error if you exceed 
+- Petitions are limited to 1 every 5 secs. You will get a 429 error if you exceed 
 
 ![Example](https://github.com/jolav/codetabs/blob/master/_public/images/starExample.png?raw=true)
 
@@ -32,7 +32,7 @@ version 0.4.2
 
 - Enter user/repo , then click add or select a zipped folder and upload it  
 - File max size 100mb;
-- Petitions are limited to 1 every 5 secs. You will get a 503 error if you exceed 
+- Petitions are limited to 1 every 5 secs. You will get a 429 error if you exceed 
 
 ![Example](https://github.com/jolav/codetabs/blob/master/_public/images/locExample.png?raw=true)
 
@@ -78,7 +78,7 @@ version 0.1.8
 
 - Free GeoIP service that provides a public HTTPS (SSL access) API to retrieve geolocation from any IPv4, IPv6 or hostname  
 - Supported formats, json and xml  
-- 120 requests per minute. Once reached subsequent requests will result in error 503 (Service unavailable) until your quota is cleared  
+- 120 requests per minute. Once reached subsequent requests will result in error 429 (too many requests) until your quota is cleared  
 - API requires no key or signup.
 
 ```json
@@ -104,7 +104,7 @@ version 0.2.2
 
 ### **[Read DOCS online](https://codetabs.com/cors-proxy/cors-proxy.html)**
 
-- Petitions are limited to 5 per sec. You will get a 503 error if you exceed 
+- Petitions are limited to 5 per sec. You will get a 429 error if you exceed 
 - Free CORS proxy server that allows access resources from any website
 - You can use to prevent mixed content of images and JSON data proxying the resources to serve them under https.
 - Each request is limited to 2mb size download to avoid abuse
@@ -119,7 +119,7 @@ version 0.2.2
 
 ### **[Read DOCS online](https://codetabs.com/weather/weather.html)**
 
-- Petitions are limited to 5 per sec. You will get a 503 error if you exceed 
+- Petitions are limited to 5 per sec. You will get a 429 error if you exceed 
 - CORS is enabled allowing Javascript make requests across domain boundaries
 - Supported formats, json and xml  
 
@@ -133,7 +133,7 @@ Tool for know Alexa Ranking Top 1 million about a website.
 
 ### **[Get Alexa Ranking Online](https://codetabs.com/alexa/alexa-ranking.html)**
 
-- Petitions are limited to 5 per second. You will get a 503 error if you exceed  
+- Petitions are limited to 5 per second. You will get a 429 error if you exceed  
 
 <hr>
 
@@ -145,7 +145,7 @@ Tool to get list of response headers including redirect chain of a HTTP connecti
 
 ### **[DEMO and DOCS online](https://codetabs.com/http-headers/headers.html)**
 
-- Petitions are limited to 1 per second. You will get a 503 error if you exceed
+- Petitions are limited to 5 per second. You will get a 429 error if you exceed
 
 <hr>
 

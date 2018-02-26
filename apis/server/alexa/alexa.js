@@ -1,10 +1,10 @@
-/*  */
-
+/* exported stderr */
 const express = require('express');
-const app = express();
 
 const job = require(__dirname + '/alexaTask.js');
 const lib = require(__dirname + '/../../../_lib/lib.js');
+
+const app = express();
 
 // download and load alexa data
 job.initAlexa();

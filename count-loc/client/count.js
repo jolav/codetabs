@@ -143,7 +143,7 @@ const stars = (function () {
       if (xhr.readyState === 4) { // 4 = "DONE"
         if (xhr.status === 200) { // 200 ="OK"
           callback(JSON.parse(xhr.responseText));
-        } else if (xhr.status === 503) { // 200 ="OK"
+        } else if (xhr.status === 429) { // 200 ="OK"
           limitExceeded();
         } else {
           if (xhr.status === 0) {
@@ -168,7 +168,7 @@ const stars = (function () {
         if (xhr.status === 200) { // 200 ="OK"
           const data = JSON.parse(xhr.responseText);
           callback(data);
-        } else if (xhr.status === 503) {
+        } else if (xhr.status === 429) {
           limitExceeded();
         } else {
           console.log('AINSS Error : ' + xhr.status + xhr.response);

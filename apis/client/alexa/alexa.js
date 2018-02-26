@@ -47,7 +47,7 @@ const alexa = (function () {
       if (xhr.readyState === 4) { // 4 = "DONE"
         if (xhr.status === 200) { // 200 ="OK"
           callback(JSON.parse(xhr.responseText));
-        } else if (xhr.status === 503) { // 200 ="OK"
+        } else if (xhr.status === 429) { // 200 ="OK"
           limitExceeded();
         } else {
           // Error parsed from backend myError
