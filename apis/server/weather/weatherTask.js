@@ -28,7 +28,7 @@ function getTemp (req, res) {
 }
 
 function getFromGeo (req, res, format) {
-  let getipurl = 'https://api.codetabs.com/geoip/json?q=' + lib.getIP(req);
+  let getipurl = 'https://geoip.tools/v1/json?q=' + lib.getIP(req);
   // console.log(getipurl)
   lib.makeHttpsRequest(getipurl, function (res2, data) {
     if (res2.statusCode !== 200) {

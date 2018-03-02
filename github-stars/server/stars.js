@@ -20,7 +20,6 @@ app.use(function (req, res, next) {
 });
 
 app.get('/get', function (req, res) {
-  console.log('1');
   job.getRepoHistory(req, res, function (response, status) {
     if (response.data) {
       response = response.data;

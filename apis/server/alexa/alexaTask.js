@@ -5,7 +5,7 @@ const fs = require('fs');
 
 const lib = require(__dirname + '/../../../_lib/lib.js');
 
-global.alexa = [];
+// global.alexa = []
 
 function initAlexa () {
   // loadDataInMemory() //uncomment for getRankByDomainRAM
@@ -119,7 +119,7 @@ function decompress () {
           console.log(e, '\n', err);
           return;
         }
-        loadDataInMemory();
+        //loadDataInMemory();
       });
   });
 }

@@ -1,12 +1,15 @@
+
+![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
+![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
+
 # ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
 1. [Github Stars graphical history](#github-stars-graphical-history)  
 2. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
-3. [Geolocation IP](#geoip)
-4. [CORS proxy](#cors-proxy)
-5. [API weather temp](#weather)  
-6. [HTTP Headers](#headers)
-7. [Alexa Ranking](#alexa)
+3. [CORS proxy](#cors-proxy)
+4. [API weather temp](#weather)  
+5. [HTTP Headers](#headers)
+6. [Alexa Ranking](#alexa)
 
 <hr>
 
@@ -70,34 +73,6 @@ Response (JSON) :
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/geoip32.png?raw=true)  **GEOLOCATION IP**
-
-version 0.1.8
-
-### **[Read API DOCS online](https://codetabs.com/geolocation-ip/geolocation-ip.html)**
-
-- Free GeoIP service that provides a public HTTPS (SSL access) API to retrieve geolocation from any IPv4, IPv6 or hostname  
-- Supported formats, json and xml  
-- 120 requests per minute. Once reached subsequent requests will result in error 429 (too many requests) until your quota is cleared  
-- API requires no key or signup.
-
-```json
-{   
-  "ip": "94.168.50.200",
-  "country_code": "GB",
-  "country_name": "United Kingdom",
-  "region_code": "ENG",
-  "region_name": "England",
-  "city": "London",
-  "zip_code": "SL1",
-  "time_zone": "Europe/London",
-  "latitude": 50.0500,
-  "longitude": 0.6172   
-}
-```
-
-<hr>
-
 ## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/server32.png?raw=true)  **CORS-PROXY**
 
 version 0.2.2
@@ -127,7 +102,7 @@ version 0.2.2
 
 ## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/podium32.png?raw=true)  **ALEXA**
 
-version 0.2.2
+version 0.2.3
 
 Tool for know Alexa Ranking Top 1 million about a website.  
 
