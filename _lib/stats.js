@@ -13,7 +13,7 @@ const myIP = [
 
 function testDB () {
   mongo.connect(connection, function (err, db) {
-    if (err) throw err;
+    if (err) return console.log(err);
     console.log('Connected to database ... OK');
     db.close();
   });
@@ -47,19 +47,10 @@ function updateStats (req, res, next) {
       'time': new Date().toISOString().split('T')[0]
     };
     if (dbData.service) {
-      try {
-        if (process.env.NODE_ENV === 'production') {
-          saveDataToDB(dbData);
-        } else {
-          console.log('SAVE TEST ...', dbData);
-        }
-      } catch (e) {
-        const time = new Date().toUTCString().split(',')[1];
-        console.log('########## STATS ERROR ##########');
-        console.log(time);
-        console.log(dbData);
-        console.log(e);
-        console.log('#################################');
+      if (process.env.NODE_ENV === 'production') {
+        saveDataToDB(dbData);
+      } else {
+        console.log('SAVE TEST ...', dbData);
       }
     } else {
       console.log('Not Service from ', dbData.ip);
@@ -72,11 +63,11 @@ function updateStats (req, res, next) {
 
 function saveDataToDB (dbData) {
   mongo.connect(connection, function (err, db) {
-    if (err) throw err;
+    if (err) return console.log(err);
     const database = db.db(process.env.DB_NAME);
     const collection = database.collection(process.env.COLLECTION);
     collection.insert(dbData, function (err, result) {
-      if (err) throw err;
+      if (err) return console.log(err);
       db.close();
     });
   });
