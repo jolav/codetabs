@@ -1,11 +1,12 @@
 {
   "name": "apis-codetabs",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "description": "API : alexa, cors proxy, http headers, weather",
   "main": "apis.js",
   "keywords": [],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/*.js --timeout 15000",
+    "start": "node apis.js"
   },
   "repository": {
     "type": "git",
@@ -19,9 +20,14 @@
   "homepage": "https://github.com/jolav/codetabs#readme",
   "dependencies": {
     "body-parser": "^1.18.2",
-    "dotenv": "^5.0.0",
-    "express": "^4.16.2",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
     "js2xmlparser": "^3.0.0",
-    "request": "^2.83.0"
+    "request": "^2.85.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "chai-xml": "^0.3.2"
   }
 }

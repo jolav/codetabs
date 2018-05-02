@@ -10,7 +10,7 @@
   "author": "jolav",
   "license": "BSD-3-Clause",
   "dependencies": {
-    "dotenv": "^5.0.0",
-    "mongodb": "^3.0.2"
+    "dotenv": "^5.0.1",
+    "mongodb": "^3.0.7"
   }
 }

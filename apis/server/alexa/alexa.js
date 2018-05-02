@@ -1,4 +1,5 @@
 /* exported stderr */
+
 const express = require('express');
 
 const job = require(__dirname + '/alexaTask.js');
@@ -8,6 +9,19 @@ const app = express();
 
 // download and load alexa data
 job.initAlexa();
+
+app.use(function (req, res, next) {
+  let err = {error: ''};
+  try {
+    decodeURIComponent(req.path);
+  } catch (e) {
+    console.log(e);
+    err.error = 'not a valid domain name';
+    lib.sendResult(req, res, err, 400);
+    return;
+  }
+  next();
+});
 
 // localhost:3000/alexa/get?d=codetabs.com => {d: 'codetabs.com'}
 app.get('/get', function (req, res) {

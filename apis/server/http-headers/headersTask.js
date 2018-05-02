@@ -20,7 +20,7 @@ async function getHeaders(req, res) {
       return;    
     }
     headers.push(parseHeadString(header));
-    console.log('JEADER =>', header);
+    //console.log('HEADER =>', header);
     if (header.indexOf("Location") === -1) {
       if (header.indexOf("location") === -1) {
         notMoreRedirections = true;

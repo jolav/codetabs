@@ -75,7 +75,7 @@ Response (JSON) :
 
 ## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/server32.png?raw=true)  **CORS-PROXY**
 
-version 0.2.2
+version 0.3.0
 
 ### **[Read DOCS online](https://codetabs.com/cors-proxy/cors-proxy.html)**
 
@@ -90,7 +90,7 @@ version 0.2.2
 
 ## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/weather32.png?raw=true)  **WEATHER** 
 
-version 0.2.2
+version 0.3.0
 
 ### **[Read DOCS online](https://codetabs.com/weather/weather.html)**
 
@@ -102,7 +102,7 @@ version 0.2.2
 
 ## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/podium32.png?raw=true)  **ALEXA**
 
-version 0.2.3
+version 0.3.0
 
 Tool for know Alexa Ranking Top 1 million about a website.  
 
@@ -114,7 +114,7 @@ Tool for know Alexa Ranking Top 1 million about a website.
 
 ## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/headers32.png?raw=true)  **HEADERS**
 
-version 0.2.2
+version 0.3.0
 
 Tool to get list of response headers including redirect chain of a HTTP connection
 

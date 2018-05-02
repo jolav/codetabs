@@ -24,9 +24,6 @@ let result = {
 
 function getRankByDomainRAM (req, res, domain) {
   res.header('Content-Type', 'application/json');
-  domain = domain.replace('https://', '');
-  domain = domain.replace('http://', '');
-  domain = domain.replace('www.', '');
   let position = global.alexa[domain];
   if (!position) {
     domain = 'www.' + domain;
@@ -47,45 +44,47 @@ function getRankByDomainRAM (req, res, domain) {
 
 function getRankByDomainCPU (req, res, domain) {
   res.header('Content-Type', 'application/json');
-  domain = domain.replace('https://', '');
-  domain = domain.replace('http://', '');
-  domain = domain.replace('www.', '');
-  exec(`cat ./alexa/data/top-1m.csv | grep ${domain}`,
-    function parseCatResult (err, stdout, stderr) {
-      if (err) {
-        e.error = `${domain} not in alexa top 1 million`;
-        lib.sendResult(req, res, e, 400);
+  const command = `cat ./alexa/data/top-1m.csv | grep ${domain}`;
+  exec(command, function parseCatResult (err, stdout, stderr) {
+    if (err) {
+      e.error = `${domain} not in alexa top 1 million`;
+      if (domain.slice(0, 4) === 'www.') {
+        domain = domain.replace('www.', '');
+        getRankByDomainCPU(req, res, domain);
         return;
       }
-      if (stderr) {
-        e.error = stderr;
-        lib.sendResult(req, res, e, 400);
-        return;
-      }
-      stdout = (stdout.split('\n'));
-      // remove last empty element ''
-      stdout = stdout.slice(0, stdout.length - 1);
-      if (stdout.length === 1) {
+      lib.sendResult(req, res, e, 400);
+      return;
+    }
+    if (stderr) {
+      e.error = stderr;
+      lib.sendResult(req, res, e, 400);
+      return;
+    }
+    stdout = (stdout.split('\n'));
+    // remove last empty element ''
+    stdout = stdout.slice(0, stdout.length - 1);
+    if (stdout.length === 1) {
+      result = {
+        'domain': domain,
+        'rank': stdout[0].split(',')[0]
+      };
+      lib.sendResult(req, res, result, 200);
+      return;
+    }
+    for (let i = 0; i < stdout.length; i++) {
+      if (stdout[i].split(',')[1] === domain) {
         result = {
           'domain': domain,
-          'rank': stdout[0].split(',')[0]
+          'rank': stdout[i].split(',')[0]
         };
         lib.sendResult(req, res, result, 200);
         return;
       }
-      for (let i = 0; i < stdout.length; i++) {
-        if (stdout[i].split(',')[1] === domain) {
-          result = {
-            'domain': domain,
-            'rank': stdout[i].split(',')[0]
-          };
-          lib.sendResult(req, res, result, 200);
-          return;
-        }
-      }
-      e.error = `Multiple results include ${domain} .Must be more specific`;
-      lib.sendResult(req, res, e, 400);
-    });
+    }
+    e.error = `Multiple results include ${domain} .Must be more specific`;
+    lib.sendResult(req, res, e, 400);
+  });
 }
 
 const dataFileURL = 'https://s3.amazonaws.com/alexa-static/top-1m.csv.zip';
@@ -119,7 +118,7 @@ function decompress () {
           console.log(e, '\n', err);
           return;
         }
-        //loadDataInMemory();
+      // loadDataInMemory()
       });
   });
 }
