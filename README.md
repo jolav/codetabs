@@ -79,7 +79,11 @@ version 0.3.1
 
 ### **[Read DOCS online](https://codetabs.com/cors-proxy/cors-proxy.html)**
 
-- Petitions are limited to 1 every 5 seconds. You will get a 429 error if you exceed 
+    24 June 2018
+    Due to recent abuse during last weeks petitions are now limited to 1-per-second
+    If you need more feel free to contact me.
+
+- Petitions are limited to 1 per second. You will get a 429 error if you exceed 
 - Free CORS proxy server that allows access resources from any website
 - You can use to prevent mixed content of images and JSON data proxying the resources to serve them under https.
 - Each request is limited to 2mb size download to avoid abuse
