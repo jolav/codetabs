@@ -26,7 +26,7 @@
   <h2 class="centerText">
     API doc
     <small>
-      <small>(version 0.3.0)</small>
+      <small>(version 0.3.1)</small>
     </small>
   </h2>
 
@@ -55,12 +55,9 @@
       <br>
       <span>
         -
-        <span class="red">Limit</span> : 5 requests per second. Once reached subsequent requests will result in error 429 (too many requests)
+        <span class="red">Limit</span> : 1 request every 5 seconds. Once reached subsequent requests will result in error 429 (too many requests)
         until your quota is cleared.
         <br>
-      </span>
-      <span>
-        - Quota is shared among services [Alexa, Cors Proxy, Weather, Http Headers].
       </span>
     </div>
   </section>

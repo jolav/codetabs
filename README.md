@@ -29,7 +29,7 @@ version 0.4.2
 
 ## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/count32.png?raw=true)  **COUNT LOC ONLINE** 
 
-version 0.4.2
+version 0.5.0
 
 ### **[DEMO and DOCS online](https://codetabs.com/count-loc/count-loc-online.html)**
 
@@ -75,11 +75,11 @@ Response (JSON) :
 
 ## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/server32.png?raw=true)  **CORS-PROXY**
 
-version 0.3.0
+version 0.3.1
 
 ### **[Read DOCS online](https://codetabs.com/cors-proxy/cors-proxy.html)**
 
-- Petitions are limited to 5 per sec. You will get a 429 error if you exceed 
+- Petitions are limited to 1 every 5 seconds. You will get a 429 error if you exceed 
 - Free CORS proxy server that allows access resources from any website
 - You can use to prevent mixed content of images and JSON data proxying the resources to serve them under https.
 - Each request is limited to 2mb size download to avoid abuse
@@ -90,7 +90,7 @@ version 0.3.0
 
 ## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/weather32.png?raw=true)  **WEATHER** 
 
-version 0.3.0
+version 0.3.1
 
 ### **[Read DOCS online](https://codetabs.com/weather/weather.html)**
 
@@ -102,7 +102,7 @@ version 0.3.0
 
 ## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/podium32.png?raw=true)  **ALEXA**
 
-version 0.3.0
+version 0.3.1
 
 Tool for know Alexa Ranking Top 1 million about a website.  
 
@@ -114,7 +114,7 @@ Tool for know Alexa Ranking Top 1 million about a website.
 
 ## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/headers32.png?raw=true)  **HEADERS**
 
-version 0.3.0
+version 0.3.1
 
 Tool to get list of response headers including redirect chain of a HTTP connection
 
