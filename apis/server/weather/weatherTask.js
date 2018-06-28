@@ -29,7 +29,6 @@ function getTemp (req, res) {
 
 function getFromGeo (req, res, format) {
   let getipurl = 'https://geoip.tools/v1/json?q=' + lib.getIP(req);
-  // console.log(getipurl)
   lib.makeHttpsRequest(getipurl, function (res2, data) {
     if (res2.statusCode !== 200) {
       let text = `Error ${res2.statusCode}`;
@@ -70,7 +69,7 @@ function cityToTemp (req, res, city, format) {
   let path = base + encodeURIComponent(city) + '&APPID=' + process.env.OPENWEATHER_KEY;
   lib.makeHttpsRequest(path, function (res2, data) {
     if (res2.statusCode !== 200) {
-      let text = `Error ${res2.statusCode}`;
+      let text = `Sorry, ${city} not found`;
       sendResult(res, 'json', text, res2.statusCode);
       return;
     }

@@ -9,7 +9,7 @@ const expect = require('chai').expect;
 chai.use(chaiHttp);
 chai.use(chaiXml);
 
-const url = 'https://api.codetabs.com';
+const url = 'https://api.codetabs.com/cors-proxy';
 // const url = 'http://localhost:3000'
 
 describe('CORS-PROXY TEST ', function () {
@@ -18,7 +18,7 @@ describe('CORS-PROXY TEST ', function () {
   });
   it('json api', function (done) {
     chai.request(url)
-      .get('/cors-proxy/apis-v1-jolav.glitch.me/time/')
+      .get('/apis-v1-jolav.glitch.me/time/')
       .query({})
       .end(function (err, res) {
         // console.log('PATH=> ', res.req.path)
@@ -33,7 +33,7 @@ describe('CORS-PROXY TEST ', function () {
   });
   it('image', function (done) {
     chai.request(url)
-      .get('/cors-proxy/' + text)
+      .get('/' + text)
       .query({})
       .end(function (err, res) {
         // console.log('PATH=> ', res.req.path)

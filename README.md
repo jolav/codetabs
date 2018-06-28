@@ -75,7 +75,7 @@ Response (JSON) :
 
 ## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/server32.png?raw=true)  **CORS-PROXY**
 
-version 0.3.1
+version 0.1.0
 
 ### **[Read DOCS online](https://codetabs.com/cors-proxy/cors-proxy.html)**
 

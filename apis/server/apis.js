@@ -13,7 +13,6 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 const alexa = require('./alexa/alexa.js');
-const corsproxy = require('./cors-proxy/proxy.js');
 const headers = require('./http-headers/headers.js');
 const weather = require('./weather/weather.js');
 
@@ -24,10 +23,16 @@ app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
   extended: true
 }));
 
-app.use(stats.updateStats);
+app.use(function (req, res, next) {
+  const sv = req.originalUrl.split('/')[1];
+  if (sv === 'alexa' || sv === 'weather' || sv === 'http-headers') {
+    stats.updateStats(req, res, next);
+  } else {
+    next();
+  }
+});
 
 app.use('/alexa', alexa);
-app.use('/cors-proxy', corsproxy);
 app.use('/http-headers', headers);
 app.use('/weather', weather);
 
