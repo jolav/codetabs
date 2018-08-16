@@ -6,14 +6,15 @@
 
 1. [Github Stars graphical history](#github-stars-graphical-history)  
 2. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
-3. [CORS proxy](#cors-proxy)
+3. [CORS proxy](#cors-proxy)  
 4. [API weather temp](#weather)  
-5. [HTTP Headers](#headers)
-6. [Alexa Ranking](#alexa)
+5. [HTTP Headers](#headers)  
+6. [Alexa Ranking](#alexa)  
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/stars32.png?raw=true)  **GITHUB STARS GRAPHICAL HISTORY**
+## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/stars32.png?raw=true)  
+# **GITHUB STARS GRAPHICAL HISTORY**
 
 version 0.4.2
 
@@ -27,7 +28,8 @@ version 0.4.2
 <hr>
 
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/count32.png?raw=true)  **COUNT LOC ONLINE** 
+## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/count32.png?raw=true)  
+# **COUNT LOC ONLINE** 
 
 version 0.5.0
 
@@ -73,17 +75,15 @@ Response (JSON) :
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/server32.png?raw=true)  **CORS-PROXY**
+## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/server32.png?raw=true)  
+# **CORS-PROXY**
 
 version 0.1.0
 
 ### **[Read DOCS online](https://codetabs.com/cors-proxy/cors-proxy.html)**
 
-    24 June 2018
-    Due to recent abuse during last weeks petitions are now limited to 1-per-second
-    If you need more feel free to contact me.
-
-- Petitions are limited to 1 per second. You will get a 429 error if you exceed 
+- Petitions are limited to 5 per second. You will get a 429 error if you exceed 
+- Bypass same-origin policy related to performing standard AJAX requests to 3rd party services
 - Free CORS proxy server that allows access resources from any website
 - You can use to prevent mixed content of images and JSON data proxying the resources to serve them under https.
 - Each request is limited to 2mb size download to avoid abuse
@@ -92,7 +92,8 @@ version 0.1.0
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/weather32.png?raw=true)  **WEATHER** 
+## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/weather32.png?raw=true)  
+# **WEATHER** 
 
 version 0.3.1
 
@@ -104,7 +105,8 @@ version 0.3.1
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/podium32.png?raw=true)  **ALEXA**
+## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/podium32.png?raw=true)  
+# **ALEXA**
 
 version 0.3.1
 
@@ -116,7 +118,8 @@ Tool for know Alexa Ranking Top 1 million about a website.
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/headers32.png?raw=true)  **HEADERS**
+## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/headers32.png?raw=true)  
+# **HEADERS**
 
 version 0.3.1
 

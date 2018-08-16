@@ -1,26 +1,23 @@
 /* */
 require('dotenv').config();
-const mongo = require('mongodb');
-const lib = require('./lib.js');
-const connection = process.env.DB_STATS;
-const myIP = [
-  process.env.IP2,
-  process.env.IP3,
-  process.env.IP5,
-  process.env.IP7
-];
 
-function testDB () {
-  mongo.connect(connection, function (err, db) {
-    if (err) return console.log(err);
-    console.log('Connected to database ... OK');
-    db.close();
-  });
-}
+const MY_TABLE = process.env.MY_TABLE;
+
+const mysql = require('mysql');
+const lib = require('./lib.js');
+
+const con = mysql.createConnection({
+  host: process.env.MY_HOST,
+  user: process.env.MY_USER,
+  password: process.env.MY_PASSWORD,
+  database: process.env.MY_DB,
+  connectTimeout: 20000,
+  acquireTimeout: 20000
+});
 
 function updateStats (req, res, next) {
   const test = lib.getIP(req);
-  if (myIP.indexOf(test) === -1) {
+  if (test) {
     // console.log(test , ' => SAVE')
     let service = res.locals.service;
     if (!service) {
@@ -40,14 +37,14 @@ function updateStats (req, res, next) {
           break;
       }
     }
+    const time = new Date(); // .toISOString().split('T')[0]
     let dbData = {
-      'ip': lib.getIP(req),
       'service': service,
-      'time': new Date().toISOString().split('T')[0]
+      'time': time
     };
     if (dbData.service) {
       if (process.env.NODE_ENV === 'production') {
-        saveDataToDB(dbData);
+        insertHit(dbData);
       } else {
         console.log('SAVE TEST ...', dbData);
       }
@@ -60,19 +57,36 @@ function updateStats (req, res, next) {
   next();
 }
 
-function saveDataToDB (dbData) {
-  mongo.connect(connection, function (err, db) {
-    if (err) return console.log(err);
-    const database = db.db(process.env.DB_NAME);
-    const collection = database.collection(process.env.COLLECTION);
-    collection.insert(dbData, function (err, result) {
-      if (err) return console.log(err);
-      db.close();
-    });
+function insertHit (data) {
+  let sql = 'INSERT INTO ?? (time, alexa, loc, stars, proxy, headers, weather)';
+  sql += ' VALUES (?, 0, 0, 0, 0, 0, 0)';
+  sql += ` ON DUPLICATE KEY UPDATE ${data.service} = ${data.service} + 1;`;
+  const inserts = [MY_TABLE, data.time];
+  sql = mysql.format(sql, inserts);
+  con.query(sql, function (err, rows) {
+    if (err) {
+      console.log('Insert HIT error =>', err);
+    // throw err
+    } else {
+      // console.log(rows)
+    }
+  });
+}
+
+function testDB () {
+  console.log('Connecting ......');
+  // console.log(con)
+  con.connect(function (err) {
+    if (err) {
+      console.log('Error connecting to DB => ', err);
+    } else {
+      console.log('Connection OK');
+    }
   });
 }
 
 module.exports = {
   updateStats: updateStats,
   testDB: testDB
+
 };

@@ -15,7 +15,11 @@ if (process.env.NODE_ENV === 'production') {
 
 app.disable('x-powered-by');
 
-app.use(stats.updateStats);
+// app.use(stats.updateStats)
+app.use(function (req, res, next) {
+  res.locals.service = 'proxy';
+  stats.updateStats(req, res, next);
+});
 
 app.get('/cors-proxy/*', function (req, res) {
   job.corsProxy(req, res);
