@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://codetabs.com/</loc>
+  <lastmod>2018-03-07T08:08:29+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://codetabs.com/github-stars/github-star-history.html</loc>
+  <lastmod>2018-03-07T08:08:29+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://codetabs.com/count-loc/count-loc-online.html</loc>
+  <lastmod>2018-03-07T08:08:29+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://codetabs.com/cors-proxy/cors-proxy.html</loc>
+  <lastmod>2018-03-07T08:08:29+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://codetabs.com/weather/weather.html</loc>
+  <lastmod>2018-03-07T08:08:29+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://codetabs.com/http-headers/headers.html</loc>
+  <lastmod>2018-03-07T08:08:29+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://codetabs.com/alexa/alexa-ranking.html</loc>
+  <lastmod>2018-03-07T08:08:29+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+
+
+</urlset>

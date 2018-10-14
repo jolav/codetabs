@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <title>Alexa Ranking</title>
+
+  <!--Head -->
+  <!--#include file="/_public/templates/head.html" -->
+
+</head>
+
+<body>
+
+  <header class="header">
+    <h1 class="small">
+      <img class="verticalImage" alt="Logo" src="/_public/sprites/alexa32.png">
+      <span> Alexa Ranking</span>
+    </h1>
+    <h1 class="big">
+      <img class="verticalImage" alt="Logo" src="/_public/icons/alexa48.png">
+      <span> Alexa Ranking</span>
+    </h1>
+  </header>
+
+  <section class="form" id="getForm">
+    <form class="getDomain" onsubmit="return false">
+      <input type="text" required id="domainName" placeholder="domain.tld">
+      <span id="getDomain" class="action">Get Alexa</span>
+    </form>
+  </section>
+
+  <div class="rank centerText">
+    <div id="rankResult">---</div>
+    <div id="rankResult2"></div>
+  </div>
+
+  <h2 class="centerText">
+    API doc
+    <small>
+      <small>(version 0.3.1)</small>
+    </small>
+  </h2>
+
+  <section class="description">
+    <div class="centerText">
+      <strong>Description</strong>
+    </div>
+    <div class="leftText">
+      <span>
+        - Tool for know Alexa Ranking Top 1 million about a website.
+      </span>
+      <br>
+      <span>
+        -
+        <span class="red">Limit</span> : 5 requests per second. Once reached subsequent requests will result in error
+        429 (too many requests)
+        until your quota is cleared.
+        <br>
+      </span>
+      <span>
+        - Quota is shared among services [Alexa, Weather, Http Headers].
+      </span>
+    </div>
+  </section>
+
+  <section class="endpoint">
+    <div class="centerText">
+      <strong>Endpoint - Get Alexa Ranking from a website</strong>
+    </div>
+    <div class="leftText">
+      <strong>http Request : </strong>
+      <code class="red">
+          GET https://api.codetabs.com/alexa/get/domain.extension 
+      </code>
+      <br>
+      <strong>examples : </strong>
+      <br>
+      <code>
+          <a href="https://api.codetabs.com/alexa/get/github.com"> https://api.codetabs.com/alexa/get/github.com</a> 
+          <br>
+          <a href="https://api.codetabs.com/alexa/get/expressjs.com"> https://api.codetabs.com/alexa/get/expressjs.com</a> 
+          </code>
+      <br>
+      <strong>response : </strong>
+      <pre class="marginLeft">
+  {
+    "domain": "github.com",
+    "rank"  : "63"
+  }       
+          </pre>
+    </div>
+  </section>
+
+  <br>
+
+  <!-- Footer -->
+  <!--#include file="/_public/templates/footer.html" -->
+
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="./../apis.css">
+
+
+  <!-- google-analytics -->
+  <!--#include file="/_public/templates/analyticstracking.html" -->
+  <!-- cookie Law -->
+  <!--#include file="/_public/templates/cookieLaw.html" -->
+
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
+
+  <script async src="./alexa.js"></script>
+
+  <!-- Titillium Web + Varela-->
+  <link href="https://fonts.googleapis.com/css?family=Varela|Titillium+Web:400,700" rel="stylesheet">
+</body>
+
+</html>

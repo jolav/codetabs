@@ -1,20 +1,31 @@
-#Ignore these directories
+# Ignore these directories
 _aux/
 node_modules/
 tmp/
+logs/
 apis/server/alexa/data
 geolocation-ip/server/db
 
-#Ignore these files
+# Ignore these files
 .env
 .DS_Store
 config.js
 config.json
 private.json
 secret.json
-hits.json
 stats.json
+private.go
+secret.go
 
-#third party binaries
+
+# Ignore binaries
+alexa/alexa
+headers/headers
+loc/loc
+proxy/proxy
+stars/stars
+weathers/weathers
+
+# third party binaries
 */server/loc
 */server/locMac

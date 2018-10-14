@@ -1,0 +1,101 @@
+body {
+  font-family: 'arial', sans-serif;
+  background-color: #fafafa;
+  font-size: 1em;
+  margin: auto;
+  max-width: 960px;
+  -webkit-user-select: none;
+  /* Chrome all / Safari all */
+  -moz-user-select: none;
+  /* Firefox all */
+  -ms-user-select: none;
+  /* IE 10+ */
+  user-select: none;
+  color: #404040;
+}
+
+@media (max-width: 540px) {
+  .error {
+    flex-direction: column;
+    align-items: center;
+  }
+  .type {
+    margin-top: 20px;
+  }
+}
+
+@media (min-width: 541px) {
+  .error {
+    align-items: baseline;
+  }
+  .number {
+    padding-right: 20px;
+  }
+  .type {
+    padding-left: 20px;
+  }
+}
+
+.error {
+  display: flex;
+}
+
+.container {
+  margin-top: 50px;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.number {
+  font-size: 5em;
+  font-weight: bold;
+  display: flex;
+}
+
+.digit {
+  border: 1px solid #404040;
+  padding: 5px 10px;
+}
+
+.digit+.digit {
+  border-left: none;
+}
+
+.type {
+  font-size: 2em;
+}
+
+.explanation {
+  margin-top: 30px;
+}
+
+.options {
+  font-size: 1.2em;
+  margin-top: 10px;
+}
+
+a.link {
+  color: #375EAB;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a.link:hover {
+  color: lightskyblue;
+}
+
+/* TITLE */
+
+.titleBox {
+  font-family: "Titillium Web", "arial", sans-serif;
+  padding: 0px;
+  font-size: 2.5em;
+  text-align: center;
+  color: #b42c5f;
+}
+
+.titleBox img {
+  vertical-align: middle;
+  padding: 0px 15px 8px 0px;
+}

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <title>Weather docs</title>
+
+  <!--Head -->
+  <!--#include file="/_public/templates/head.html" -->
+
+</head>
+
+<body>
+
+  <header class="header">
+    <h1 class="small">
+      <img class="verticalImage" alt="Logo" src="/_public/sprites/weather32.png">
+      <span>Weather API</span>
+    </h1>
+    <h1 class="big">
+      <img class="verticalImage" alt="Logo" src="/_public/icons/weather48.png">
+      <span>Weather API</span>
+    </h1>
+  </header>
+
+  <h2 class="centerText">
+    API doc
+    <small>
+      <small>(version 0.3.1)</small>
+    </small>
+  </h2>
+
+  <section class="description">
+    <div class="centerText">
+      <strong>Description</strong>
+    </div>
+    <div class="leftText">
+      <span>- CORS is enabled allowing Javascript make requests across domain boundaries</span>
+      <br>
+      <span>
+        - API URL =>
+        <code class="red">https://api.codetabs.com/weather/temp/</code>
+      </span>
+      <br>
+      <span>
+        - JSON format is used by default. To get data in XML set up
+        <code class="red">format=xml</code> .
+      </span>
+      <br>
+      <span>
+        -
+        <span class="red">Limit</span> : 5 requests per second. Once reached subsequent requests will result in error
+        429 (too many requests)
+        until your quota is cleared.
+        <br>
+      </span>
+      <span>
+        - Quota is shared among services [Alexa, Weather, Http Headers].
+      </span>
+    </div>
+  </section>
+
+  <section class="endpoint">
+    <div class="centerText">
+      <strong>Endpoint - Get your local temp</strong>
+      <br> This endpoint retrieves actual temp based on your public IP geolocation.
+    </div>
+    <div class="leftText">
+      <strong>http Request : </strong>
+      <code class="red">
+        GET https://api.codetabs.com/weather/temp/ 
+      </code>
+      <br>
+      <strong>parameter "&format="</strong> values are json(by default or if parameter is empty) or xml
+      <br>
+      <strong>examples : </strong>
+      <br>
+      <code>
+        <a href="https://api.codetabs.com/weather/temp/">https://api.codetabs.com/weather/temp/</a>
+        <br>
+        <a href="https://api.codetabs.com/weather/temp?format=xml">https://api.codetabs.com/weather/temp?format=xml</a>
+      </code>
+      <br>
+      <strong>response : </strong>
+      <pre class="marginLeft">
+{
+  "city": "paris",
+  "country": "FR",
+  "lat": "48.8600",
+  "lon": "2.3500",
+  "tempC": 21.62,
+  "tempF": 53.62,
+}       
+      </pre>
+    </div>
+  </section>
+
+  <section class="endpoint">
+    <div class="centerText">
+      <strong>Endpoint - Get temp from any location</strong>
+      <br>This endpoint retrieves actual temp from the city passed as a parameter.
+    </div>
+    <div class="leftText">
+      <strong>http Request : </strong>
+      <code class="red">
+        GET https://api.codetabs.com/weather/temp?city=paris/
+      </code>
+      <br>
+      <strong>parameter "&format="</strong> values are json(by default or if parameter is empty) or xml
+      <br>
+      <strong>parameter "&city="</strong> city i want to know the temperature.
+      <br>
+      <code>
+        <a href="https://api.codetabs.com/weather/temp?city=london"> https://api.codetabs.com/weather/temp?city=london</a>
+        <br>
+        <a href="https://api.codetabs.com/weather/temp?city=london&format=xml">  https://api.codetabs.com/weather/temp?city=london&format=xml
+        </a>
+      </code>
+      <br>
+      <strong>response : </strong>
+      <pre class="marginLeft">
+{
+  "city ": "london ",
+  "country ": "GB ",
+  "lat ": "51.5100 ",
+  "lon ": "-0.1300 ",
+  "tempC ": "9.18 ",
+  "tempF ": "48.52 "
+}
+          </pre>
+    </div>
+  </section>
+
+  <br>
+
+  <!-- Footer -->
+  <!--#include file="/_public/templates/footer.html" -->
+
+  <!-- CSS -->
+  <link rel="stylesheet " type="text/css " href="./../apis.css ">
+
+  <!-- google-analytics -->
+  <!--#include file="/_public/templates/analyticstracking.html" -->
+  <!-- cookie Law -->
+  <!--#include file="/_public/templates/cookieLaw.html" -->
+
+  <!-- Titillium Web + Varela -->
+  <link href="https://fonts.googleapis.com/css?family=Varela|Titillium+Web:400,700" rel="stylesheet ">
+
+</body>
+
+</html>

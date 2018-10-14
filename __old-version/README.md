@@ -2,7 +2,7 @@
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
-# ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
+# ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
 1. [Github Stars graphical history](#github-stars-graphical-history)  
 2. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
@@ -13,7 +13,7 @@
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/stars32.png?raw=true)  
+## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/stars32.png?raw=true)  
 # **GITHUB STARS GRAPHICAL HISTORY**
 
 version 0.4.2
@@ -23,12 +23,12 @@ version 0.4.2
 - Enter user/repo , then click add.
 - Petitions are limited to 1 every 5 secs. You will get a 429 error if you exceed 
 
-![Example](https://github.com/jolav/codetabs/blob/master/www/_public/images/starExample.png?raw=true)
+![Example](https://github.com/jolav/codetabs/blob/master/_public/images/starExample.png?raw=true)
 
 <hr>
 
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/count32.png?raw=true)  
+## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/count32.png?raw=true)  
 # **COUNT LOC ONLINE** 
 
 version 0.5.0
@@ -39,7 +39,7 @@ version 0.5.0
 - File max size 100mb;
 - Petitions are limited to 1 every 5 secs. You will get a 429 error if you exceed 
 
-![Example](https://github.com/jolav/codetabs/blob/master/www/_public/images/locExample.png?raw=true)
+![Example](https://github.com/jolav/codetabs/blob/master/_public/images/locExample.png?raw=true)
 
 **API LOC**
 
@@ -75,24 +75,24 @@ Response (JSON) :
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/server32.png?raw=true)  
+## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/server32.png?raw=true)  
 # **CORS-PROXY**
 
-version 0.2.0
+version 0.1.0
 
 ### **[Read DOCS online](https://codetabs.com/cors-proxy/cors-proxy.html)**
 
-- Free CORS proxy server to bypass same-origin policy related to performing standard AJAX requests to 3rd party services.
-You can use to prevent mixed content of images and JSON data proxying the resources to serve them under https.
-- API URL => append the url with the resource you want to "https://api.codetabs.com/v1/proxy/"
-- Each request is limited to 5mb (2mb for old endpoint) size download to avoid abuse.
-- Only suppports GET request.
-- Limit : 5 request per second. Once reached subsequent requests will result in error 429 (too many requests) until your quota is cleared. 
+- Petitions are limited to 5 per second. You will get a 429 error if you exceed 
+- Bypass same-origin policy related to performing standard AJAX requests to 3rd party services
+- Free CORS proxy server that allows access resources from any website
+- You can use to prevent mixed content of images and JSON data proxying the resources to serve them under https.
+- Each request is limited to 2mb size download to avoid abuse
+- Only suppports GET request
 
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/weather32.png?raw=true)  
+## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/weather32.png?raw=true)  
 # **WEATHER** 
 
 version 0.3.1
@@ -105,7 +105,7 @@ version 0.3.1
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/podium32.png?raw=true)  
+## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/podium32.png?raw=true)  
 # **ALEXA**
 
 version 0.3.1
@@ -118,7 +118,7 @@ Tool for know Alexa Ranking Top 1 million about a website.
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/headers32.png?raw=true)  
+## ![logo](https://github.com/jolav/codetabs/blob/master/_public/icons/headers32.png?raw=true)  
 # **HEADERS**
 
 version 0.3.1
