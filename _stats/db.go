@@ -44,7 +44,7 @@ func (MYDB *myDB) InitDB() {
 }
 
 func (MYDB *myDB) insertHit(service string, datenow string) {
-	sql := fmt.Sprintf("INSERT INTO `%s` (time, alexa, loc, stars, proxy, headers, weather) VALUES ('%s', 0, 0, 0, 0, 0, 0) ON DUPLICATE KEY UPDATE %s = %s + 1;", c.Mysql.Table, datenow, service, service)
+	sql := fmt.Sprintf("INSERT INTO `%s` (time, alexa, loc, stars, proxy, headers, weather, geoip) VALUES ('%s', 0, 0, 0, 0, 0, 0, 0) ON DUPLICATE KEY UPDATE %s = %s + 1;", c.Mysql.Table, datenow, service, service)
 	stmt, err := db.Prepare(sql)
 	if err != nil {
 		log.Println(fmt.Sprintf("ERROR 2 DB %s", err))

@@ -4,29 +4,48 @@
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-1. [Github Stars graphical history](#github-stars-graphical-history)  
+1. [IP GeoLocation](#ip-geolocation)
 2. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
-3. [CORS proxy](#cors-proxy)  
-4. [API weather temp](#weather)  
-5. [HTTP Headers](#headers)  
-6. [Alexa Ranking](#alexa)  
+3. [Github Stars graphical history](#github-stars-graphical-history)  
+4. [CORS proxy](#cors-proxy)  
+5. [Alexa Ranking](#alexa)  
+6. [HTTP Headers](#headers)  
+7. [API weather temp](#weather)  
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/stars48.png?raw=true)  
-# **GITHUB STARS GRAPHICAL HISTORY**
+## ![Logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/geoip48.png?raw=true)  
+# **IP GEOLOCATION**
 
-version 0.4.2
+version 0.1.0
 
-### **[DEMO online](https://codetabs.com/github-stars/github-star-history.html)**
+### **[DEMO online](https://codetabs.com/ip-geolocation/geoip.html)**
 
-- Enter user/repo , then click add.
-- Petitions are limited to 1 every 5 secs. You will get a 429 error if you exceed 
+- Free service that provides a public secure API (CORS enabled) to retrieve geolocation from any IP or hostname.  
+- 5 request per second. Once reached subsequent requests will result in error 429 until your quota is cleared.  
+- This API requires no key or signup.  
+- JSON and XML supported
+- IPv4 and IPv6 supported  
+- CORS support out of the box makes this perfect to your front end apps or webs  
 
-![Example](https://github.com/jolav/codetabs/blob/master/www/_public/images/starExample.png?raw=true)
+Response JSON :
+
+```json
+{   
+  "ip": "192.168.200.200",
+  "country_code": "GB",
+  "country_name": "United Kingdom",
+  "region_code": "ENG",
+  "region_name": "England",
+  "city": "London",
+  "zip_code": "SL1",
+  "time_zone": "Europe/London",
+  "latitude": 50.0500,
+  "longitude": 0.6172   
+}
+```
 
 <hr>
-
 
 ## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/loc48.png?raw=true)  
 # **COUNT LOC ONLINE** 
@@ -75,6 +94,20 @@ Response (JSON) :
 
 <hr>
 
+## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/stars48.png?raw=true)  
+# **GITHUB STARS GRAPHICAL HISTORY**
+
+version 0.4.2
+
+### **[DEMO online](https://codetabs.com/github-stars/github-star-history.html)**
+
+- Enter user/repo , then click add.
+- Petitions are limited to 1 every 5 secs. You will get a 429 error if you exceed 
+
+![Example](https://github.com/jolav/codetabs/blob/master/www/_public/images/starExample.png?raw=true)
+
+<hr>
+
 ## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/proxy48.png?raw=true)  
 # **CORS-PROXY**
 
@@ -88,20 +121,6 @@ You can use to prevent mixed content of images and JSON data proxying the resour
 - Each request is limited to 5mb (2mb for old endpoint) size download to avoid abuse.
 - Only suppports GET request.
 - Limit : 5 request per second. Once reached subsequent requests will result in error 429 (too many requests) until your quota is cleared. 
-
-
-<hr>
-
-## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/weather48.png?raw=true)  
-# **WEATHER** 
-
-version 0.3.1
-
-### **[Read DOCS online](https://codetabs.com/weather/weather.html)**
-
-- Petitions are limited to 5 per sec. You will get a 429 error if you exceed 
-- CORS is enabled allowing Javascript make requests across domain boundaries
-- Supported formats, json and xml  
 
 <hr>
 
@@ -128,6 +147,19 @@ Tool to get list of response headers including redirect chain of a HTTP connecti
 ### **[DEMO and DOCS online](https://codetabs.com/http-headers/headers.html)**
 
 - Petitions are limited to 5 per second. You will get a 429 error if you exceed
+
+<hr>
+
+## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/weather48.png?raw=true)  
+# **WEATHER** 
+
+version 0.3.1
+
+### **[Read DOCS online](https://codetabs.com/weather/weather.html)**
+
+- Petitions are limited to 5 per sec. You will get a 429 error if you exceed 
+- CORS is enabled allowing Javascript make requests across domain boundaries
+- Supported formats, json and xml  
 
 <hr>
 

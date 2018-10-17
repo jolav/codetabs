@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"math"
 	"math/rand"
 	"net"
 	"net/http"
@@ -79,6 +80,13 @@ func GetRandomInt(min, max int) int {
 	//rand.Seed(time.Now().UnixNano())
 	//	return rand.Intn(max-min+1) + min
 	return r.Intn(max-min+1) + min
+}
+
+// ToFixedFloat64 (untruncated, num) -> untruncated.toFixed(num)
+func ToFixedFloat64(untruncated float64, precision int) float64 {
+	coef := math.Pow10(precision)
+	truncated := float64(int(untruncated*coef)) / coef
+	return truncated
 }
 
 // IsJSON ...

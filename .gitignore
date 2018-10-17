@@ -25,7 +25,12 @@ loc/loc
 proxy/proxy
 stars/stars
 weathers/weathers
+geoip/geoip
 
 # third party binaries
 */loc/loc
 */loc/locMac
+
+# ip databases
+geoip/db
+GeoLite2-City.mmdb
