@@ -17,10 +17,6 @@ import (
 	stats "../_stats"
 )
 
-var mylogger *logger
-
-type logger struct{}
-
 func init() {
 	lib.LoadConfig(configjson, &c)
 	if c.App.Mode != "production" {
@@ -39,6 +35,7 @@ func main() {
 		defer mylog.Close() // defer must be in main
 		log.SetOutput(mylog)
 	}
+
 	///////////////////////////////////////////////////
 	stats.MYDB.InitDB()
 
@@ -58,8 +55,8 @@ func main() {
 
 func proxyURL(w http.ResponseWriter, r *http.Request) {
 	e = myError{}
-	original := r.URL.Path[1:len(r.URL.Path)]
-	myurl := original
+	quest := r.URL.Path[1:len(r.URL.Path)]
+	myurl := quest
 	var p []string
 	if strings.HasPrefix(myurl, "https:") || strings.HasPrefix(myurl, "http:") {
 		p = strings.SplitN(myurl, "/", 2)
@@ -70,12 +67,12 @@ func proxyURL(w http.ResponseWriter, r *http.Request) {
 	myurl = p[0] + "//" + p[1]
 	resp, err := http.Get(myurl)
 	if err != nil {
-		log.Println(fmt.Sprintf("WARN %s", original))
-		e.Error = fmt.Sprintf("%s is not a valid resource", original)
+		log.Println(fmt.Sprintf("WARN %s", quest))
+		e.Error = fmt.Sprintf("%s is not a valid resource", quest)
 		lib.SendErrorToClient(w, e)
 		return
 	}
-	stats.AddHit(c.App.Service, c.App.Mode, r)
+	stats.AddHit(c.App.Service, c.App.Mode, lib.GetIP(r), quest)
 	defer resp.Body.Close()
 	limitReader := &io.LimitedReader{R: resp.Body, N: 5e6} // (5mb)
 	body, err := ioutil.ReadAll(limitReader)

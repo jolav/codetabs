@@ -215,3 +215,15 @@ hr {
     transform: rotate(360deg);
   }
 }
+
+/* DEPRECATED */
+
+.deprecated {
+  border: 1px solid #ff6565;
+  background-color: #ff6565;
+}
+
+.newendpoint {
+  border: 1px solid #93be93;
+  background-color: #93be93;
+}

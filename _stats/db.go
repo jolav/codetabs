@@ -33,10 +33,9 @@ var MYDB myDB
 func (MYDB *myDB) InitDB() {
 	lib.LoadConfig(mysqljson, &c)
 	connPath := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s", c.Mysql.User, c.Mysql.Password, c.Mysql.Host, c.Mysql.Port, c.Mysql.Db)
-	fmt.Println(connPath)
+	//fmt.Println(connPath)
 	var err error
 	db, err = sql.Open("mysql", connPath)
-	fmt.Println(`errrr`, db)
 	if err != nil {
 		log.Println(fmt.Sprintf("ERROR 1 DB %s", err))
 	} else {

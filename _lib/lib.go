@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"os/exec"
 	"time"
 )
 
@@ -111,4 +112,14 @@ func LoadConfig(configjson []byte, c interface{}) {
 	if err != nil {
 		fmt.Println(err)
 	}
+}
+
+// GenericCommand ...
+func GenericCommand(args []string) (err error) {
+	_, err = exec.Command(args[0], args[1:len(args)]...).CombinedOutput()
+	if err != nil {
+		fmt.Println("ERROR CMD= ", err)
+		return err
+	}
+	return err
 }

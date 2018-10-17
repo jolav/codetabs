@@ -3,21 +3,16 @@ package stats
 import (
 	"fmt"
 	"log"
-	"net/http"
 	"os"
 	"strings"
 	"time"
-
-	lib "../_lib"
 )
 
 // AddHit ...
-func AddHit(service string, mode string, r *http.Request) {
-	ip := lib.GetIP(r)
-	original := r.URL.Path[1:len(r.URL.Path)]
+func AddHit(service, mode, ip, quest string) {
 	layout := "2006-01-02 15:04:05"
 	now := time.Now().Format(layout)
-	text := fmt.Sprintf("INFO %s %s %s\n", now, ip, original)
+	text := fmt.Sprintf("INFO %s %s %s\n", now, ip, quest)
 	var filename = fmt.Sprintf("./logs/%s-hits.log", service)
 	hits, err := os.OpenFile(filename, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {

@@ -27,5 +27,5 @@ stars/stars
 weathers/weathers
 
 # third party binaries
-*/server/loc
-*/server/locMac
+*/loc/loc
+*/loc/locMac

@@ -2,7 +2,7 @@
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
-# ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
+# ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
 1. [Github Stars graphical history](#github-stars-graphical-history)  
 2. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
@@ -13,7 +13,7 @@
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/stars32.png?raw=true)  
+## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/stars48.png?raw=true)  
 # **GITHUB STARS GRAPHICAL HISTORY**
 
 version 0.4.2
@@ -28,10 +28,10 @@ version 0.4.2
 <hr>
 
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/count32.png?raw=true)  
+## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/loc48.png?raw=true)  
 # **COUNT LOC ONLINE** 
 
-version 0.5.0
+version 0.6.0
 
 ### **[DEMO and DOCS online](https://codetabs.com/count-loc/count-loc-online.html)**
 
@@ -75,7 +75,7 @@ Response (JSON) :
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/server32.png?raw=true)  
+## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/proxy48.png?raw=true)  
 # **CORS-PROXY**
 
 version 0.2.0
@@ -92,7 +92,7 @@ You can use to prevent mixed content of images and JSON data proxying the resour
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/weather32.png?raw=true)  
+## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/weather48.png?raw=true)  
 # **WEATHER** 
 
 version 0.3.1
@@ -105,7 +105,7 @@ version 0.3.1
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/podium32.png?raw=true)  
+## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/alexa48.png?raw=true)  
 # **ALEXA**
 
 version 0.3.1
@@ -118,7 +118,7 @@ Tool for know Alexa Ranking Top 1 million about a website.
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/headers32.png?raw=true)  
+## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/headers48.png?raw=true)  
 # **HEADERS**
 
 version 0.3.1

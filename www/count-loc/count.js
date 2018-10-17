@@ -5,8 +5,9 @@ const stars = (function () {
   'use strict';
   /* code here */
 
-  // const urlBase = 'http://localhost:3000/'
-  const urlBase = 'https://api.codetabs.com/count-loc/';
+  // const urlBase = 'http://localhost:3701/'
+  // const urlBase = 'https://api.codetabs.com/count-loc/'
+  const urlBase = 'https://api.codetabs.com/v1/loc/';
 
   const ctx = document.getElementById('myPie');
   const pointsPerLine = 70;
@@ -53,6 +54,7 @@ const stars = (function () {
       return;
     }
     formData.append('inputFile', inputFile.files[0]);
+    console.log('REQUEST => ', urlData, prepareData, formData);
     makeAjaxRequest(urlData, 'POST', prepareData, formData);
   }
 
