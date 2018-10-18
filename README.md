@@ -14,7 +14,7 @@
 
 <hr>
 
-## ![Logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/geoip48.png?raw=true)  
+## ![Logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ip48.png?raw=true)  
 # **IP GEOLOCATION**
 
 version 0.1.0
@@ -97,7 +97,7 @@ Response (JSON) :
 ## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/stars48.png?raw=true)  
 # **GITHUB STARS GRAPHICAL HISTORY**
 
-version 0.4.2
+version 0.5.0
 
 ### **[DEMO online](https://codetabs.com/github-stars/github-star-history.html)**
 

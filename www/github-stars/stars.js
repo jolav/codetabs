@@ -5,6 +5,7 @@ const stars = (function () {
   /* code here */
 
   const urlBase = 'https://api.codetabs.com/github-stars/';
+  // const urlBase = 'https://api.codetabs.com/v1/stars/'
   // const urlBase = 'http://localhost:3000/'
   const ctx = document.getElementById('myChart');
   const pointsPerLine = 70;
