@@ -153,7 +153,7 @@ Tool to get list of response headers including redirect chain of a HTTP connecti
 ## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/weather48.png?raw=true)  
 # **WEATHER** 
 
-version 0.3.1
+version 0.4.0
 
 ### **[Read DOCS online](https://codetabs.com/weather/weather.html)**
 

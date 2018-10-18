@@ -24,7 +24,7 @@ headers/headers
 loc/loc
 proxy/proxy
 stars/stars
-weathers/weathers
+weather/weather
 geoip/geoip
 
 # third party binaries
