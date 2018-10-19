@@ -1,7 +1,8 @@
 const alexa = (function () {
   /* code here */
 
-  const baseUrl = 'https://api.codetabs.com/alexa/';
+  // const baseUrl = 'https://api.codetabs.com/alexa/'
+  const baseUrl = 'https://api.codetabs.com/v1/alexa/';
 
   function init () {
     console.log('Init Alexa');
@@ -23,15 +24,17 @@ const alexa = (function () {
   }
 
   function showData (data) {
+    // console.log(data)
     document.getElementById('rankResult2').innerText = '';
     document.getElementById('rankResult').innerText = data.rank;
   }
 
   function showError (dataError) {
-    if (dataError.error) {
+    // console.log(dataError)
+    if (dataError.Error) {
       // alert(dataError.error)
       document.getElementById('rankResult').innerText = '';
-      document.getElementById('rankResult2').innerText = dataError.error;
+      document.getElementById('rankResult2').innerText = dataError.Error;
     } else {
       alert('An error has ocurred while fetching data');
     }

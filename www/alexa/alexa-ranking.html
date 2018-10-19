@@ -38,7 +38,7 @@
   <h2 class="centerText">
     API doc
     <small>
-      <small>(version 0.3.1)</small>
+      <small>(version 0.4.0)</small>
     </small>
   </h2>
 
@@ -58,15 +58,44 @@
         until your quota is cleared.
         <br>
       </span>
-      <span>
-        - Quota is shared among services [Alexa, Weather, Http Headers].
-      </span>
     </div>
   </section>
 
   <section class="endpoint">
     <div class="centerText">
-      <strong>Endpoint - Get Alexa Ranking from a website</strong>
+      <strong class="newendpoint">
+        NEW - Endpoint - Get Alexa Ranking from a website</strong>
+    </div>
+    <div class="leftText">
+      <strong>http Request : </strong>
+      <code class="red">
+          GET https://api.codetabs.com/v1/alexa/get/domain.extension 
+      </code>
+      <br>
+      <strong>examples : </strong>
+      <br>
+      <code>
+          <a href="https://api.codetabs.com/v1/alexa/get/github.com"> https://api.codetabs.com/v1/alexa/get/github.com</a> 
+          <br>
+          <a href="https://api.codetabs.com/v1/alexa/get/expressjs.com"> https://api.codetabs.com/v1/alexa/get/expressjs.com</a> 
+          </code>
+      <br>
+      <strong>response : </strong>
+      <pre class="marginLeft">
+  {
+    "domain": "github.com",
+    "rank"  : "63"
+  }       
+          </pre>
+    </div>
+  </section>
+
+  <section class="endpoint">
+    <div class="centerText">
+      <strong class="deprecated">
+        Endpoint - Get Alexa Ranking from a website
+        <br>This Endpoint will de deprecated on 2018-11-30
+      </strong>
     </div>
     <div class="leftText">
       <strong>http Request : </strong>

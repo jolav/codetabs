@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"math"
@@ -130,4 +131,35 @@ func GenericCommand(args []string) (err error) {
 		return err
 	}
 	return err
+}
+
+// GenericCommandSH ...
+func GenericCommandSH(comm string) (chunk []byte, err error) {
+	chunk, err = exec.Command("sh", "-c", comm).CombinedOutput()
+	if err != nil {
+		return nil, err
+	}
+	return chunk, err
+}
+
+// DownloadFile ...
+func DownloadFile(filePath string, url string) (err error) {
+	// Create the file
+	out, err := os.Create(filePath)
+	if err != nil {
+		return err
+	}
+	defer out.Close()
+	// Get the data
+	resp, err := http.Get(url)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+	// Writer the body to file
+	_, err = io.Copy(out, resp.Body)
+	if err != nil {
+		return err
+	}
+	return nil
 }
