@@ -4,8 +4,8 @@ const stars = (function () {
   'use strict';
   /* code here */
 
-  // const baseUrl = 'http://localhost:3000/http-headers/'
-  const baseUrl = 'https://api.codetabs.com/http-headers/';
+  // const baseUrl = 'http://localhost:3000/'
+  const baseUrl = 'https://api.codetabs.com/v1/headers/';
 
   function init () {
     console.log('Init HTTP Headers');
@@ -22,13 +22,13 @@ const stars = (function () {
       alert('Not a valid url');
       return;
     }
-    let urlData = baseUrl + 'get/' + url;
+    let urlData = baseUrl /*+ 'get/'*/ + url;
     console.log('Requesting ...', urlData);
     getAjaxData(urlData, showData);
   }
 
-  function showData (data) {
-    // console.log('DATA => ', data)
+  function showData (dataRaw) {
+    let data = JSON.parse(dataRaw);
     let res = '';
     for (let i = 0; i < data.length; i++) {
       res += `
@@ -40,17 +40,18 @@ const stars = (function () {
             </tr>
           </thead>
           <tbody class="tbody">`;
-      for (let prop in data[i]) {
+      for (let prop in data[i].header) {
         res +=
           `<tr class="tr">
         <td>${prop}</td>
-        <td>${data[i][prop]}</td>
+        <td>${data[i].header[prop]}</td>
         </tr>`;
       }
       res += `
       </tbody>`;
     }
     res += `</table>`;
+    // console.log('RES ====>', res)
     document.getElementById('result').innerHTML = res;
   }
 
@@ -73,7 +74,9 @@ const stars = (function () {
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) { // 4 = "DONE"
         if (xhr.status === 200) { // 200 ="OK"
-          callback(JSON.parse(xhr.responseText));
+          console.log('BUEN CAMINO');
+          // callback(JSON.parse(xhr.responseText))
+          callback(xhr.responseText);
         } else if (xhr.status === 429) { // 200 ="OK"
           limitExceeded();
         } else {

@@ -140,7 +140,7 @@ Tool for know Alexa Ranking Top 1 million about a website.
 ## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/headers48.png?raw=true)  
 # **HEADERS**
 
-version 0.3.1
+version 0.4.0
 
 Tool to get list of response headers including redirect chain of a HTTP connection
 
