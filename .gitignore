@@ -28,8 +28,8 @@ weather/weather
 geoip/geoip
 
 # third party binaries
-*/loc/loc
-*/loc/locMac
+loc/locLinux
+loc/locMac
 
 # ip databases
 geoip/db

@@ -28,6 +28,6 @@ func AddHit(service, mode, ip, quest string) {
 	if mode == "production" {
 		MYDB.insertHit(service, strings.Split(now, " ")[0])
 	} else {
-		fmt.Println(`TESTING ... DO NOT DB SAVE`)
+		// fmt.Println(`TESTING ... DO NOT DB SAVE`)
 	}
 }
