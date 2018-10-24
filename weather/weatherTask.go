@@ -21,7 +21,7 @@ func getTemp(w http.ResponseWriter, r *http.Request, f string, city string) {
 		url = "https://api.openweathermap.org/data/2.5/weather?"
 		url += "q=" + city
 		url += "&APPID=" + g.OpenWeather.Key
-		fmt.Println(url)
+		//fmt.Println(url)
 		resp, err := http.Get(url)
 		if err != nil {
 			log.Fatal(fmt.Sprintf("ERROR %s", err))
@@ -108,7 +108,6 @@ func getGeo(r *http.Request) {
 	if err != nil {
 		log.Fatal(fmt.Sprintf("ERROR %s", err))
 	}
-	fmt.Println(`1`, geo)
 	o.City = geo.City
 	o.Country = geo.CountryCode
 	o.Lat = geo.Lat
