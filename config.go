@@ -1,19 +1,63 @@
 package main
 
+import (
+	"net/http"
+	"time"
+)
+
 var configjson = []byte(`
 {
-	"app": {
-		"version":"0.4.0",
-		"mode":"production",
-		"port": 3703,
-		"service":"weather"
-  }
+  "app": {
+    "version": "0.1.1",
+    "mode": "production",
+    "port": 3510,
+		"service": "",
+		"hitslog":"./logs/hits.log",
+		"errlog":"./logs/error.log",
+		"services": ["alexa","headers","loc","proxy","stars","weather"]
+  },
+  "alexa": {
+    "dataFilePath": "./_data/alexa/top-1m.csv",
+		"zipFile": "./_data/alexa/top-1m.csv.zip",
+		"dataDir": "./_data/alexa",
+    "dataFileURL": "https://s3.amazonaws.com/alexa-static/top-1m.csv.zip"
+	},
+	"loc": {
+		"locLinux": "./_data/loc/locLinux",
+		"order": "1",
+		"orderInt": 1
+	}
 }
 `)
 
-var g conf
+var c configuration
 
-type conf struct {
+type configuration struct {
+	App struct {
+		Mode     string //`json:"mode"`
+		Port     int    //`json:"port"`
+		Service  string //`json:"service"`
+		Version  string //`json:"version"`
+		HitsLog  string
+		ErrLog   string
+		Services []string
+	} //`json:"app"`
+	Alexa struct {
+		DataFilePath string
+		ZipFilePath  string `json:"zipFile"`
+		DataDir      string
+		DataFileURL  string
+	}
+	Loc struct {
+		LocLinux string
+		order    string
+		orderInt int
+	}
+}
+
+var g privateConfiguration
+
+type privateConfiguration struct {
 	OpenWeather struct {
 		Name string `json:"name"`
 		Key  string `json:"key"`
@@ -22,38 +66,9 @@ type conf struct {
 		AppID string `json:"appId"`
 		Key   string `json:"key"`
 	} `json:"weatherUnlocked"`
-}
-
-var geo mygeoData
-
-type mygeoData struct {
-	IP          string  `json:"ip" xml:"ip,omitempty"`
-	City        string  `json:"city" xml:"city,omitempty"`
-	CountryCode string  `json:"country_code" xml:"country_code,omitempty"`
-	Lat         float64 `json:"latitude" xml:"latitude,omitempty"`
-	Lon         float64 `json:"longitude" xml:"longitude,omitempty"`
-}
-
-var o output
-
-type output struct {
-	TempC   float64 `json:"tempC"`
-	TempF   float64 `json:"tempF"`
-	City    string  `json:"city"`
-	Country string  `json:"country"`
-	Lat     float64 `json:"latitude"`
-	Lon     float64 `json:"longitude"`
-}
-
-var c configuration
-
-type configuration struct {
-	App struct {
-		Mode    string `json:"mode"`
-		Port    int    `json:"port"`
-		Service string `json:"service"`
-		Version string `json:"version"`
-	} `json:"app"`
+	GitHub struct {
+		Token []string `json:"token"`
+	} `json:"gitHub"`
 }
 
 var e myError
@@ -62,7 +77,71 @@ type myError struct {
 	Error string `json:"Error,omitempty"`
 }
 
-var mw myWeatherData
+// ALEXA
+
+var alexaList map[string](int)
+
+type alexaOutput struct {
+	Domain string `json:"domain"`
+	Rank   int    `json:"rank"`
+}
+
+// HEADERS
+
+type header struct {
+	Header map[string]string `json:"header"`
+}
+
+// LOC
+
+type language struct {
+	Name     string `json:"language"`
+	Files    int    `json:"files"`
+	Lines    int    `json:"lines"`
+	Blanks   int    `json:"blanks"`
+	Comments int    `json:"comments"`
+	Code     int    `json:"linesOfCode"`
+}
+
+// PROXY
+
+// STARS
+
+type star struct {
+	StarredAt *time.Time `json:"starred_at"`
+}
+
+type point struct {
+	When     string `json:"x"`
+	Quantity int    `json:"y"`
+}
+
+type httpResponse struct {
+	link     string
+	response *http.Response
+	err      error
+	id       int
+}
+
+// WEATHER
+
+type weatherGeoData struct {
+	IP          string  `json:"ip" xml:"ip,omitempty"`
+	City        string  `json:"city" xml:"city,omitempty"`
+	CountryCode string  `json:"country_code" xml:"country_code,omitempty"`
+	Lat         float64 `json:"latitude" xml:"latitude,omitempty"`
+	Lon         float64 `json:"longitude" xml:"longitude,omitempty"`
+}
+
+type weatherOutput struct {
+	TempC   float64 `json:"tempC"`
+	TempF   float64 `json:"tempF"`
+	City    string  `json:"city"`
+	Country string  `json:"country"`
+	Lat     float64 `json:"latitude"`
+	Lon     float64 `json:"longitude"`
+	active  bool
+}
 
 type myWeatherData struct {
 	Coord struct {

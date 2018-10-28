@@ -1,12 +1,11 @@
 /*jshint node: true */
 /* global Chart */
 
-const stars = (function () {
+const loc = (function () {
   'use strict';
   /* code here */
 
-  // const urlBase = 'http://localhost:3701/'
-  // const urlBase = 'https://api.codetabs.com/count-loc/'
+  // const urlBase = 'http://localhost:3000/v1/loc/'
   const urlBase = 'https://api.codetabs.com/v1/loc/';
 
   const ctx = document.getElementById('myPie');
@@ -42,7 +41,7 @@ const stars = (function () {
     showLoader();
     e.preventDefault();
     let urlData = urlBase + 'upload';
-    // console.log(urlData)
+    console.log(urlData);
     // console.log('2', myChart)
     if (myChart !== undefined) {
       myChart.destroy();
@@ -192,4 +191,4 @@ const stars = (function () {
   };
 }());
 
-window.addEventListener('load', stars.init);
+window.addEventListener('load', loc.init);

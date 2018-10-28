@@ -10,26 +10,27 @@ import (
 	"strings"
 	"time"
 
-	lib "../_lib"
+	lib "./_lib"
 )
 
-func getRankByDomain(w http.ResponseWriter, r *http.Request) {
-
-	o.Rank = list[o.Domain]
+func doAlexaRequest(w http.ResponseWriter, params []string) {
+	o := &alexaOutput{}
+	o.Domain = params[1]
+	o.Rank = alexaList[o.Domain]
 	if o.Rank != 0 {
 		lib.SendJSONToClient(w, o)
 		return
 	}
 	if strings.HasPrefix(o.Domain, "www.") {
 		o.Domain = o.Domain[4:len(o.Domain)]
-		o.Rank = list[o.Domain]
+		o.Rank = alexaList[o.Domain]
 		if o.Rank != 0 {
 			lib.SendJSONToClient(w, o)
 			return
 		}
 	}
 	if !strings.HasPrefix(o.Domain, "www.") {
-		o.Rank = list["www."+o.Domain]
+		o.Rank = alexaList["www."+o.Domain]
 		if o.Rank != 0 {
 			lib.SendJSONToClient(w, o)
 			return
@@ -41,10 +42,10 @@ func getRankByDomain(w http.ResponseWriter, r *http.Request) {
 }
 
 func loadDataInMemory() {
-	list = make(map[string]int) //, 1000000)
-	file, err := os.Open(dataFile)
+	alexaList = make(map[string]int) //, 1000000)
+	file, err := os.Open(c.Alexa.DataFilePath)
 	if err != nil {
-		log.Fatal(fmt.Sprintf("ERROR LOADING DATA IN MEMORY %s", err))
+		log.Printf("ERROR loading Alexa data in memory %s\n", err)
 	}
 	defer file.Close()
 	scanner := bufio.NewScanner(file)
@@ -52,10 +53,11 @@ func loadDataInMemory() {
 		line := scanner.Text()
 		domain := strings.Split(line, ",")[1]
 		rank, _ := strconv.Atoi(strings.Split(line, ",")[0])
-		list[domain] = rank
+		alexaList[domain] = rank
 	}
-	if err := scanner.Err(); err != nil {
-		log.Fatal(fmt.Sprintf("ERROR LOADING DATA IN MEMORY %s", err))
+	err = scanner.Err()
+	if err != nil {
+		log.Printf("ERROR loading Alexa data in memory %s\n", err)
 	}
 }
 
@@ -76,9 +78,9 @@ func onceADayTask() {
 
 func downloadDataFile() {
 	deleteZip()
-	err := lib.DownloadFile(zipFile, dataFileURL)
+	err := lib.DownloadFile(c.Alexa.ZipFilePath, c.Alexa.DataFileURL)
 	if err != nil {
-		log.Println(fmt.Sprintf("ERROR downloading Zip %s", err))
+		log.Printf("ERROR downloading Zip %s\n", err)
 		return
 	}
 	deleteCsv()
@@ -87,23 +89,23 @@ func downloadDataFile() {
 }
 
 func deleteZip() {
-	_, err := lib.GenericCommandSH("rm " + zipFile)
+	_, err := lib.GenericCommandSH("rm " + c.Alexa.ZipFilePath)
 	if err != nil {
-		log.Println(fmt.Sprintf("ERROR deleting Zip %s", err))
+		log.Printf("ERROR deleting Zip %s\n", err)
 	}
 }
 
 func deleteCsv() {
-	_, err := lib.GenericCommandSH("rm " + dataFile)
+	_, err := lib.GenericCommandSH("rm " + c.Alexa.DataFilePath)
 	if err != nil {
-		log.Println(fmt.Sprintf("ERROR deleting CSV %s", err))
+		log.Printf("ERROR deleting CSV %s\n", err)
 	}
 }
 
 func unzipCsv() {
-	com := "unzip ./data/top-1m.csv.zip -d ./data"
+	com := fmt.Sprintf("unzip %s -d %s", c.Alexa.ZipFilePath, c.Alexa.DataDir)
 	_, err := lib.GenericCommandSH(com)
 	if err != nil {
-		log.Println(fmt.Sprintf("ERROR unzipping data %s", err))
+		log.Printf("ERROR unzipping data %s\n", err)
 	}
 }

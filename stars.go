@@ -10,34 +10,18 @@ import (
 	"strings"
 	"time"
 
-	lib "../_lib"
+	lib "./_lib"
 )
 
 var stars []*star
-
-type star struct {
-	StarredAt *time.Time `json:"starred_at"`
-}
 
 var headerLink string
 
 var data []point
 
-type point struct {
-	When     string `json:"x"`
-	Quantity int    `json:"y"`
-}
-
 var responses []*httpResponse
 
-type httpResponse struct {
-	link     string
-	response *http.Response
-	err      error
-	id       int
-}
-
-func getRepo(w http.ResponseWriter, r *http.Request, repo string) {
+func doStarsRequest(w http.ResponseWriter, r *http.Request, repo string) {
 	e = myError{}
 	stars = []*star{}
 	data = []point{}
@@ -46,7 +30,7 @@ func getRepo(w http.ResponseWriter, r *http.Request, repo string) {
 	//fmt.Printf("%s has %d stars \n", repo, totalStars)
 	if totalStars == 0 && len(x.Errors) > 0 { // repo || user doesn't exist
 		if x.Errors[0].Message != "" {
-			log.Println(fmt.Sprintf("ERROR %s", x.Errors[0].Message))
+			log.Printf("ERROR %s", x.Errors[0].Message)
 			e.Error = x.Errors[0].Message
 			lib.SendErrorToClient(w, e)
 			return
@@ -59,7 +43,7 @@ func getRepo(w http.ResponseWriter, r *http.Request, repo string) {
 	url := "https://api.github.com/repos/" + repo + "/stargazers?per_page=100"
 	doFirstRequest(w, r, url, true)
 	if e.Error != "" { // api limit errors go here
-		log.Println(fmt.Sprintf("ERROR %s", e.Error))
+		log.Printf("ERROR %s", e.Error)
 		lib.SendErrorToClient(w, e)
 		return
 	}
@@ -69,7 +53,7 @@ func getRepo(w http.ResponseWriter, r *http.Request, repo string) {
 		takeOutData()
 	}
 	if e.Error != "" { // fetching errors go here
-		log.Println(fmt.Sprintf("ERROR %s", e.Error))
+		log.Printf("ERROR %s", e.Error)
 		lib.SendErrorToClient(w, e)
 		return
 	}
@@ -95,11 +79,13 @@ func takeOutData() {
 		if v.response.Status == "200 OK" {
 			body, err := ioutil.ReadAll(v.response.Body)
 			if err != nil {
-				log.Fatal(err)
+				log.Printf("ERROR 1 takeoutdata %s", err)
+				return
 			}
 			err = json.Unmarshal(body, &aux)
 			if err != nil {
-				log.Fatalln(err)
+				log.Printf("ERROR 2 takeoutdata %s", err)
+				return
 			}
 		} else {
 			//fmt.Println("Working on ", i, v.response.Status)
@@ -137,7 +123,7 @@ func doLinksRequests(links []string) {
 		case r := <-ch:
 			if r.err != nil {
 				//fmt.Printf("%d Error \n", r.err)
-				log.Println(fmt.Sprintf("ERROR %s", r.err.Error()))
+				log.Printf("ERROR %s", r.err.Error())
 				e.Error = r.err.Error()
 				return
 			}
@@ -179,25 +165,27 @@ func doFirstRequest(w http.ResponseWriter, r *http.Request, url string, flag boo
 	resp, err := client.Do(req)
 	if err != nil {
 		e.Error = fmt.Sprintf("%s is not a valid resource\n", url)
-		log.Println(fmt.Sprintf("ERROR %s", e.Error))
+		log.Printf("ERROR %s", e.Error)
 		lib.SendErrorToClient(w, e)
 		return
 	}
 	if resp.StatusCode != 200 {
 		e.Error = fmt.Sprintf("Error : Status %d \n", resp.StatusCode)
-		log.Println(fmt.Sprintf("ERROR %s", e.Error))
+		log.Printf("ERROR %s", e.Error)
 		w.Write([]byte(e.Error))
 		return
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatal(err)
+		log.Print(err)
+		return
 	}
 	var aux []*star
 	err = json.Unmarshal(body, &aux)
 	if err != nil {
-		log.Fatalln(err)
+		log.Print(err)
+		return
 	}
 	if flag {
 		headerLink = resp.Header.Get("Link")
@@ -233,7 +221,8 @@ func parseHeaderLink(s string) []string {
 	pieces := strings.Split(lastLink, "page=")
 	many, err := strconv.Atoi(pieces[len(pieces)-1])
 	if err != nil {
-		log.Fatalln(err)
+		log.Print(err)
+		return []string{}
 	}
 	link := firstLink[0 : strings.Index(firstLink, "&page=")+6]
 	for i := 2; i <= many; i++ {
@@ -269,23 +258,27 @@ func getTotalStars(target string) int {
 	query := strings.NewReader(graphql)
 	req, err := http.NewRequest("POST", "https://api.github.com/graphql", query)
 	if err != nil {
-		log.Fatalln(err)
+		log.Printf("Error 1 getTotalStars %s", err)
+		return 0
 	}
 	rndToken := lib.GetRandomInt(0, 9)
 	req.Header.Set("Authorization", "bearer "+g.GitHub.Token[rndToken])
 	req.Header.Set("Content-Type", "x-www-form-urlencoded")
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
-		log.Fatalln(err)
+		log.Printf("Error 2 getTotalStars %s", err)
+		return 0
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("Error 3 getTotalStars %s", err)
+		return 0
 	}
 	err = json.Unmarshal(body, &x)
 	if err != nil {
-		log.Fatalln(err)
+		log.Printf("Error 4 getTotalStars %s", err)
+		return 0
 	}
 	return x.Data.Repository.Stargazers.TotalCount
 }

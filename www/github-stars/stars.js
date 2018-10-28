@@ -4,9 +4,9 @@ const stars = (function () {
   'use strict';
   /* code here */
 
-  const urlBase = 'https://api.codetabs.com/github-stars/';
-  // const urlBase = 'https://api.codetabs.com/v1/stars/'
-  // const urlBase = 'http://localhost:3000/'
+  const urlBase = 'https://api.codetabs.com/v1/stars/';
+  // const urlBase = 'http://localhost:3000/v1/stars/'
+
   const ctx = document.getElementById('myChart');
   const pointsPerLine = 70;
   let myChart;

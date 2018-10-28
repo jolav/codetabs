@@ -7,14 +7,27 @@ import (
 	"net/http"
 	"strconv"
 
-	lib "../_lib"
+	lib "./_lib"
 )
 
-func getTemp(w http.ResponseWriter, r *http.Request, f string, city string) {
-	makeReady()
+func doWeatherRequest(w http.ResponseWriter, r *http.Request, f, city string) {
+	var geo = weatherGeoData{}
+	o := weatherOutput{
+		active: true,
+	}
+	mw := myWeatherData{
+		Unlocked: -1000,
+		Main: struct {
+			Open float64 `json:"temp,omitempty"`
+		}{
+			Open: -1000,
+		},
+	}
 	if city == "" {
-		getGeo(r)
-		getWeather(w, r)
+		getGeo(w, r, &o, &geo)
+		if o.active {
+			getWeather(w, &o, &mw, &geo)
+		}
 	} else {
 		o.City = city
 		var url string
@@ -24,36 +37,33 @@ func getTemp(w http.ResponseWriter, r *http.Request, f string, city string) {
 		//fmt.Println(url)
 		resp, err := http.Get(url)
 		if err != nil {
-			log.Fatal(fmt.Sprintf("ERROR %s", err))
+			e.Error = fmt.Sprintf("ERROR gathering weather from city %s", city)
+			log.Printf(e.Error + "\n" + err.Error())
+			lib.SendErrorToClient(w, e)
+			return
 		}
 		defer resp.Body.Close()
 		decoder := json.NewDecoder(resp.Body)
 		err = decoder.Decode(&mw)
 		if err != nil {
-			log.Fatal(fmt.Sprintf("ERROR %s", err))
+			e.Error = fmt.Sprintf("ERROR decoding weather from city %s", city)
+			log.Printf(e.Error + "\n" + err.Error())
+			lib.SendErrorToClient(w, e)
+			return
 		}
 	}
-	prepareOutput()
-	if f == "xml" {
-		lib.SendXMLToClient(w, o)
-		return
+
+	if o.active {
+		prepareOutput(&o, &mw)
+		if f == "xml" {
+			lib.SendXMLToClient(w, &o)
+			return
+		}
+		lib.SendJSONToClient(w, &o)
 	}
-	lib.SendJSONToClient(w, o)
 }
 
-func makeReady() {
-	mw = myWeatherData{
-		Unlocked: -1000,
-		Main: struct {
-			Open float64 `json:"temp,omitempty"`
-		}{
-			Open: -1000,
-		},
-	}
-	o = output{}
-}
-
-func prepareOutput() {
+func prepareOutput(o *weatherOutput, mw *myWeatherData) {
 	if mw.Main.Open == -1000 {
 		o.TempC = mw.Unlocked
 	} else {
@@ -67,7 +77,8 @@ func prepareOutput() {
 	o.Lon = mw.Coord.Lon
 }
 
-func getWeather(w http.ResponseWriter, r *http.Request) {
+func getWeather(w http.ResponseWriter, o *weatherOutput, mw *myWeatherData,
+	geo *weatherGeoData) {
 	var url string
 	source := lib.GetRandomInt(1, 2)
 	if source == 1 { // openWeather
@@ -85,28 +96,45 @@ func getWeather(w http.ResponseWriter, r *http.Request) {
 	}
 	resp, err := http.Get(url)
 	if err != nil {
-		log.Fatal(fmt.Sprintf("ERROR %s", err))
+		e.Error = fmt.Sprint("ERROR requesting GetWeather URL")
+		log.Printf(e.Error + "\n" + err.Error())
+		lib.SendErrorToClient(w, e)
+		o.active = false
+		return
 	}
 	defer resp.Body.Close()
 	decoder := json.NewDecoder(resp.Body)
 	err = decoder.Decode(&mw)
 	if err != nil {
-		log.Fatal(fmt.Sprintf("ERROR %s", err))
+		e.Error = fmt.Sprint("ERROR decoding GetWeather URL")
+		log.Printf(e.Error + "\n" + err.Error())
+		lib.SendErrorToClient(w, e)
+		o.active = false
+		return
 	}
 }
 
-func getGeo(r *http.Request) {
-	url := "https://api.codetabs.com/v1/geoip/json/?q=" + lib.GetIP(r)
+func getGeo(w http.ResponseWriter, r *http.Request, o *weatherOutput,
+	geo *weatherGeoData) {
+	url := "https://geoip.xyz/v1/json?q=" + lib.GetIP(r)
 	//fmt.Println(`URl =>`, url)
 	resp, err := http.Get(url)
 	if err != nil {
-		log.Fatal(fmt.Sprintf("ERROR %s", err))
+		e.Error = fmt.Sprint("ERROR requesting GetGeo URL")
+		log.Printf(e.Error + "\n" + err.Error())
+		lib.SendErrorToClient(w, e)
+		o.active = false
+		return
 	}
 	defer resp.Body.Close()
 	decoder := json.NewDecoder(resp.Body)
 	err = decoder.Decode(&geo)
 	if err != nil {
-		log.Fatal(fmt.Sprintf("ERROR %s", err))
+		e.Error = fmt.Sprint("ERROR decoding GetGeo URL")
+		log.Printf(e.Error + "\n" + err.Error())
+		lib.SendErrorToClient(w, e)
+		o.active = false
+		return
 	}
 	o.City = geo.City
 	o.Country = geo.CountryCode

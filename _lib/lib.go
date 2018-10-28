@@ -19,32 +19,38 @@ import (
 
 // SendJSONToClient ...
 func SendJSONToClient(w http.ResponseWriter, d interface{}) {
+	w.Header().Set("Content-Type", "application/json")
+	var dataJSON = []byte(`{}`)
 	dataJSON, err := json.MarshalIndent(d, "", " ")
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("ERROR Marshaling %s\n", err)
+		w.Write([]byte(`{}`))
 	}
-	w.Header().Set("Content-Type", "application/json")
 	w.Write(dataJSON)
 }
 
 // SendXMLToClient ...
 func SendXMLToClient(w http.ResponseWriter, d interface{}) {
+	w.Header().Set("Content-Type", "application/xml")
+	var dataXML = []byte(`<output></output>`)
 	dataXML, err := xml.Marshal(&d)
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("ERROR Parsing into XML %s\n", err)
+		w.Write([]byte(`{}`))
 	}
-	w.Header().Set("Content-Type", "application/xml")
 	w.Write(dataXML)
 }
 
 // SendErrorToClient ...
 func SendErrorToClient(w http.ResponseWriter, d interface{}) {
-	dataJSON, err := json.MarshalIndent(d, "", " ")
-	if err != nil {
-		log.Fatal(err)
-	}
 	w.WriteHeader(http.StatusBadRequest)
 	w.Header().Set("Content-Type", "application/json")
+	var dataJSON = []byte(`{}`)
+	dataJSON, err := json.MarshalIndent(d, "", " ")
+	if err != nil {
+		log.Printf("ERROR Marshaling %s\n", err)
+		w.Write([]byte(`{}`))
+	}
 	w.Write(dataJSON)
 }
 
@@ -52,7 +58,7 @@ func SendErrorToClient(w http.ResponseWriter, d interface{}) {
 func WriteFile(filePath string, content string) {
 	file, err := os.Create(filePath)
 	if err != nil {
-		log.Fatal(err)
+		log.Printf("Error WriteFile", err)
 	}
 	defer file.Close()
 	file.WriteString(content)
@@ -62,16 +68,16 @@ func WriteFile(filePath string, content string) {
 func LoadJSONfromFileMarshall(filePath string, data interface{}) {
 	file, err := os.Open(filePath)
 	if err != nil {
-		log.Fatalln("Cannot open config file", err)
+		log.Printf("Cannot open config file %s", err)
 	}
 	defer file.Close()
 	body, err := ioutil.ReadAll(file) //	get file content
 	if err != nil {
-		log.Fatalln(err)
+		log.Printf("Error 1 LoadJSONfromFileMarshall %s", err)
 	}
 	err = json.Unmarshal(body, &data)
 	if err != nil {
-		log.Fatalln(err)
+		log.Printf("Error 2 LoadJSONfromFileMarshall %s", err)
 	}
 }
 
@@ -119,7 +125,7 @@ func GetIP(r *http.Request) string {
 func LoadConfig(configjson []byte, c interface{}) {
 	err := json.Unmarshal(configjson, &c)
 	if err != nil {
-		fmt.Println(err)
+		log.Printf("ERROR LoadConfig %s\n", err)
 	}
 }
 
@@ -162,4 +168,14 @@ func DownloadFile(filePath string, url string) (err error) {
 		return err
 	}
 	return nil
+}
+
+// SliceContainsString ... returns true/false
+func SliceContainsString(str string, slice []string) bool {
+	for _, v := range slice {
+		if v == str {
+			return true
+		}
+	}
+	return false
 }

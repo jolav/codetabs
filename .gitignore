@@ -3,7 +3,7 @@ _aux/
 node_modules/
 tmp/
 logs/
-alexa/data
+_data
 geolocation-ip/server/db
 
 # Ignore these files
@@ -17,20 +17,10 @@ stats.json
 private.go
 secret.go
 
-
 # Ignore binaries
-alexa/alexa
-headers/headers
-loc/loc
-proxy/proxy
-stars/stars
-weather/weather
-geoip/geoip
+codetabs
 
 # third party binaries
-loc/locLinux
-loc/locMac
+_data/loc/locLinux
+_data/loc/locMac
 
-# ip databases
-geoip/db
-GeoLite2-City.mmdb

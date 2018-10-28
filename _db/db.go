@@ -37,22 +37,22 @@ func (MYDB *myDB) InitDB() {
 	var err error
 	db, err = sql.Open("mysql", connPath)
 	if err != nil {
-		log.Println(fmt.Sprintf("ERROR 1 DB %s", err))
+		log.Printf("ERROR 1 DB %s\n", err)
 	} else {
-		log.Println(fmt.Sprintf("INFO DB " + c.Mysql.Db + " sql.Open() => OK"))
+		log.Printf("INFO DB %s sql.Open() => OK\n", c.Mysql.Db)
 	}
 }
 
-func (MYDB *myDB) insertHit(service string, datenow string) {
+func (MYDB *myDB) InsertHit(service string, datenow string) {
 	sql := fmt.Sprintf("INSERT INTO `%s` (time, alexa, loc, stars, proxy, headers, weather, geoip) VALUES ('%s', 0, 0, 0, 0, 0, 0, 0) ON DUPLICATE KEY UPDATE %s = %s + 1;", c.Mysql.Table, datenow, service, service)
 	stmt, err := db.Prepare(sql)
 	if err != nil {
-		log.Println(fmt.Sprintf("ERROR 2 DB %s", err))
+		log.Printf("ERROR 2 DB %s\n", err)
 		return
 	}
 	defer stmt.Close()
 	_, err = stmt.Exec()
 	if err != nil {
-		log.Println(fmt.Sprintf("ERROR 3 DB %s", err))
+		log.Printf("ERROR 3 DB %s\n", err)
 	}
 }
