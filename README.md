@@ -30,10 +30,10 @@ version 0.1.1
 **API LOC**
 
 *  Make a GET HTTP Request   
-`https://api.codetabs.com/count-loc/get?repo=USERNAME/REPONAME`
+`https://api.codetabs.com/v1/loc/get?repo=USERNAME/REPONAME`
 
 Example :   
-https://api.codetabs.com/count-loc/get?repo=jolav/codetabs
+https://api.codetabs.com/v1/loc/get?repo=jolav/codetabs
 
 Response (JSON) :
 

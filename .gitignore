@@ -16,6 +16,8 @@ secret.json
 stats.json
 private.go
 secret.go
+www/robots.txt
+www/sitemap.xml
 
 # Ignore binaries
 codetabs
