@@ -20,7 +20,7 @@ var proxyTests = []struct {
 	statusCode int
 }{
 	{"JSON api", "/v1/proxy/apis-v1-jolav.glitch.me/time/", "", 200},
-	{"JSON api", "/v1/proxy/https://geoip.xyz/v1/json", "", 200},
+	{"JSON api", "/v1/proxy/https:/geoip.xyz/v1/json", "", 200},
 	{"image", "/v1/proxy/https:/jolav.me/_public/icons/jolav128.png", "", 200},
 	{"empty", "/v1/proxy/", "ERROR Bad Request, not enough parameters", 400},
 	{"not existing", "/v1/proxy/sure-this-domain-dont-exist.com", "http://sure-this-domain-dont-exist.com is not a valid resource", 400},

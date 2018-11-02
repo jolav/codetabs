@@ -105,9 +105,9 @@ func router(w http.ResponseWriter, r *http.Request) {
 	case "loc":
 		if params[0] == "upload" {
 			if r.Method == "POST" {
-				c.Loc.orderInt++
-				c.Loc.order = strconv.Itoa(c.Loc.orderInt)
-				doLocUploadRequest(w, r, c.Loc.order)
+				c.Loc.OrderInt++
+				c.Loc.Order = strconv.Itoa(c.Loc.OrderInt)
+				doLocUploadRequest(w, r, c.Loc.Order)
 			}
 		} else {
 			if len(params) != 1 || params[0] != "get" {
@@ -123,9 +123,9 @@ func router(w http.ResponseWriter, r *http.Request) {
 				badRequest(w, msg)
 				return
 			}
-			c.Loc.orderInt++
-			c.Loc.order = strconv.Itoa(c.Loc.orderInt)
-			doLocRepoRequest(w, r, repo, c.Loc.order)
+			c.Loc.OrderInt++
+			c.Loc.Order = strconv.Itoa(c.Loc.OrderInt)
+			doLocRepoRequest(w, r, repo, c.Loc.Order)
 		}
 	// PROXY
 	case "proxy":

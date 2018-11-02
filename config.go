@@ -8,7 +8,7 @@ import (
 var configjson = []byte(`
 {
   "app": {
-    "version": "0.1.1",
+    "version": "0.1.2",
     "mode": "production",
     "port": 3510,
 		"service": "",
@@ -24,8 +24,8 @@ var configjson = []byte(`
 	},
 	"loc": {
 		"locLinux": "./_data/loc/locLinux",
-		"order": "1",
-		"orderInt": 1
+		"order": "0",
+		"orderInt": 0
 	}
 }
 `)
@@ -50,8 +50,8 @@ type configuration struct {
 	}
 	Loc struct {
 		LocLinux string
-		order    string
-		orderInt int
+		Order    string
+		OrderInt int
 	}
 }
 
