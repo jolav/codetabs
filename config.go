@@ -8,13 +8,13 @@ import (
 var configjson = []byte(`
 {
   "app": {
-    "version": "0.1.2",
+    "version": "0.2.0",
     "mode": "production",
     "port": 3510,
 		"service": "",
 		"hitslog":"./logs/hits.log",
 		"errlog":"./logs/error.log",
-		"services": ["alexa","headers","loc","proxy","stars","weather"]
+		"services": ["alexa","headers","loc","proxy","stars","weather","video2gif"]
   },
   "alexa": {
     "dataFilePath": "./_data/alexa/top-1m.csv",
@@ -26,6 +26,10 @@ var configjson = []byte(`
 		"locLinux": "./_data/loc/locLinux",
 		"order": "0",
 		"orderInt": 0
+	},
+	"video2gif": {
+		"order": "1",
+		"orderInt": 1
 	}
 }
 `)
@@ -53,6 +57,10 @@ type configuration struct {
 		Order    string
 		OrderInt int
 	}
+	Video2Gif struct {
+		order    string
+		orderInt int
+	}
 }
 
 var g privateConfiguration
@@ -68,7 +76,7 @@ type privateConfiguration struct {
 	} `json:"weatherUnlocked"`
 	GitHub struct {
 		Token []string `json:"token"`
-	} `json:"gitHub"`
+	} `json:"github"`
 }
 
 var e myError
@@ -195,4 +203,20 @@ type myWeatherDataFull struct {
 	ID   int    `json:"id"`
 	Name string `json:"name"`
 	Cod  int    `json:"cod"`
+}
+
+// VIDEO2GIF
+
+type parameters2 struct {
+	fps   int
+	start int
+	dur   int
+	scale string
+}
+
+type parameters struct {
+	fps   string
+	start string
+	dur   string
+	scale string
 }

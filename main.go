@@ -81,6 +81,8 @@ func router(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	saveHit(r)
+
 	switch c.App.Service {
 
 	// ALEXA
@@ -165,12 +167,26 @@ func router(w http.ResponseWriter, r *http.Request) {
 			badRequest(w, msg)
 			return
 		}
+
+		// VIDEO2GIF
+	case "video2gif":
+		if len(params) != 1 {
+			msg := fmt.Sprintf("ERROR %s", "Bad Request, incorrect parameters")
+			badRequest(w, msg)
+			return
+		}
+		if params[0] == "upload" && r.Method == "POST" {
+			c.Video2Gif.orderInt++
+			c.Video2Gif.order = strconv.Itoa(c.Video2Gif.orderInt)
+			doVideo2GifRequest(w, r, c.Video2Gif.order)
+		}
+		if params[0] == "download" && r.Method == "GET" {
+			//doDownloadVideo2GifRequest(w, r)
+		}
 	default:
 		msg := fmt.Sprintf("ERROR %s is not a valid service", c.App.Service)
 		badRequest(w, msg)
 	}
-
-	saveHit(r)
 
 }
 
@@ -184,6 +200,6 @@ func badRequest(w http.ResponseWriter, msg string) {
 
 func saveHit(r *http.Request) {
 	aux := fmt.Sprintf("/v1/%s/", c.App.Service)
-	quest := strings.Split(r.URL.RequestURI(), aux)[1]
+	quest := strings.Replace(r.URL.RequestURI(), aux, "/", 1)
 	addHit(c.App.Service, c.App.Mode, lib.GetIP(r), quest)
 }

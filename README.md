@@ -1,18 +1,19 @@
 
-![Version](https://img.shields.io/badge/version-0.1.2-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.2.0-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-version 0.1.2
+version 0.2.0
 
 1. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
-2. [Github Stars graphical history](#github-stars-graphical-history)  
+2. [Video2Gif](#video2gif)
 3. [CORS proxy](#cors-proxy)  
-4. [Alexa Ranking](#alexa)  
-5. [HTTP Headers](#headers)  
-6. [API weather temp](#weather)  
+4. [Github Stars graphical history](#github-stars-graphical-history)  
+5. [Alexa Ranking](#alexa)  
+6. [HTTP Headers](#headers)  
+7. [API weather temp](#weather)  
 
 <hr>
 
@@ -61,15 +62,31 @@ Response (JSON) :
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/stars48.png?raw=true)  
-# **GITHUB STARS GRAPHICAL HISTORY**
+## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/gif48.png?raw=true)  
+# **VIDEO TO GIF**
 
-### **[DEMO online](https://codetabs.com/github-stars/github-star-history.html)**
+### **[Read DOCS online](https://codetabs.com/video2gif/video-to-gif.html)**
 
-- Enter user/repo , then click add.
-- Petitions are limited to 1 every 5 secs. You will get a 429 error if you exceed 
+- Tool for converting videos to animated gifs
+- File max size 100mb
+- Limit : 1 request every 30 seconds. Once reached subsequent requests will result in error 429 (too many requests) until your quota is cleared.
 
-![Example](https://github.com/jolav/codetabs/blob/master/www/_public/images/starExample.png?raw=true)
+**Parameters** 
+
+Frames : Set frame rate (frames per second). Max value 10, default 5.
+
+Start : Seek to given time position in seconds. "hh:mm:ss" syntax is also supported. Default is from start
+> - 100 - begin from second 100   
+> - 01:40 - begin from minute 1 and second 40  
+
+Duration : Restrict the captured video sequence to the duration specified in seconds. "hh:mm:ss" syntax is also supported. Default is all duration
+> - 200 - take 200 seconds from start  
+> - 03:20 - take 3 minutes and 20 seconds from start  
+
+Scale : Set width:height , if one parameter is -1 it will automatically determine the other while preserving the aspect ratio. Default is 320:160
+> - 500:500 set width = 500 and height = 500  
+> - 640:-1 set width = 640 and height automatically preserving the aspect ratio  
+> - -1:320 set height = 640 and width automatically preserving the aspect ratio  
 
 <hr>
 
@@ -84,6 +101,18 @@ You can use to prevent mixed content of images and JSON data proxying the resour
 - Each request is limited to 5mb (2mb for old endpoint) size download to avoid abuse.
 - Only suppports GET request.
 - Limit : 5 request per second. Once reached subsequent requests will result in error 429 (too many requests) until your quota is cleared. 
+
+<hr>
+
+## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/stars48.png?raw=true)  
+# **GITHUB STARS GRAPHICAL HISTORY**
+
+### **[DEMO online](https://codetabs.com/github-stars/github-star-history.html)**
+
+- Enter user/repo , then click add.
+- Petitions are limited to 1 every 5 secs. You will get a 429 error if you exceed 
+
+![Example](https://github.com/jolav/codetabs/blob/master/www/_public/images/starExample.png?raw=true)
 
 <hr>
 
