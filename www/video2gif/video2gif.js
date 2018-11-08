@@ -10,7 +10,7 @@ const video2gif = (function () {
 
   let repo = '';
 
-  function init () {
+  function init() {
     console.log('Init Count video2gif');
     // document.getElementById('addURL').addEventListener('click', addURL)
     document.getElementById('upload').addEventListener('click', upload);
@@ -18,7 +18,7 @@ const video2gif = (function () {
     hideLoader();
   }
 
-  function addURL (e) {
+  function addURL(e) {
     repo = document.getElementById('repoName').value;
     if (repo === '') {
       alert('user/repo cannot be empty');
@@ -30,7 +30,7 @@ const video2gif = (function () {
     getAjaxData(urlData, showGif);
   }
 
-  function upload (e) {
+  function upload(e) {
     var gifs = document.getElementsByClassName('gif')[0];
     console.log(gifs);
     if (gifs || gifs !== null) {
@@ -60,17 +60,17 @@ const video2gif = (function () {
     makeAjaxRequest(urlData, 'POST', showGif, formData);
   }
 
-  function hideLoader () {
+  function hideLoader() {
     document.getElementsByClassName('loader')[0].style.visibility = 'hidden';
     document.getElementsByClassName('loader')[0].style.display = 'none';
   }
 
-  function showLoader () {
+  function showLoader() {
     document.getElementsByClassName('loader')[0].style.visibility = 'visible';
     document.getElementsByClassName('loader')[0].style.display = 'block';
   }
 
-  function showError (dataError) {
+  function showError(dataError) {
     hideLoader();
     if (dataError.Error) {
       alert(dataError.Error);
@@ -79,12 +79,12 @@ const video2gif = (function () {
     }
   }
 
-  function limitExceeded () {
+  function limitExceeded() {
     hideLoader();
     alert('Rate limit exceeded, wait a few seconds');
   }
 
-  function showGif (dataGif) {
+  function showGif(dataGif) {
     var i = new Image();
     i.onload = function () {
       hideLoader();
@@ -102,7 +102,7 @@ const video2gif = (function () {
     i.src = 'data:image/gif;base64,' + /* btoa*/dataGif;
   }
 
-  function getAjaxData (urlData, callback) {
+  function getAjaxData(urlData, callback) {
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) { // 4 = "DONE"
@@ -126,7 +126,7 @@ const video2gif = (function () {
     xhr.send();
   }
 
-  function makeAjaxRequest (url, action, callback, params) {
+  function makeAjaxRequest(url, action, callback, params) {
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) { // 4 = "DONE"

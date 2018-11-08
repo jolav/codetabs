@@ -1,11 +1,11 @@
 
-![Version](https://img.shields.io/badge/version-0.2.0-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.2.1-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-version 0.2.0
+version 0.2.1
 
 1. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
 2. [Video2Gif](#video2gif)
@@ -63,7 +63,7 @@ Response (JSON) :
 <hr>
 
 ## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/gif48.png?raw=true)  
-# **VIDEO TO GIF**
+# **VIDEO2GIF**
 
 ### **[Read DOCS online](https://codetabs.com/video2gif/video-to-gif.html)**
 

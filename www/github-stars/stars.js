@@ -13,7 +13,7 @@ const stars = (function () {
   let dataSets = [];
   let repo = '';
 
-  function init () {
+  function init() {
     console.log('Init GitHub Star History');
     document.getElementById('addRepo').addEventListener('click', addRepo);
     document.getElementById('clearAll').addEventListener('click', clearAll);
@@ -22,7 +22,7 @@ const stars = (function () {
     hideLoader();
   }
 
-  function addRepo (e) {
+  function addRepo(e) {
     repo = document.getElementById('repoName').value;
     if (repo === '') {
       alert('user/repo cannot be empty');
@@ -40,22 +40,22 @@ const stars = (function () {
     getAjaxData(urlData, showData);
   }
 
-  function hideLoader () {
+  function hideLoader() {
     document.getElementsByClassName('loader')[0].style.visibility = 'hidden';
     document.getElementsByClassName('loader')[0].style.display = 'none';
   }
 
-  function showLoader () {
+  function showLoader() {
     document.getElementsByClassName('loader')[0].style.visibility = 'visible';
     document.getElementsByClassName('loader')[0].style.display = 'block';
   }
 
-  function clearAll () {
+  function clearAll() {
     dataSets = [];
     myChart.destroy();
   }
 
-  function cutData (dataRepo) {
+  function cutData(dataRepo) {
     let hop = Math.ceil(dataRepo.length / 100);
     let data = [];
     console.log('POINTS', dataRepo.length, 'HOP', hop);
@@ -73,7 +73,7 @@ const stars = (function () {
     return data;
   }
 
-  function showError (dataError) {
+  function showError(dataError) {
     hideLoader();
     if (dataError.Error) {
       alert(dataError.Error);
@@ -82,12 +82,12 @@ const stars = (function () {
     }
   }
 
-  function limitExceeded () {
+  function limitExceeded() {
     hideLoader();
     alert('Rate limit exceeded, wait a few seconds');
   }
 
-  function showData (dataRepo) {
+  function showData(dataRepo) {
     console.log('Receive .......... => ', dataRepo);
     hideLoader();
     let newDataRepo = {};
@@ -107,7 +107,7 @@ const stars = (function () {
     drawHistory();
   }
 
-  function drawHistory () {
+  function drawHistory() {
     myChart = new Chart(ctx, {
       type: 'line',
       data: {
@@ -154,7 +154,7 @@ const stars = (function () {
     });
   }
 
-  function getRandomColor () {
+  function getRandomColor() {
     var letters = '0123456789ABCDEF'.split('');
     var color = '#';
     for (var i = 0; i < 6; i++) {
@@ -163,7 +163,7 @@ const stars = (function () {
     return color;
   }
 
-  function getAjaxData (urlData, callback) {
+  function getAjaxData(urlData, callback) {
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
       console.log('STATUS =>', xhr.status);

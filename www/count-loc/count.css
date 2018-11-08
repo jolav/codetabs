@@ -227,3 +227,39 @@ hr {
   border: 1px solid #93be93;
   background-color: #93be93;
 }
+
+/* TABLE */
+
+thead tr th {
+  color: #fafafa;
+  background-color: #404040;
+  font-size: 0.9em;
+}
+
+.table>thead>tr>th {
+  padding: 5px 10px;
+}
+
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+  padding: 3px 7px;
+  line-height: 1.2em;
+}
+
+table, tr, th, td {
+  border-collapse: collapse;
+  box-shadow: inset 0 0 1px #cccccc;
+  text-align: center;
+}
+
+.table tbody tr .points {
+  text-align: center;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+  background-color: #dddddd
+}
+
+tr:nth-child(odd) {
+  background-color: #eee;
+}

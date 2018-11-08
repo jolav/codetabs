@@ -5,7 +5,7 @@ const loc = (function () {
   'use strict';
   /* code here */
 
-  // const urlBase = 'http://localhost:3000/v1/loc/'
+  //const urlBase = 'http://localhost:3000/v1/loc/';
   const urlBase = 'https://api.codetabs.com/v1/loc/';
 
   const ctx = document.getElementById('myPie');
@@ -13,7 +13,7 @@ const loc = (function () {
   let myChart;
   let repo = '';
 
-  function init () {
+  function init() {
     console.log('Init Count Loc');
     document.getElementById('addRepo').addEventListener('click', addRepo);
     document.getElementById('upload').addEventListener('click', upload);
@@ -21,7 +21,7 @@ const loc = (function () {
     hideLoader();
   }
 
-  function addRepo (e) {
+  function addRepo(e) {
     repo = document.getElementById('repoName').value;
     if (repo === '') {
       alert('user/repo cannot be empty');
@@ -37,7 +37,7 @@ const loc = (function () {
     getAjaxData(urlData, prepareData);
   }
 
-  function upload (e) {
+  function upload(e) {
     showLoader();
     e.preventDefault();
     let urlData = urlBase + 'upload';
@@ -57,17 +57,17 @@ const loc = (function () {
     makeAjaxRequest(urlData, 'POST', prepareData, formData);
   }
 
-  function hideLoader () {
+  function hideLoader() {
     document.getElementsByClassName('loader')[0].style.visibility = 'hidden';
     document.getElementsByClassName('loader')[0].style.display = 'none';
   }
 
-  function showLoader () {
+  function showLoader() {
     document.getElementsByClassName('loader')[0].style.visibility = 'visible';
     document.getElementsByClassName('loader')[0].style.display = 'block';
   }
 
-  function showError (dataError) {
+  function showError(dataError) {
     hideLoader();
     if (dataError.Error) {
       alert(dataError.Error);
@@ -76,13 +76,13 @@ const loc = (function () {
     }
   }
 
-  function limitExceeded () {
+  function limitExceeded() {
     hideLoader();
     alert('Rate limit exceeded, wait a few seconds');
   }
 
-  function prepareData (dataRepo) {
-    // console.log('RECEIVE => ', dataRepo.length)
+  function prepareData(dataRepo) {
+    //console.log('RECEIVE => ', dataRepo);
     if (dataRepo.length === 1) {
       if (dataRepo[0].linesOfCode === 0 || dataRepo[0].linesOfCode === undefined) {
         alert('Not a valid file');
@@ -99,9 +99,10 @@ const loc = (function () {
       }
     }
     drawChart(linesOfCode, labels);
+    showTotal(dataRepo);
   }
 
-  function drawChart (loc, langs) {
+  function drawChart(loc, langs) {
     document.getElementsByClassName('pie')[0].style.display = 'block';
     let colors = [];
     let data = [];
@@ -129,7 +130,35 @@ const loc = (function () {
     });
   }
 
-  function getRandomColor () {
+  function showTotal(dataRepo) {
+    const data = dataRepo[dataRepo.length - 1];
+    let res = `
+        <table class="table">
+          <thead class="thead">
+            <tr>
+              <th class="Files">Files</th>
+              <th class="Lines">Lines</th>
+              <th class="Blanks">Blanks</th>
+              <th class="Comments">Comments</th>
+              <th class="Lines of Code">Lines of Code</th>
+            </tr>
+          </thead>
+          <tbody class="tbody">
+            <tr class="tr">
+                <td>${data.files}</td>
+                <td>${data.lines}</td>
+                <td>${data.blanks}</td>
+                <td>${data.comments}</td>
+                <td>${data.linesOfCode}</td>
+            </tr>
+            </tbody>
+        </table>
+    `;
+    document.getElementById("totalResume").innerHTML = res;
+
+  }
+
+  function getRandomColor() {
     var letters = '0123456789ABCDEF'.split('');
     var color = '#';
     for (var i = 0; i < 6; i++) {
@@ -138,7 +167,7 @@ const loc = (function () {
     return color;
   }
 
-  function getAjaxData (urlData, callback) {
+  function getAjaxData(urlData, callback) {
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) { // 4 = "DONE"
@@ -162,7 +191,7 @@ const loc = (function () {
     xhr.send();
   }
 
-  function makeAjaxRequest (url, action, callback, params) {
+  function makeAjaxRequest(url, action, callback, params) {
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) { // 4 = "DONE"

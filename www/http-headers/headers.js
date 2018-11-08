@@ -7,12 +7,12 @@ const stars = (function () {
   // const baseUrl = 'http://localhost:3000/'
   const baseUrl = 'https://api.codetabs.com/v1/headers/';
 
-  function init () {
+  function init() {
     console.log('Init HTTP Headers');
     document.getElementById('addUrl').addEventListener('click', getHeaders);
   }
 
-  function getHeaders (e) {
+  function getHeaders(e) {
     let url = document.getElementById('urlName').value;
     if (url === '') {
       alert('Url cannot be empty');
@@ -27,7 +27,7 @@ const stars = (function () {
     getAjaxData(urlData, showData);
   }
 
-  function showData (dataRaw) {
+  function showData(dataRaw) {
     let data = JSON.parse(dataRaw);
     let res = '';
     for (let i = 0; i < data.length; i++) {
@@ -55,7 +55,7 @@ const stars = (function () {
     document.getElementById('result').innerHTML = res;
   }
 
-  function showError (dataError) {
+  function showError(dataError) {
     console.log('SHOW ERROR');
     if (dataError.error) {
       // alert(dataError.error)
@@ -65,11 +65,11 @@ const stars = (function () {
     }
   }
 
-  function limitExceeded () {
+  function limitExceeded() {
     alert('Rate limit exceeded, wait a few seconds');
   }
 
-  function getAjaxData (urlData, callback) {
+  function getAjaxData(urlData, callback) {
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) { // 4 = "DONE"
@@ -90,7 +90,7 @@ const stars = (function () {
     xhr.send();
   }
 
-  function isValidHostname (hostname) {
+  function isValidHostname(hostname) {
     hostname = hostname.replace('https://', '');
     hostname = hostname.replace('http://', '');
     let condition = /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])$/;

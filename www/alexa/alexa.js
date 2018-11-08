@@ -4,12 +4,12 @@ const alexa = (function () {
   // const baseUrl = 'https://api.codetabs.com/alexa/'
   const baseUrl = 'https://api.codetabs.com/v1/alexa/';
 
-  function init () {
+  function init() {
     console.log('Init Alexa');
     document.getElementById('getDomain').addEventListener('click', getDomain);
   }
 
-  function getDomain (e) {
+  function getDomain(e) {
     let domain = document.getElementById('domainName').value;
     if (domain === '') {
       alert('domain cannot be empty');
@@ -23,13 +23,13 @@ const alexa = (function () {
     getAjaxData(urlData, showData);
   }
 
-  function showData (data) {
+  function showData(data) {
     // console.log(data)
     document.getElementById('rankResult2').innerText = '';
     document.getElementById('rankResult').innerText = data.rank;
   }
 
-  function showError (dataError) {
+  function showError(dataError) {
     // console.log(dataError)
     if (dataError.Error) {
       // alert(dataError.error)
@@ -40,11 +40,11 @@ const alexa = (function () {
     }
   }
 
-  function limitExceeded () {
+  function limitExceeded() {
     alert('Rate limit exceeded, wait a few seconds');
   }
 
-  function getAjaxData (urlData, callback) {
+  function getAjaxData(urlData, callback) {
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) { // 4 = "DONE"
@@ -63,7 +63,7 @@ const alexa = (function () {
     xhr.send();
   }
 
-  function isValidHostname (hostname) {
+  function isValidHostname(hostname) {
     let condition = /^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])$/;
     if (condition.test(hostname)) {
       return true;
