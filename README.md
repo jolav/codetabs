@@ -1,11 +1,16 @@
 
-![Version](https://img.shields.io/badge/version-0.2.1-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.3.0-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-version 0.2.1
+version 0.3.0
+
+# **##################################**
+# **NEW ENDPOINTS ARE DEFINITIVES (2018-11-10)**  
+# **Change old endpoints before 2018-11-30**
+# **##################################**
 
 1. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
 2. [Video2Gif](#video2gif)
@@ -31,10 +36,10 @@ version 0.2.1
 **API LOC**
 
 *  Make a GET HTTP Request   
-`https://api.codetabs.com/v1/loc/get?repo=USERNAME/REPONAME`
+`https://api.codetabs.com/v1/loc?github=USERNAME/REPONAME`
 
 Example :   
-https://api.codetabs.com/v1/loc/get?repo=jolav/codetabs
+https://api.codetabs.com/v1/loc?github=jolav/codetabs
 
 Response (JSON) :
 
