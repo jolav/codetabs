@@ -4,8 +4,10 @@ const stars = (function () {
   'use strict';
   /* code here */
 
-  // const baseUrl = 'http://localhost:3000/'
-  const baseUrl = 'https://api.codetabs.com/v1/headers/';
+  let baseUrl = 'https://api.codetabs.com/v1/headers';
+  if (window.mode === "dev") {
+    baseUrl = 'http://localhost:3000/v1/headers';
+  }
 
   function init() {
     console.log('Init HTTP Headers');
@@ -22,13 +24,14 @@ const stars = (function () {
       alert('Not a valid url');
       return;
     }
-    let urlData = baseUrl /*+ 'get/'*/ + url;
+    let urlData = baseUrl + '?domain=' + url;
     console.log('Requesting ...', urlData);
     getAjaxData(urlData, showData);
   }
 
   function showData(dataRaw) {
     let data = JSON.parse(dataRaw);
+    //console.log('DATA =>', data[0].Location);
     let res = '';
     for (let i = 0; i < data.length; i++) {
       res += `
@@ -51,7 +54,7 @@ const stars = (function () {
       </tbody>`;
     }
     res += `</table>`;
-    // console.log('RES ====>', res)
+    //console.log('RES ====>', res);
     document.getElementById('result').innerHTML = res;
   }
 
@@ -74,8 +77,7 @@ const stars = (function () {
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) { // 4 = "DONE"
         if (xhr.status === 200) { // 200 ="OK"
-          console.log('BUEN CAMINO');
-          // callback(JSON.parse(xhr.responseText))
+          //callback(JSON.parse(xhr.responseText))
           callback(xhr.responseText);
         } else if (xhr.status === 429) { // 200 ="OK"
           limitExceeded();

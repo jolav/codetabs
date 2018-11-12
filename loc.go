@@ -18,11 +18,13 @@ import (
 var languages []language
 
 func doLocUploadRequest(w http.ResponseWriter, r *http.Request, folder string) {
+	folderNum := folder
+	folder = "temp/loc/" + folder
 	destroyTemporalDir := []string{"rm", "-r", folder}
 	createTemporalDir := []string{"mkdir", folder}
 	err := lib.GenericCommand(createTemporalDir)
 	if err != nil {
-		log.Printf("ERROR 1 %s", err)
+		log.Printf("ERROR 1 creating folder %s\n", err)
 		e.Error = "Error creating folder " + folder
 		lib.SendErrorToClient(w, e)
 		return
@@ -31,7 +33,7 @@ func doLocUploadRequest(w http.ResponseWriter, r *http.Request, folder string) {
 	// create file
 	file, handler, err := r.FormFile("inputFile")
 	if err != nil {
-		log.Printf("ERROR creating file %s", err)
+		log.Printf("ERROR creating file %s\n", err)
 		e.Error = "Error creating file "
 		lib.SendErrorToClient(w, e)
 		lib.GenericCommand(destroyTemporalDir)
@@ -42,7 +44,7 @@ func doLocUploadRequest(w http.ResponseWriter, r *http.Request, folder string) {
 	defer file.Close()
 	f, err := os.OpenFile(filePath, os.O_WRONLY|os.O_CREATE, 0666)
 	if err != nil {
-		log.Printf("ERROR opening uploaded file %s", err)
+		log.Printf("ERROR opening uploaded file %s\n", err)
 		e.Error = "Error opening " + upload
 		lib.SendErrorToClient(w, e)
 		lib.GenericCommand(destroyTemporalDir)
@@ -56,7 +58,7 @@ func doLocUploadRequest(w http.ResponseWriter, r *http.Request, folder string) {
 	unzipFile := []string{"7z", "x", filePath, "-o" + dest + "/src"}
 	err = lib.GenericCommand(unzipFile)
 	if err != nil {
-		log.Printf("ERROR 7z %s", err)
+		log.Printf("ERROR 7z %s -> %s\n", err, r.URL.RequestURI())
 		e.Error = "Error unziping " + upload
 		lib.SendErrorToClient(w, e)
 		lib.GenericCommand(destroyTemporalDir)
@@ -66,14 +68,14 @@ func doLocUploadRequest(w http.ResponseWriter, r *http.Request, folder string) {
 	repoPath := dest + "/src"
 	info, err := countLines(repoPath)
 	if err != nil {
-		log.Printf("ERROR %s", err)
+		log.Printf("ERROR counting loc %s -> %s\n", err, r.URL.RequestURI())
 		e.Error = "Error counting LOC in " + upload
 		lib.SendErrorToClient(w, e)
 		lib.GenericCommand(destroyTemporalDir)
 		return
 	}
 
-	resultPath := "./" + folder + "/" + folder + ".txt"
+	resultPath := "./" + folder + "/" + folderNum + ".txt"
 	lib.WriteFile(resultPath, string(info))
 	readFileLineByLine(resultPath)
 	//fmt.Println(languages)
@@ -81,8 +83,61 @@ func doLocUploadRequest(w http.ResponseWriter, r *http.Request, folder string) {
 	lib.GenericCommand(destroyTemporalDir)
 }
 
-func doLocRepoRequest(w http.ResponseWriter, r *http.Request, repo string, folder string) {
+func doLocRepoRequest(w http.ResponseWriter, r *http.Request, repo, folder string) {
 	//repouser := strings.Split(repo, "/")[0]
+	folderNum := folder
+	folder = "temp/loc/" + folder
+	//reponame := strings.Split(repo, "/")[1]
+
+	if !existRepo(repo) {
+		e.Error = repo + " doesn't exist"
+		lib.SendErrorToClient(w, e)
+		return
+	}
+	destroyTemporalDir := []string{"rm", "-r", folder}
+
+	createTemporalDir := []string{"mkdir", folder}
+	err := lib.GenericCommand(createTemporalDir)
+	if err != nil {
+		log.Printf("ERROR cant create temporal dir %s\n", err)
+		e.Error = "Cant create temporal dir for " + repo
+		lib.SendErrorToClient(w, e)
+		return
+	}
+
+	url := "https://github.com/" + repo
+	dest := "./" + folder
+	cloneRepo := []string{"git", "clone", url, dest}
+	err = lib.GenericCommand(cloneRepo)
+	if err != nil {
+		log.Printf("ERROR Cant clone repo %s -> %s\n", err, r.URL.RequestURI())
+		e.Error = "Can't clone repo " + repo
+		lib.SendErrorToClient(w, e)
+		lib.GenericCommand(destroyTemporalDir)
+		return
+	}
+	repoPath := "./" + folder
+	info, err := countLines(repoPath)
+	if err != nil {
+		log.Printf("ERROR counting loc %s -> %s\n", err, r.URL.RequestURI())
+		e.Error = "Error counting LOC in " + repo
+		lib.SendErrorToClient(w, e)
+		lib.GenericCommand(destroyTemporalDir)
+		return
+	}
+
+	resultPath := "./" + folder + "/" + folderNum + ".txt"
+	lib.WriteFile(resultPath, string(info))
+	readFileLineByLine(resultPath)
+	//fmt.Println(languages)
+	lib.SendJSONToClient(w, languages)
+	lib.GenericCommand(destroyTemporalDir)
+}
+
+func doLocRepoRequest2(w http.ResponseWriter, r *http.Request, repo string, folder string) {
+	//repouser := strings.Split(repo, "/")[0]
+	folderNum := folder
+	folder = "temp/loc/" + folder
 	reponame := strings.Split(repo, "/")[1]
 
 	if !existRepo(repo) {
@@ -95,7 +150,7 @@ func doLocRepoRequest(w http.ResponseWriter, r *http.Request, repo string, folde
 	createTemporalDir := []string{"mkdir", folder}
 	err := lib.GenericCommand(createTemporalDir)
 	if err != nil {
-		log.Printf("ERROR %s", err)
+		log.Printf("ERROR cant create temporal dir %s\n", err)
 		e.Error = "Cant create temporal dir for " + repo
 		lib.SendErrorToClient(w, e)
 		return
@@ -105,7 +160,7 @@ func doLocRepoRequest(w http.ResponseWriter, r *http.Request, repo string, folde
 	filePath := "./" + folder + "/" + reponame + ".zip"
 	err = downloadFile(filePath, url)
 	if err != nil {
-		log.Printf("ERROR %s", err)
+		log.Printf("ERROR Cant download repo %s -> %s\n", err, r.URL.RequestURI())
 		e.Error = "Can't download repo " + repo
 		lib.SendErrorToClient(w, e)
 		lib.GenericCommand(destroyTemporalDir)
@@ -121,7 +176,7 @@ func doLocRepoRequest(w http.ResponseWriter, r *http.Request, repo string, folde
 		url = "https://github.com/" + repo + "/archive/next.zip"
 		err = downloadFile(filePath, url)
 		if err != nil {
-			log.Printf("Cant download repo %s", err)
+			log.Printf("Cant download repo %s\n", err)
 			e.Error = "Can't download repo " + repo
 			lib.SendErrorToClient(w, e)
 			lib.GenericCommand(destroyTemporalDir)
@@ -130,7 +185,7 @@ func doLocRepoRequest(w http.ResponseWriter, r *http.Request, repo string, folde
 		unzipFile = []string{"7z", "x", filePath, "-o" + dest + "/src"}
 		err = lib.GenericCommand(unzipFile)
 		if err != nil {
-			log.Printf("ERROR 7z %s", err)
+			log.Printf("ERROR 7z %s -> %s\n", err, r.URL.RequestURI())
 			e.Error = "Error unziping " + repo
 			lib.SendErrorToClient(w, e)
 			lib.GenericCommand(destroyTemporalDir)
@@ -141,14 +196,14 @@ func doLocRepoRequest(w http.ResponseWriter, r *http.Request, repo string, folde
 	repoPath := dest + "/src"
 	info, err := countLines(repoPath)
 	if err != nil {
-		log.Printf("ERROR %s", err)
+		log.Printf("ERROR counting loc %s -> %s\n", err, r.URL.RequestURI())
 		e.Error = "Error counting LOC in " + repo
 		lib.SendErrorToClient(w, e)
 		lib.GenericCommand(destroyTemporalDir)
 		return
 	}
 
-	resultPath := "./" + folder + "/" + folder + ".txt"
+	resultPath := "./" + folder + "/" + folderNum + ".txt"
 	lib.WriteFile(resultPath, string(info))
 	readFileLineByLine(resultPath)
 	//fmt.Println(languages)
@@ -159,7 +214,7 @@ func doLocRepoRequest(w http.ResponseWriter, r *http.Request, repo string, folde
 func readFileLineByLine(filePath string) {
 	file, err := os.Open(filePath)
 	if err != nil {
-		log.Printf("ERROR opening file line by line %s", err)
+		log.Printf("ERROR opening file line by line %s\n", err)
 		return
 	}
 	defer file.Close()
@@ -173,7 +228,7 @@ func readFileLineByLine(filePath string) {
 		number++
 	}
 	if err := scanner.Err(); err != nil {
-		log.Printf("ERROR scan file %s", err)
+		log.Printf("ERROR scan file %s\n", err)
 	}
 }
 
@@ -198,7 +253,7 @@ func processLine(line string) {
 func stringToInt(s string) int {
 	num, err := strconv.Atoi(s)
 	if err != nil {
-		log.Printf("ERROR string to Int %s", err)
+		log.Printf("ERROR string to Int %s\n", err)
 		return 0
 	}
 	return num
@@ -208,7 +263,7 @@ func existRepo(repo string) bool {
 	url := "https://github.com/" + repo
 	resp, err := http.Get(url)
 	if err != nil {
-		log.Printf("ERROR exists repo %s", err)
+		log.Printf("ERROR exists repo %s\n", err)
 		return false
 	}
 	if resp.StatusCode == 200 {
@@ -245,8 +300,9 @@ func countLines(repoPath string) (info []byte, err error) {
 	languages = make([]language, 0)
 	var e = myError{}
 	info, err = exec.Command(c.Loc.LocLinux, repoPath).CombinedOutput()
+	//info, err = exec.Command(c.Loc.LocMac, repoPath).CombinedOutput()
 	if err != nil {
-		log.Println(fmt.Sprintf("ERROR CMD = %s", err))
+		log.Println(fmt.Sprintf("ERROR in countLines %s\n", err))
 		e.Error = err.Error()
 		return nil, err
 	}

@@ -8,35 +8,40 @@ import (
 	"testing"
 )
 
-type weatherTestOutput struct {
-	StatusCode int     // `json:"statusCode"`
-	Error      string  `json:"Error,omitempty"`
-	TempC      float64 `json:"tempC"`
-	TempF      float64 `json:"tempF"`
-	City       string  `json:"city"`
-	Country    string  `json:"country"`
-	Lat        float64 `json:"latitude"`
-	Lon        float64 `json:"longitude"`
-}
-
-var weatherTests = []struct {
-	it         string
-	endpoint   string
-	errorText  string
-	statusCode int
-}{
-	{"empty", "/v1/weather", "ERROR Bad Request, not enough parameters", 400},
-	{"bad city", "/v1/weather/temp?city=i-dont-exist", "", 200},
-	{"bad city", "/v1/weather/temp?city=lon%%don", "", 200},
-	{"incomplete", "/v1/weather/temp?city=", "", 200},
-	{"bad", "/v1/weather/bad", "ERROR Bad Request", 400},
-	{"local temp", "/v1/weather/temp", "", 200},
-	{"empty city", "/v1/weather/temp?city=", "", 200},
-	{"london", "/v1/weather/temp?city=london", "", 200},
-	{"new york", "/v1/weather/temp?city=new york", "", 200},
-}
-
 func TestWeatherApi(t *testing.T) {
+
+	type weatherTestOutput struct {
+		StatusCode int     // `json:"statusCode"`
+		Error      string  `json:"Error,omitempty"`
+		TempC      float64 `json:"tempC"`
+		TempF      float64 `json:"tempF"`
+		City       string  `json:"city"`
+		Country    string  `json:"country"`
+		Lat        float64 `json:"latitude"`
+		Lon        float64 `json:"longitude"`
+	}
+
+	var weatherTests = []struct {
+		it         string
+		endpoint   string
+		errorText  string
+		statusCode int
+	}{
+		{"empty", "/v1/weather", "", 200},
+		{"bad city", "/v1/weather?city=i-dont-exist", "", 200},
+		{"bad city", "/v1/weather/?city=lon%%don", "", 200},
+		{"incomplete", "/v1/weather/?city=&format=xml", "", 200},
+		{"bad", "/v1/weather/bad", c.Test.ValidFormat, 400},
+		{"local temp", "/v1/weather/", "", 200},
+		{"empty city", "/v1/weather/?city=", "", 200},
+		{"london", "/v1/weather/?city=london", "", 200},
+		{"new york", "/v1/weather?city=new york", "", 200},
+		{"", "/v1/weather?format=json", "", 200},
+		{"", "/v1/weather?format=invalid", c.Test.ValidFormat, 400},
+		{"", "/v1/weather?format=xml", "", 200},
+		//{"", "/v1/weather", "", 00},
+	}
+
 	c.App.Mode = "test"
 
 	for _, test := range weatherTests {

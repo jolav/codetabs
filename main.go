@@ -32,7 +32,7 @@ func main() {
 		var f = c.App.ErrLog
 		mylog, err := os.OpenFile(f, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 		if err != nil {
-			log.Printf("ERROR opening log file %s", err)
+			log.Printf("ERROR opening log file %s\n", err)
 		}
 		defer mylog.Close() // defer must be in main
 		log.SetOutput(mylog)
@@ -51,6 +51,7 @@ func main() {
 		WriteTimeout:   30 * time.Second,
 		MaxHeaderBytes: 1 << 20,
 	}
+	log.Printf("Server listening ...%s", server.Addr)
 	server.ListenAndServe()
 }
 
@@ -61,83 +62,81 @@ func router(w http.ResponseWriter, r *http.Request) {
 	if path[len(path)-1] == "" { // remove last empty slot after /
 		path = path[:len(path)-1]
 	}
-	//fmt.Println("Going ....", path, r.Method, len(path))
+	//log.Printf("Going ....%s %s %d", path, r.Method, len(path))
 	if len(path) < 2 || path[0] != "v1" {
-		msg := fmt.Sprintf("ERROR %s", "Bad Request")
-		badRequest(w, msg)
+		msg := fmt.Sprintf("%s", c.Test.ValidFormat)
+		badRequest(w, r, msg)
 		return
 	}
 	if !lib.SliceContainsString(path[1], c.App.Services) {
-		msg := fmt.Sprintf("ERROR Bad Request, endpoint '%s' unknown", path[1])
-		badRequest(w, msg)
-		return
-	}
-	c.App.Service = path[1]
-	params = path[2:len(path)]
-	quest := strings.Join(params, "/")
-	if quest == "" {
-		msg := fmt.Sprintf("ERROR %s", "Bad Request, not enough parameters")
-		badRequest(w, msg)
+		msg := fmt.Sprintf("Bad Request, service '%s' unknown", path[1])
+		badRequest(w, r, msg)
 		return
 	}
 
-	saveHit(r)
+	c.App.Service = path[1]
+	saveHit(c.App.Service, c.App.Mode, lib.GetIP(r), r.URL.RequestURI())
 
 	switch c.App.Service {
 
 	// ALEXA
 	case "alexa":
-		if len(params) != 2 {
-			msg := fmt.Sprintf("ERROR %s", "Bad Request, incorrect parameters")
-			badRequest(w, msg)
+		r.ParseForm()
+		web := r.Form.Get("web")
+		if web == "" || len(path) != 2 {
+			badRequest(w, r, c.Test.ValidFormat)
 			return
 		}
-		doAlexaRequest(w, params)
+		doAlexaRequest(w, web)
 
 	// HEADERS
 	case "headers":
-		if len(params) != 1 {
-			msg := fmt.Sprintf("ERROR %s", "Bad Request, incorrect parameters")
-			badRequest(w, msg)
+		r.ParseForm()
+		domain := r.Form.Get("domain")
+		if domain == "" || len(path) != 2 {
+			badRequest(w, r, c.Test.ValidFormat)
 			return
 		}
-		doHeadersRequest(w, params[0])
+		doHeadersRequest(w, r, domain)
 
 	// LOC
 	case "loc":
-		if params[0] == "upload" {
-			if r.Method == "POST" {
-				c.Loc.OrderInt++
-				c.Loc.Order = strconv.Itoa(c.Loc.OrderInt)
-				doLocUploadRequest(w, r, c.Loc.Order)
-			}
-		} else {
-			if len(params) != 1 || params[0] != "get" {
-				msg := fmt.Sprintf("ERROR %s", "Bad Request, incorrect parameters")
-				badRequest(w, msg)
-				return
-			}
-			r.ParseForm()
-			repo := r.Form.Get("repo")
-			aux := strings.Split(repo, "/")
-			if len(aux) != 2 || aux[0] == "" || aux[1] == "" {
-				msg := fmt.Sprintf("Incorrect user/repo")
-				badRequest(w, msg)
-				return
-			}
+		if r.Method == "POST" {
 			c.Loc.OrderInt++
 			c.Loc.Order = strconv.Itoa(c.Loc.OrderInt)
-			doLocRepoRequest(w, r, repo, c.Loc.Order)
+			doLocUploadRequest(w, r, c.Loc.Order)
+			return
 		}
+		r.ParseForm()
+		repo := r.Form.Get("github")
+		aux := strings.Split(repo, "/")
+		if len(aux) != 2 || aux[0] == "" || aux[1] == "" {
+			msg := fmt.Sprintf("Incorrect user/repo")
+			badRequest(w, r, msg)
+			return
+		}
+		if len(path) != 2 {
+			badRequest(w, r, c.Test.ValidFormat)
+			return
+		}
+		c.Loc.OrderInt++
+		c.Loc.Order = strconv.Itoa(c.Loc.OrderInt)
+		doLocRepoRequest(w, r, repo, c.Loc.Order)
+
 	// PROXY
 	case "proxy":
-		doProxyRequest(w, quest)
+		r.ParseForm()
+		quest := r.Form.Get("quest")
+		if quest == "" || len(path) != 2 {
+			badRequest(w, r, c.Test.ValidFormat)
+			return
+		}
+		doProxyRequest(w, r, quest)
 
 	// STARS
 	case "stars":
-		if len(params) != 1 || params[0] != "get" {
-			msg := fmt.Sprintf("ERROR %s", "Bad Request, incorrect parameters")
-			badRequest(w, msg)
+		if len(path) != 2 {
+			badRequest(w, r, c.Test.ValidFormat)
 			return
 		}
 		r.ParseForm()
@@ -145,61 +144,49 @@ func router(w http.ResponseWriter, r *http.Request) {
 		aux := strings.Split(repo, "/")
 		if len(aux) != 2 || aux[0] == "" || aux[1] == "" {
 			msg := fmt.Sprintf("Incorrect user/repo")
-			badRequest(w, msg)
+			badRequest(w, r, msg)
 			return
 		}
 		doStarsRequest(w, r, repo)
 
-	// WEATHER
-	case "weather":
-		r.ParseForm()
-		format := strings.ToLower(r.Form.Get("format"))
-		city := strings.ToLower(r.Form.Get("city"))
-		if params[0] != "temp" {
-			msg := fmt.Sprintf("ERROR %s", "Bad Request")
-			badRequest(w, msg)
-			return
-		}
-		if format == "xml" || format == "json" || format == "" {
-			doWeatherRequest(w, r, format, city)
-		} else {
-			msg := fmt.Sprintf("Format %s not recognized", path[0])
-			badRequest(w, msg)
-			return
-		}
-
 		// VIDEO2GIF
 	case "video2gif":
-		if len(params) != 1 {
-			msg := fmt.Sprintf("ERROR %s", "Bad Request, incorrect parameters")
-			badRequest(w, msg)
-			return
-		}
-		if params[0] == "upload" && r.Method == "POST" {
+		if r.Method == "POST" {
 			c.Video2Gif.orderInt++
 			c.Video2Gif.order = strconv.Itoa(c.Video2Gif.orderInt)
 			doVideo2GifRequest(w, r, c.Video2Gif.order)
+			return
 		}
-		if params[0] == "download" && r.Method == "GET" {
-			//doDownloadVideo2GifRequest(w, r)
+		badRequest(w, r, c.Test.ValidFormat)
+
+	// WEATHER
+	case "weather":
+		if len(path) != 2 {
+			badRequest(w, r, c.Test.ValidFormat)
+			return
 		}
+		r.ParseForm()
+		format := strings.ToLower(r.Form.Get("format"))
+		city := strings.ToLower(r.Form.Get("city"))
+		if format == "" {
+			format = "json"
+		}
+		if format != "xml" && format != "json" {
+			badRequest(w, r, c.Test.ValidFormat)
+			return
+		}
+		doWeatherRequest(w, r, format, city)
+
 	default:
-		msg := fmt.Sprintf("ERROR %s is not a valid service", c.App.Service)
-		badRequest(w, msg)
+		badRequest(w, r, c.Test.ValidFormat)
 	}
 
 }
 
-func badRequest(w http.ResponseWriter, msg string) {
+func badRequest(w http.ResponseWriter, r *http.Request, msg string) {
 	e.Error = msg
 	if c.App.Mode != "test" {
-		log.Println(e.Error)
+		log.Printf("ERROR Bad Request -> %s\n", r.URL.RequestURI())
 	}
 	lib.SendErrorToClient(w, e)
-}
-
-func saveHit(r *http.Request) {
-	aux := fmt.Sprintf("/v1/%s/", c.App.Service)
-	quest := strings.Replace(r.URL.RequestURI(), aux, "/", 1)
-	addHit(c.App.Service, c.App.Mode, lib.GetIP(r), quest)
 }

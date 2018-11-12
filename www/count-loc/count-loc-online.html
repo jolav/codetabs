@@ -70,15 +70,6 @@
         until your quota is cleared.
         <br>
       </span>
-      <span>- <span class="red">IMPORTANT TIP</span> Most github repos can be downloaded through
-        "https://github.com/user/repo/archive/master.zip" or
-        "https://github.com/user/repo/archive/next.zip" .That's what this application does.<br>
-        Unfortunately some
-        repos have
-        "custom" download files. So while i figure how to resolve this issue if you find a repo and receive an error
-        "Error unzipping user/repo" you can try to download directy from "https://github/user/repo" -> click clone or
-        download ->
-        Download zip and then upload here the zip file.</span>
     </div>
   </section>
 
@@ -91,14 +82,14 @@
     </div>
     <div class="leftText">
       <strong>http Request : </strong>
-      <code class="red"> GET https://api.codetabs.com/v1/loc/get?repo=username/reponame 
+      <code class="red"> GET https://api.codetabs.com/v1/loc?github=username/reponame 
         </code>
       <br>
       <strong>example : </strong>
       <br>
       <code>
-          <a href="https://api.codetabs.com/v1/loc/get?repo=jolav/codetabs  
-          ">https://api.codetabs.com/v1/loc/get?repo=jolav/codetabs</a>  
+          <a href="https://api.codetabs.com/v1/loc?github=jolav/geoip-xyz  
+          ">https://api.codetabs.com/v1/loc?github=jolav/geoip-xyz</a>  
         </code>
       <br>
       <strong>response :</strong>
@@ -133,13 +124,13 @@
     </div>
     <div class="leftText">
       <strong>http Request : </strong>
-      <code class="red"> POST https://api.codetabs.com/v1/loc/upload</code>
+      <code class="red"> POST https://api.codetabs.com/v1/loc</code>
       <br>
       <strong>parameter : Form Data</strong>
       <br>
       <code class="red">Content-Disposition: form-data; name="inputFile"; filename="yourRarZipFolder.zip"</code>
       <br>
-      <strong>response :</strong> Same as Endpoint - Get Lines of Code from GitHub repo
+      <strong>response :</strong> Same as Endpoint - Get Lines of Code from any zipped Project
     </div>
   </section>
 
@@ -159,8 +150,8 @@
       <strong>example : </strong>
       <br>
       <code>
-        <a href="https://api.codetabs.com/count-loc/get?repo=jolav/codetabs  
-        ">https://api.codetabs.com/count-loc/get?repo=jolav/codetabs</a>  
+        <a href="https://api.codetabs.com/count-loc/get?repo=jolav/geoip-xyz  
+        ">https://api.codetabs.com/count-loc/get?repo=jolav/geoip-xyz</a>  
       </code>
       <br>
       <strong>response :</strong>
@@ -221,6 +212,7 @@
 
   <script async src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.bundle.min.js"></script>
 
+  <script type='text/javascript' src='./../mode.js'></script>
   <script async src="./count.js"></script>
 
   <!-- Open Sans + Titillium Web -->

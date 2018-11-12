@@ -8,26 +8,32 @@ import (
 	"testing"
 )
 
-type headersTestOutput struct {
-	StatusCode int    // `json:"statusCode"`
-	Error      string `json:"Error,omitempty"`
-}
-
-var headersTests = []struct {
-	it         string
-	endpoint   string
-	errorText  string
-	statusCode int
-}{
-	{"not domain (empty)", "/v1/headers/", "ERROR Bad Request, not enough parameters", 400},
-	{"not valid hostname", "/v1/headers/no-valid-hostname.com", "ERROR Couldn't resolve host no-valid-hostname.com", 400},
-	{"not registered domain", "/v1/headers/sure-this-is-not-registered.com", "ERROR Couldn't resolve host sure-this-is-not-registered.com", 400},
-	{"domain without redirection", "/v1/headers/codetabs.com", "", 200},
-	{"domain with redirection", "/v1/headers/www.codetabs.com", "", 200},
-}
-
 func TestHeadersApi(t *testing.T) {
 	c.App.Mode = "test"
+
+	type headersTestOutput struct {
+		StatusCode int    // `json:"statusCode"`
+		Error      string `json:"Error,omitempty"`
+	}
+
+	var headersTests = []struct {
+		it         string
+		endpoint   string
+		errorText  string
+		statusCode int
+	}{
+		{"not domain (empty)", "/v1/headers/", c.Test.ValidFormat, 400},
+		{"not valid hostname", "/v1/headers?domain=no-valid-hostname.com", "ERROR /v1/headers?domain=no-valid-hostname.com -> Couldn't resolve host no-valid-hostname.com", 400},
+		{"not valid domain", "/v1/headers/?domain=no-valid-hostname.com", "ERROR /v1/headers/?domain=no-valid-hostname.com -> Couldn't resolve host no-valid-hostname.com", 400},
+		{"without redirection", "/v1/headers/?domain=codetabs.com", "", 200},
+		{"without redirection", "/v1/headers?domain=codetabs.com", "", 200},
+		{"with redirection", "/v1/headers/?domain=www.codetabs.com", "", 200},
+		{"with redirection", "/v1/headers?domain=www.codetabs.com", "", 200},
+		{"with https", "/v1/headers?domain=https://codetabs.com", "", 200},
+		{"with http", "/v1/headers?domain=http://codetabs.com", "", 200},
+		{"with https and www", "/v1/headers?domain=https://www.codetabs.com", "", 200},
+		{"with https and www", "/v1/headers?domain=http://www.codetabs.com", "", 200},
+	}
 
 	for _, test := range headersTests {
 		var to = headersTestOutput{}

@@ -10,33 +10,33 @@ import (
 	"strings"
 	"time"
 
-	lib "./_lib"
+	lib "./_lib" 
 )
 
-func doAlexaRequest(w http.ResponseWriter, params []string) {
+func doAlexaRequest(w http.ResponseWriter, web string) {
 	o := &alexaOutput{}
-	o.Domain = params[1]
-	o.Rank = alexaList[o.Domain]
+	o.Web = web
+	o.Rank = alexaList[o.Web]
 	if o.Rank != 0 {
 		lib.SendJSONToClient(w, o)
 		return
 	}
-	if strings.HasPrefix(o.Domain, "www.") {
-		o.Domain = o.Domain[4:len(o.Domain)]
-		o.Rank = alexaList[o.Domain]
+	if strings.HasPrefix(o.Web, "www.") {
+		o.Web = o.Web[4:len(o.Web)]
+		o.Rank = alexaList[o.Web]
 		if o.Rank != 0 {
 			lib.SendJSONToClient(w, o)
 			return
 		}
 	}
-	if !strings.HasPrefix(o.Domain, "www.") {
-		o.Rank = alexaList["www."+o.Domain]
+	if !strings.HasPrefix(o.Web, "www.") {
+		o.Rank = alexaList["www."+o.Web]
 		if o.Rank != 0 {
 			lib.SendJSONToClient(w, o)
 			return
 		}
 	}
-	e.Error = fmt.Sprintf("%s not in alexa top 1 million", o.Domain)
+	e.Error = fmt.Sprintf("%s not in alexa top 1 million", o.Web)
 	lib.SendErrorToClient(w, e)
 	return
 }
@@ -45,7 +45,7 @@ func loadDataInMemory() {
 	alexaList = make(map[string]int) //, 1000000)
 	file, err := os.Open(c.Alexa.DataFilePath)
 	if err != nil {
-		log.Printf("ERROR loading Alexa data in memory %s\n", err)
+		log.Printf("ERROR 1 loading Alexa data in memory %s\n", err)
 	}
 	defer file.Close()
 	scanner := bufio.NewScanner(file)
@@ -57,7 +57,7 @@ func loadDataInMemory() {
 	}
 	err = scanner.Err()
 	if err != nil {
-		log.Printf("ERROR loading Alexa data in memory %s\n", err)
+		log.Printf("ERROR 2 loading Alexa data in memory %s\n", err)
 	}
 }
 

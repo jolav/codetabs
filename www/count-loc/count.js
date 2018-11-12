@@ -1,15 +1,15 @@
-/*jshint node: true */
 /* global Chart */
 
 const loc = (function () {
   'use strict';
   /* code here */
 
-  //const urlBase = 'http://localhost:3000/v1/loc/';
-  const urlBase = 'https://api.codetabs.com/v1/loc/';
+  let urlBase = 'https://api.codetabs.com/v1/loc';
+  if (window.mode === "dev") {
+    urlBase = 'http://localhost:3000/v1/loc';
+  }
 
   const ctx = document.getElementById('myPie');
-  const pointsPerLine = 70;
   let myChart;
   let repo = '';
 
@@ -28,11 +28,12 @@ const loc = (function () {
       return;
     }
     showLoader();
-    let urlData = urlBase + 'get?repo=' + repo;
-    // console.log(urlData)
+    let urlData = urlBase + '?github=' + repo;
+    console.log(urlData);
     // console.log('1', myChart)
     if (myChart !== undefined) {
       myChart.destroy();
+      document.getElementById("totalResume").innerHTML = "";
     }
     getAjaxData(urlData, prepareData);
   }
@@ -40,11 +41,12 @@ const loc = (function () {
   function upload(e) {
     showLoader();
     e.preventDefault();
-    let urlData = urlBase + 'upload';
+    let urlData = urlBase;
     console.log(urlData);
     // console.log('2', myChart)
     if (myChart !== undefined) {
       myChart.destroy();
+      document.getElementById("totalResume").innerHTML = "";
     }
     let formData = new FormData();
     let inputFile = document.getElementById('inputFile');
@@ -210,7 +212,7 @@ const loc = (function () {
     if (action === 'GET') {
       xhr.send();
     } else if (action !== 'GET') {
-      // xhr.setRequestHeader('Content-Type', 'multipart/form-data')
+      //xhr.setRequestHeader('Content-Type', 'multipart/form-data');
       xhr.send(params);
     }
   }

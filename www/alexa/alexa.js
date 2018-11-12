@@ -1,8 +1,12 @@
+/* global */
+
 const alexa = (function () {
   /* code here */
 
-  // const baseUrl = 'https://api.codetabs.com/alexa/'
-  const baseUrl = 'https://api.codetabs.com/v1/alexa/';
+  let baseUrl = 'https://api.codetabs.com/v1/alexa';
+  if (window.mode === "dev") {
+    baseUrl = 'http://localhost:3000/v1/alexa';
+  }
 
   function init() {
     console.log('Init Alexa');
@@ -19,7 +23,8 @@ const alexa = (function () {
       alert('domain is not a valid hostname');
       return;
     }
-    let urlData = baseUrl + 'get/' + domain;
+    let urlData = baseUrl + '?web=' + domain;
+    console.log('Request ......', urlData);
     getAjaxData(urlData, showData);
   }
 
@@ -77,3 +82,4 @@ const alexa = (function () {
 }());
 
 window.addEventListener('load', alexa.init);
+

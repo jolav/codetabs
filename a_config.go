@@ -8,14 +8,17 @@ import (
 var configjson = []byte(`
 {
   "app": {
-    "version": "0.2.1",
+    "version": "0.3.1",
     "mode": "production",
     "port": 3510,
 		"service": "",
 		"hitslog":"./logs/hits.log",
 		"errlog":"./logs/error.log",
 		"services": ["alexa","headers","loc","proxy","stars","weather","video2gif"]
-  },
+	},
+	"test": {
+		"validFormat": "Valid format is 'api.codetabs.com/v1/{service}?{param}=value' .Please read our docs at https://codetabs.com"
+	},
   "alexa": {
     "dataFilePath": "./_data/alexa/top-1m.csv",
 		"zipFile": "./_data/alexa/top-1m.csv.zip",
@@ -24,13 +27,15 @@ var configjson = []byte(`
 	},
 	"loc": {
 		"locLinux": "./_data/loc/locLinux",
-		"order": "0",
+		"locMac": "./_data/loc/locMac",
+		"order": "0", 
 		"orderInt": 0
 	},
 	"video2gif": {
 		"order": "1",
 		"orderInt": 1
 	}
+ 
 }
 `)
 
@@ -46,6 +51,9 @@ type configuration struct {
 		ErrLog   string
 		Services []string
 	} //`json:"app"`
+	Test struct {
+		ValidFormat string
+	}
 	Alexa struct {
 		DataFilePath string
 		ZipFilePath  string `json:"zipFile"`
@@ -54,6 +62,7 @@ type configuration struct {
 	}
 	Loc struct {
 		LocLinux string
+		LocMac   string
 		Order    string
 		OrderInt int
 	}
@@ -90,8 +99,8 @@ type myError struct {
 var alexaList map[string](int)
 
 type alexaOutput struct {
-	Domain string `json:"domain"`
-	Rank   int    `json:"rank"`
+	Web  string `json:"web"`
+	Rank int    `json:"rank"`
 }
 
 // HEADERS
@@ -134,11 +143,13 @@ type httpResponse struct {
 // WEATHER
 
 type weatherGeoData struct {
-	IP          string  `json:"ip" xml:"ip,omitempty"`
-	City        string  `json:"city" xml:"city,omitempty"`
-	CountryCode string  `json:"country_code" xml:"country_code,omitempty"`
-	Lat         float64 `json:"latitude" xml:"latitude,omitempty"`
-	Lon         float64 `json:"longitude" xml:"longitude,omitempty"`
+	IP          string `json:"ip" xml:"ip,omitempty"`
+	City        string `json:"city" xml:"city,omitempty"`
+	CountryCode string `json:"country_code" xml:"country_code,omitempty"`
+	Lat         float64
+	Lon         float64
+	latString   string `json:"latitude" xml:"latitude,omitempty"`
+	lonString   string `json:"longitude" xml:"longitude,omitempty"`
 }
 
 type weatherOutput struct {

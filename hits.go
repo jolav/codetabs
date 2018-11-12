@@ -10,7 +10,7 @@ import (
 	db "./_db"
 )
 
-func addHit(service, mode, ip, quest string) {
+func saveHit(service, mode, ip, quest string) {
 	layout := "2006-01-02 15:04:05"
 	now := time.Now().Format(layout)
 	text := fmt.Sprintf("INFO %s %s %s %s\n", now, ip, service, quest)
@@ -19,7 +19,7 @@ func addHit(service, mode, ip, quest string) {
 	if mode == "production" {
 		db.MYDB.InsertHit(service, strings.Split(now, " ")[0])
 	} else {
-		// fmt.Println(`TESTING ... DO NOT DB SAVE`)
+		//fmt.Println(`TESTING ... DO NOT DB SAVE`)
 	}
 
 	var hitslog = c.App.HitsLog

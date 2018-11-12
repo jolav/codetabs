@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	lib "./_lib"
@@ -35,14 +36,14 @@ ffmpeg -i video.mp4 -r 10 -ss 15 -t 20 -vf scale=160:90 out.gif -hide_banner
 func doVideo2GifRequest(w http.ResponseWriter, r *http.Request, folder string) {
 
 	counter := folder
-	tempPath := fmt.Sprintf("./temp/%s/", counter)
-	fmt.Println(`DO SOMETHING... with `, tempPath)
+	tempPath := fmt.Sprintf("./temp/videos/%s/", counter)
+	//fmt.Println(`DO SOMETHING... with `, tempPath)
 
 	destroyTemporalDir := []string{"rm", "-r", tempPath}
 	createTemporalDir := []string{"mkdir", tempPath}
 	err := lib.GenericCommand(createTemporalDir)
 	if err != nil {
-		log.Printf("ERROR 1 %s", err)
+		log.Printf("ERROR 1 creating folder %s\n", err)
 		e.Error = "Error creating folder " + tempPath
 		lib.SendErrorToClient(w, e)
 		return
@@ -51,7 +52,7 @@ func doVideo2GifRequest(w http.ResponseWriter, r *http.Request, folder string) {
 	// create file
 	file, handler, err := r.FormFile("inputFile")
 	if err != nil {
-		log.Printf("ERROR creating file %s", err)
+		log.Printf("ERROR creating file %s\n", err)
 		e.Error = "Error creating file "
 		lib.SendErrorToClient(w, e)
 		lib.GenericCommand(destroyTemporalDir)
@@ -64,7 +65,7 @@ func doVideo2GifRequest(w http.ResponseWriter, r *http.Request, folder string) {
 	defer file.Close()
 	f, err := os.OpenFile(inputPath, os.O_WRONLY|os.O_CREATE, 0666)
 	if err != nil {
-		log.Printf("ERROR opening uploaded file %s", err)
+		log.Printf("ERROR opening uploaded file %s\n", err)
 		e.Error = "Error opening " + inputFile
 		lib.SendErrorToClient(w, e)
 		lib.GenericCommand(destroyTemporalDir)
@@ -81,7 +82,7 @@ func doVideo2GifRequest(w http.ResponseWriter, r *http.Request, folder string) {
 	//fmt.Println(`Convert Command ->`, comm)
 	_, err = lib.GenericCommandSH(comm)
 	if err != nil {
-		log.Printf("ERROR converting file %s", err)
+		log.Printf("ERROR converting file %s\n", err)
 		e.Error = "Error converting file " + inputFile
 		lib.SendErrorToClient(w, e)
 		lib.GenericCommand(destroyTemporalDir)
@@ -91,7 +92,7 @@ func doVideo2GifRequest(w http.ResponseWriter, r *http.Request, folder string) {
 	// open gif to grab data
 	gifFileData, err := os.Open(outputPath)
 	if err != nil {
-		log.Printf("ERROR opening gif %s", err)
+		log.Printf("ERROR opening gif %s\n", err)
 		e.Error = "Error opening file " + outputPath
 		lib.SendErrorToClient(w, e)
 		lib.GenericCommand(destroyTemporalDir)
@@ -100,7 +101,7 @@ func doVideo2GifRequest(w http.ResponseWriter, r *http.Request, folder string) {
 	reader := bufio.NewReader(gifFileData)
 	content, err := ioutil.ReadAll(reader)
 	if err != nil {
-		log.Printf("ERROR reading gif %s", err)
+		log.Printf("ERROR reading gif %s\n", err)
 		e.Error = "Error reading file " + outputPath
 		lib.SendErrorToClient(w, e)
 		lib.GenericCommand(destroyTemporalDir)
@@ -114,7 +115,6 @@ func doVideo2GifRequest(w http.ResponseWriter, r *http.Request, folder string) {
 	http.ServeContent(w, r, outputPath, now, data)
 
 	lib.GenericCommand(destroyTemporalDir)
-	fmt.Println(`End`)
 }
 
 func createCommand(p parameters2, inputPath, outputPath string) string {
@@ -148,7 +148,16 @@ func getParameters(r *http.Request) parameters2 {
 	if in.fps == "" {
 		out.fps = 5
 	} else {
-		out.fps, _ = strconv.Atoi(in.fps)
+		fps, err := strconv.Atoi(in.fps)
+		if err != nil {
+			out.fps = 5
+		} else {
+			if fps < 1 || fps > 10 {
+				out.fps = 5
+			} else {
+				out.fps, _ = strconv.Atoi(in.fps)
+			}
+		}
 	}
 	if in.start == "" {
 		out.start = -1
@@ -163,7 +172,39 @@ func getParameters(r *http.Request) parameters2 {
 	if in.scale == "" {
 		out.scale = "320:160"
 	} else {
-		out.scale = in.scale
+		out.scale = getScale(in.scale)
 	}
 	return out
+}
+
+func getScale(old string) string {
+	values := strings.Split(old, ":")
+	if len(values) != 2 {
+		return "320:160"
+	}
+
+	a, err1 := strconv.Atoi(values[0])
+	b, err2 := strconv.Atoi(values[1])
+	if err1 != nil || err2 != nil {
+		return "320:160"
+	}
+	if a >= b && a > 480 {
+		if b == -1 {
+			return fmt.Sprintf("480:-1")
+		}
+		a, b = rescale(a, b)
+	}
+	if b > a && b > 480 {
+		if a == -1 {
+			return fmt.Sprintf("-1:480")
+		}
+		b, a = rescale(b, a)
+	}
+	return fmt.Sprintf("%d:%d", a, b)
+}
+
+func rescale(big, small int) (big2, small2 int) {
+	big2 = 480
+	small2 = 480 * small / big
+	return big2, small2
 }

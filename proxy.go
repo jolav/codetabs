@@ -6,25 +6,17 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"strings"
 
 	lib "./_lib"
 )
 
-func doProxyRequest(w http.ResponseWriter, quest string) {
+func doProxyRequest(w http.ResponseWriter, r *http.Request, quest string) {
 	e = myError{}
-	var p []string
-	if strings.HasPrefix(quest, "https:") || strings.HasPrefix(quest, "http:") {
-		p = strings.SplitN(quest, "/", 2)
-	} else {
-		p = append(p, "http:")
-		p = append(p, quest)
-	}
-	quest = p[0] + "//" + p[1]
+	quest = "http://" + lib.RemoveProtocolFromURL(quest)
 	resp, err := http.Get(quest)
 	if err != nil {
 		if c.App.Mode != "test" {
-			log.Printf("WARN %s", quest)
+			log.Printf("WARN %s -> %s\n", quest, r.URL.RequestURI())
 		}
 		e.Error = fmt.Sprintf("%s is not a valid resource", quest)
 		lib.SendErrorToClient(w, e)
@@ -34,7 +26,7 @@ func doProxyRequest(w http.ResponseWriter, quest string) {
 	limitReader := &io.LimitedReader{R: resp.Body, N: 5e6} // (5mb)
 	body, err := ioutil.ReadAll(limitReader)
 	if err != nil {
-		log.Printf("ERROR 1 %s", err)
+		log.Printf("ERROR %s -> %s\n", err, r.URL.RequestURI())
 		e.Error = fmt.Sprintf("ERROR 1 %s ", quest)
 		lib.SendErrorToClient(w, e)
 		return

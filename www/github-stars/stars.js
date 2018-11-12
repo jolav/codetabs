@@ -4,11 +4,12 @@ const stars = (function () {
   'use strict';
   /* code here */
 
-  const urlBase = 'https://api.codetabs.com/v1/stars/';
-  // const urlBase = 'http://localhost:3000/v1/stars/'
+  let urlBase = 'https://api.codetabs.com/v1/stars';
+  if (window.mode === "dev") {
+    urlBase = 'http://localhost:3000/v1/stars';
+  }
 
   const ctx = document.getElementById('myChart');
-  const pointsPerLine = 70;
   let myChart;
   let dataSets = [];
   let repo = '';
@@ -35,7 +36,7 @@ const stars = (function () {
       }
     }
     showLoader();
-    let urlData = urlBase + 'get?repo=' + repo;
+    let urlData = urlBase + '?repo=' + repo;
     console.log(urlData);
     getAjaxData(urlData, showData);
   }

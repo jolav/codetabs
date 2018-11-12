@@ -96,6 +96,11 @@ body {
   display: none;
 }
 
+.endpoint {
+  font-family: 'arial', sans-serif;
+  font-size: 2em;
+}
+
 /* HEADER */
 
 .headerText {

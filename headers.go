@@ -9,7 +9,7 @@ import (
 	lib "./_lib"
 )
 
-func doHeadersRequest(w http.ResponseWriter, domain string) {
+func doHeadersRequest(w http.ResponseWriter, r *http.Request, domain string) {
 	hs := []header{}
 	notMoreRedirections := false
 	count := 0
@@ -23,7 +23,7 @@ func doHeadersRequest(w http.ResponseWriter, domain string) {
 	for !notMoreRedirections && count < 10 {
 		rawData, err := lib.GenericCommandSH(curl + domain)
 		if err != nil {
-			e.Error = fmt.Sprintf("ERROR %s %s", curlStatus[err.Error()], domain)
+			e.Error = fmt.Sprintf("ERROR %s -> %s %s", r.URL.RequestURI(), curlStatus[err.Error()], domain)
 			if c.App.Mode != "test" {
 				log.Printf(e.Error + "\n" + err.Error())
 			}
@@ -61,7 +61,7 @@ func parseHeadString(rawData string, hs *[]header) {
 			name := strings.Split(v, ": ")[0]
 			value := strings.Split(v, ": ")[1]
 			//fmt.Println(`******`, name, value)
-			if name == "Location" {
+			if name == "Location" || name == "location" {
 				last = value
 			} else {
 				h.Header[name] = value

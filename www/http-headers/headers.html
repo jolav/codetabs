@@ -65,15 +65,15 @@
     <div class="leftText">
       <strong>http Request : </strong>
       <code class="red">
-          GET https://api.codetabs.com/v1/headers/domain-name 
+          GET https://api.codetabs.com/v1/headers?domain=domain.tld 
         </code>
       <br>
       <strong>examples : </strong>
       <br>
       <code>
-          <a href="https://api.codetabs.com/v1/headers/codetabs.com"> https://api.codetabs.com/v1/headers/codetabs.com</a> 
+          <a href="https://api.codetabs.com/v1/headers?domain=https://codetabs.com"> https://api.codetabs.com/v1/headers?domain=https://codetabs.com</a> 
           <br>
-          <a href="https://api.codetabs.com/v1/headers/www.codetabs.com"> https://api.codetabs.com/v1/headers/www.codetabs.com</a> 
+          <a href="https://api.codetabs.com/v1/headers?domain=www.codetabs.com"> https://api.codetabs.com/v1/headers?domain=www.codetabs.com</a> 
             </code>
       <br>
       <strong>response : </strong>
@@ -118,6 +118,7 @@
   <!-- cookie Law -->
   <!--#include file="/_public/templates/cookieLaw.html" -->
 
+  <script type='text/javascript' src='./../mode.js'></script>
   <script async src="./headers.js"></script>
 
   <!-- Titillium Web + Varela-->

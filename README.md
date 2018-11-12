@@ -1,11 +1,11 @@
 
-![Version](https://img.shields.io/badge/version-0.3.0-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.3.1-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-version 0.3.0
+version 0.3.1
 
 # **##################################**
 # **NEW ENDPOINTS ARE DEFINITIVES (2018-11-10)**  

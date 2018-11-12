@@ -3,7 +3,6 @@ package lib
 import (
 	"encoding/json"
 	"encoding/xml"
-	"fmt"
 	"io"
 	"io/ioutil"
 	"log"
@@ -14,6 +13,7 @@ import (
 	"net/url"
 	"os"
 	"os/exec"
+	"strings"
 	"time"
 )
 
@@ -58,7 +58,7 @@ func SendErrorToClient(w http.ResponseWriter, d interface{}) {
 func WriteFile(filePath string, content string) {
 	file, err := os.Create(filePath)
 	if err != nil {
-		log.Printf("Error WriteFile", err)
+		log.Printf("Error WriteFile \n", err)
 	}
 	defer file.Close()
 	file.WriteString(content)
@@ -68,16 +68,16 @@ func WriteFile(filePath string, content string) {
 func LoadJSONfromFileMarshall(filePath string, data interface{}) {
 	file, err := os.Open(filePath)
 	if err != nil {
-		log.Printf("Cannot open config file %s", err)
+		log.Printf("Cannot open config file %s\n", err)
 	}
 	defer file.Close()
 	body, err := ioutil.ReadAll(file) //	get file content
 	if err != nil {
-		log.Printf("Error 1 LoadJSONfromFileMarshall %s", err)
+		log.Printf("Error 1 LoadJSONfromFileMarshall %s\n", err)
 	}
 	err = json.Unmarshal(body, &data)
 	if err != nil {
-		log.Printf("Error 2 LoadJSONfromFileMarshall %s", err)
+		log.Printf("Error 2 LoadJSONfromFileMarshall %s\n", err)
 	}
 }
 
@@ -133,7 +133,7 @@ func LoadConfig(configjson []byte, c interface{}) {
 func GenericCommand(args []string) (err error) {
 	_, err = exec.Command(args[0], args[1:len(args)]...).CombinedOutput()
 	if err != nil {
-		fmt.Println("ERROR CMD= ", err)
+		//fmt.Println("ERROR CMD= ", err)
 		return err
 	}
 	return err
@@ -178,4 +178,38 @@ func SliceContainsString(str string, slice []string) bool {
 		}
 	}
 	return false
+}
+
+// RemoveProtocolFromURL ...
+func RemoveProtocolFromURL(url string) string {
+	if strings.HasPrefix(url, "https://") {
+		return url[8:]
+	}
+	if strings.HasPrefix(url, "https:/") {
+		return url[7:]
+	}
+	if strings.HasPrefix(url, "http://") {
+		return url[7:]
+	}
+	if strings.HasPrefix(url, "http:/") {
+		return url[6:]
+	}
+	return url
+}
+
+// RemoveProtocolAndWWWFromURL ...
+func RemoveProtocolAndWWWFromURL(url string) string {
+	if strings.HasPrefix(url, "https://www.") {
+		return url[12:]
+	}
+	if strings.HasPrefix(url, "https:/www.") {
+		return url[11:]
+	}
+	if strings.HasPrefix(url, "http://www.") {
+		return url[11:]
+	}
+	if strings.HasPrefix(url, "http:/www.") {
+		return url[10:]
+	}
+	return RemoveProtocolFromURL(url)
 }

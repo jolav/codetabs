@@ -1,29 +1,20 @@
 # Ignore these directories
 _aux/
-node_modules/
-temp/
-tmp/
 logs/
-_data
-geolocation-ip/server/db
+temp/loc/
+temp/videos
+_data/alexa
+_data/loc
 
 # Ignore these files
 .env
 .DS_Store
-config.js
-config.json
-private.json
-secret.json
-stats.json
-private.go
-secret.go
-www/robots.txt
-www/sitemap.xml
+_private.js
+_private.json
+a_private.go
+tmp/runner-build
 
-# Ignore binaries
+
+# binaries
 codetabs
-
-# third party binaries
-_data/loc/locLinux
-_data/loc/locMac
-
+codetabs-*

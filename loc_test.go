@@ -8,36 +8,35 @@ import (
 	"testing"
 )
 
-func TestProxyApi(t *testing.T) {
+func TestLocApi(t *testing.T) {
 
-	type proxyTestOutput struct {
+	type locTestOutput struct {
+		Domain     string `json:"domain"`
+		Rank       int    `json:"rank"`
 		StatusCode int    // `json:"statusCode"`
 		Error      string `json:"Error,omitempty"`
 	}
 
-	var proxyTests = []struct {
+	var locTests = []struct {
 		it         string
 		endpoint   string
 		errorText  string
 		statusCode int
 	}{
-		{"JSON api", "/v1/proxy?quest=apis-v1-jolav.glitch.me/time/", "", 200},
-		{"JSON api", "/v1/proxy?quest=https:/geoip.xyz/v1/json", "", 200},
-		{"image", "/v1/proxy?quest=https:/jolav.me/_public/icons/jolav128.png", "", 200},
-		{"empty", "/v1/proxy//", c.Test.ValidFormat, 400},
-		{"empty", "/v1/proxy/?quest=&&", c.Test.ValidFormat, 400},
-		{"empty", "/v1/proxy/?quest=codetabs.com", "", 200},
-		{"empty", "/v1/proxy/?q=codetabs.com", c.Test.ValidFormat, 400},
-
-		{"not existing", "/v1/proxy?quest=sure-this-domain-dont-exist.com", "http://sure-this-domain-dont-exist.com is not a valid resource", 400},
-		{"not a valid domain name", "/v1/proxy?quest=code%%tabs.com", c.Test.ValidFormat, 400},
-		//{"", "/v1/proxy/", "", 200},
+		{"empty", "/v1/loc", "Incorrect user/repo", 400},   // unless upload
+		{"empty", "/v1/loc/", "Incorrect user/repo", 400},  // unless upload
+		{"empty", "/v1/loc//", "Incorrect user/repo", 400}, // unless upload
+		{"bad user/repo", "/v1/loc?repo=", "Incorrect user/repo", 400},
+		{"bad user/repo", "/v1/loc?repo=/", "Incorrect user/repo", 400},
+		{"bad user/repo", "/v1/loc?repo=jolav/", "Incorrect user/repo", 400},
+		{"bad user/repo", "/v1/loc?repo=/codetabs", "Incorrect user/repo", 400},
+		{"bad user/repo", "/v1/loc?repo=/jolav/codetabs/another", "Incorrect user/repo", 400},
 	}
 
 	c.App.Mode = "test"
 
-	for _, test := range proxyTests {
-		var to = proxyTestOutput{}
+	for _, test := range locTests {
+		var to = locTestOutput{}
 		pass := true
 		//fmt.Println(`Test...`, test.endpoint, "...", test.it)
 		req, err := http.NewRequest("GET", test.endpoint, nil)
@@ -47,7 +46,7 @@ func TestProxyApi(t *testing.T) {
 			//fmt.Println(test.errorText)
 			//fmt.Println(`------------------------------`)
 			if err.Error() != test.errorText {
-				t.Fatalf("Error Request %s\n", err.Error())
+				t.Errorf("Error Request %s\n", err.Error())
 			} else {
 				pass = false
 			}

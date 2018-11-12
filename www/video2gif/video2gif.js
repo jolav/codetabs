@@ -1,33 +1,19 @@
-/*jshint node: true */
 /* global Chart */
 
 const video2gif = (function () {
   'use strict';
   /* code here */
 
-  // const urlBase = 'http://localhost:3000/v1/video2gif/'
-  const urlBase = 'https://api.codetabs.com/v1/video2gif/';
-
-  let repo = '';
+  let urlBase = 'https://api.codetabs.com/v1/video2gif';
+  if (window.mode === "dev") {
+    urlBase = 'http://localhost:3000/v1/video2gif';
+  }
 
   function init() {
     console.log('Init Count video2gif');
-    // document.getElementById('addURL').addEventListener('click', addURL)
     document.getElementById('upload').addEventListener('click', upload);
     // document.getElementsByClassName('pie')[0].style.display = 'none'
     hideLoader();
-  }
-
-  function addURL(e) {
-    repo = document.getElementById('repoName').value;
-    if (repo === '') {
-      alert('user/repo cannot be empty');
-      return;
-    }
-    showLoader();
-    let urlData = urlBase + 'get?repo=' + repo;
-    // console.log(urlData)
-    getAjaxData(urlData, showGif);
   }
 
   function upload(e) {
@@ -40,7 +26,7 @@ const video2gif = (function () {
     }
     showLoader();
     e.preventDefault();
-    let urlData = urlBase + 'upload';
+    let urlData = urlBase;
     let formData = new FormData();
     let inputFile = document.getElementById('inputFile');
     if (inputFile.files.length === 0) {

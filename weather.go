@@ -138,6 +138,6 @@ func getGeo(w http.ResponseWriter, r *http.Request, o *weatherOutput,
 	}
 	o.City = geo.City
 	o.Country = geo.CountryCode
-	o.Lat = geo.Lat
-	o.Lon = geo.Lon
+	o.Lat, _ = strconv.ParseFloat(geo.latString, 64)
+	o.Lon, _ = strconv.ParseFloat(geo.lonString, 64)
 }

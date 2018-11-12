@@ -8,31 +8,44 @@ import (
 	"testing"
 )
 
-type mainTestOutput struct {
-	Domain     string `json:"domain"`
-	Rank       int    `json:"rank"`
-	StatusCode int    // `json:"statusCode"`
-	Error      string `json:"Error,omitempty"`
-}
-
-var mainTests = []struct {
-	it         string
-	endpoint   string
-	errorText  string
-	statusCode int
-}{
-	{"empty path", "", "ERROR Bad Request", 400},
-	{"bad path", "/V1/lexa", "ERROR Bad Request, endpoint 'lexa' unknown", 400},
-	{"bad path", "/v2/loc/", "ERROR Bad Request", 400},
-	{"bad path", "v1", "ERROR Bad Request", 400},
-	{"bad path", "v2/", "ERROR Bad Request", 400},
-	{"bad path", "/hi/proxy/codetabs.com", "ERROR Bad Request", 400},
-	{"bad path", "/v1/not", "ERROR Bad Request, endpoint 'not' unknown", 400},
-	{"bad path", "/code%6%&tabs.com", `parse /code%6%&tabs.com: invalid URL escape "%6%"`, 400},
-	//{"bad path", "", "ERROR Bad Request", 400},
-}
-
 func TestMainApi(t *testing.T) {
+
+	type mainTestOutput struct {
+		Domain     string `json:"domain"`
+		Rank       int    `json:"rank"`
+		StatusCode int    // `json:"statusCode"`
+		Error      string `json:"Error,omitempty"`
+	}
+
+	var mainTests = []struct {
+		it         string
+		endpoint   string
+		errorText  string
+		statusCode int
+	}{
+		{"empty path", "", c.Test.ValidFormat, 400},
+		{"bad path", "/V1/lexa", "Bad Request, service 'lexa' unknown", 400},
+		{"bad path", "/v2/loc/", c.Test.ValidFormat, 400},
+		{"bad path", "v1/proxy/", c.Test.ValidFormat, 400},
+		{"bad path", "v1/proxy", c.Test.ValidFormat, 400},
+		{"bad path", "V1/proxy/codetabs.com", c.Test.ValidFormat, 400},
+		{"bad path", "v1", c.Test.ValidFormat, 400},
+		{"bad path", "v2/", c.Test.ValidFormat, 400},
+		{"bad path", "/v1/v1/alexa/get/codetabs.com", "Bad Request, service 'v1' unknown", 400},
+		{"bad path", "//v1/headers/codetabs.com", c.Test.ValidFormat, 400},
+		{"bad path", "/v1//headers/codetabs.com", "Bad Request, service '' unknown", 400},
+		{"bad path", "/v1/headers//", c.Test.ValidFormat, 400},
+		{"bad path", "/hi/proxy/codetabs.com", c.Test.ValidFormat, 400},
+		{"bad path", "/v1/not", "Bad Request, service 'not' unknown", 400},
+		{"bad path", "/code%6%&tabs.com", `parse /code%6%&tabs.com: invalid URL escape "%6%"`, 400},
+		{"bad path", "/code%%&tabs.com", `parse /code%%&tabs.com: invalid URL escape "%%&"`, 400},
+		{"bad path", "/code%%tabs.com", `parse /code%%tabs.com: invalid URL escape "%%t"`, 400},
+		{"bad path", "*%67%%%%", `parse *%67%%%%: invalid URL escape "%%%"`, 400},
+		{"bad path", "/*%67%%%%", `parse /*%67%%%%: invalid URL escape "%%%"`, 400},
+		{"bad path", "*/%67%/%%%", `parse */%67%/%%%: invalid URL escape "%/%"`, 400},
+		//{"bad path", "", c.Test.ValidFormat, 400},
+	}
+
 	c.App.Mode = "test"
 
 	for _, test := range mainTests {

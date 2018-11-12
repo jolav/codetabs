@@ -8,37 +8,42 @@ import (
 	"testing"
 )
 
-type alexaTestOutput struct {
-	Domain     string `json:"domain"`
-	Rank       int    `json:"rank"`
-	StatusCode int    // `json:"statusCode"`
-	Error      string `json:"Error,omitempty"`
-}
-
-var alexaTests = []struct {
-	it         string
-	endpoint   string
-	errorText  string
-	statusCode int
-}{
-	{"not domain(empty)", "/v1/alexa/get", "ERROR Bad Request, incorrect parameters", 400},
-	{"wrong domain", "/v1/alexa/wrong", "ERROR Bad Request, incorrect parameters", 400},
-	{"wrong domain", "/v1/alexa/too/much/parameters", "ERROR Bad Request, incorrect parameters", 400},
-	{"not a valid domain name", "/v1/alexa/get/code%%tabs.com", `parse /v1/alexa/get/code%%tabs.com: invalid URL escape "%%t"`, 0},
-	{"domain in routes parameters", "/v1/alexa/get/google.com", "", 200},
-	{"www.github.com", "/v1/alexa/get/www.github.com", "", 200},
-	{"github.com", "/v1/alexa/get/github.com", "", 200},
-	{"valid domain not in alexa top 1m", "/v1/alexa/get/not-top-domain.com", "not-top-domain.com not in alexa top 1 million", 400},
-	{"awwwards.com ,www in the middle of the domain", "/v1/alexa/get/awwwards.com", "", 200},
-	{"progresswww.nl ,www at the end of the domain", "/v1/alexa/get/progresswww.nl", "", 200},
-	{"www.gov.uk ,www as subdomain", "/v1/alexa/get/www.gov.uk", "", 200},
-	{"gov.uk ,multiple results", "/v1/alexa/get/gov.uk", "", 200},
-	{"www.nic.in ,www as subdomain", "/v1/alexa/get/www.nic.in", "", 200},
-	{"bih.nic.in ,not www subdomain in multiple results", "/v1/alexa/get/bih.nic.in", "", 200},
-	{"nic.in ,multiple results", "/v1/alexa/get/nic.in", "", 200},
-}
-
 func TestAlexaApi(t *testing.T) {
+
+	type alexaTestOutput struct {
+		Domain     string `json:"domain"`
+		Rank       int    `json:"rank"`
+		StatusCode int    // `json:"statusCode"`
+		Error      string `json:"Error,omitempty"`
+	}
+
+	var alexaTests = []struct {
+		it         string
+		endpoint   string
+		errorText  string
+		statusCode int
+	}{
+		{"not domain(empty)", "/v1/alexa", c.Test.ValidFormat, 400},
+		{"not domain(empty)", "/v1/alexa/", c.Test.ValidFormat, 400},
+		{"not valid format", "/v1/alexa//", c.Test.ValidFormat, 400},
+		{"not valid format", "/v1/alexa/&%$/wrong", `parse /v1/alexa/&%$/wrong: invalid URL escape "%$/"`, 400},
+		{"not valid format", "/v1/alexa/web?=codetabs.com", c.Test.ValidFormat, 400},
+		{"not valid format", "/v1/alexa?we=codetabs.com", c.Test.ValidFormat, 400},
+		{"not valid format", "/v1/alexa/too/much/parameters", c.Test.ValidFormat, 400},
+		{"not a valid domain name", "/v1/alexa?web=code%%tabs.com", c.Test.ValidFormat, 400},
+		{"domain in routes parameters", "/v1/alexa?web=google.com", "", 200},
+		{"www.github.com", "/v1/alexa?web=www.github.com", "", 200},
+		{"github.com", "/v1/alexa?web=github.com", "", 200},
+		{"valid domain not in alexa top 1m", "/v1/alexa?web=not-top-domain.com", "not-top-domain.com not in alexa top 1 million", 400},
+		{"awwwards.com ,www in the middle of the domain", "/v1/alexa?web=awwwards.com", "", 200},
+		{"progresswww.nl ,www at the end of the domain", "/v1/alexa?web=progresswww.nl", "", 200},
+		{"www.gov.uk ,www as subdomain", "/v1/alexa?web=www.gov.uk", "", 200},
+		{"gov.uk ,multiple results", "/v1/alexa?web=gov.uk", "", 200},
+		{"www.nic.in ,www as subdomain", "/v1/alexa?web=www.nic.in", "", 200},
+		{"bih.nic.in ,not www subdomain in multiple results", "/v1/alexa?web=bih.nic.in", "", 200},
+		{"nic.in ,multiple results", "/v1/alexa?web=nic.in", "", 200},
+	}
+
 	c.App.Mode = "test"
 
 	for _, test := range alexaTests {
