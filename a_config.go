@@ -8,13 +8,13 @@ import (
 var configjson = []byte(`
 {
   "app": {
-    "version": "0.3.1",
+    "version": "0.4.0",
     "mode": "production",
     "port": 3510,
 		"service": "",
 		"hitslog":"./logs/hits.log",
 		"errlog":"./logs/error.log",
-		"services": ["alexa","headers","loc","proxy","stars","weather","video2gif"]
+		"services": ["alexa","headers","loc","proxy","stars","weather","video2gif","geoip"]
 	},
 	"test": {
 		"validFormat": "Valid format is 'api.codetabs.com/v1/{service}?{param}=value' .Please read our docs at https://codetabs.com"
@@ -34,6 +34,10 @@ var configjson = []byte(`
 	"video2gif": {
 		"order": "1",
 		"orderInt": 1
+	},
+	"geoip": {
+		"geoDataBaseFile": "./_data/geoip/GeoLite2-City.mmdb",
+		"formats": ["json","xml"]
 	}
  
 }
@@ -69,6 +73,10 @@ type configuration struct {
 	Video2Gif struct {
 		order    string
 		orderInt int
+	}
+	Geoip struct {
+		GeoDataBaseFile string
+		Formats         []string
 	}
 }
 
@@ -148,8 +156,8 @@ type weatherGeoData struct {
 	CountryCode string `json:"country_code" xml:"country_code,omitempty"`
 	Lat         float64
 	Lon         float64
-	latString   string `json:"latitude" xml:"latitude,omitempty"`
-	lonString   string `json:"longitude" xml:"longitude,omitempty"`
+	//latString   string `json:"latitude" xml:"latitude,omitempty"`
+	//lonString   string `json:"longitude" xml:"longitude,omitempty"`
 }
 
 type weatherOutput struct {
@@ -230,4 +238,19 @@ type parameters struct {
 	start string
 	dur   string
 	scale string
+}
+
+// GEOIP
+
+type geoipOutput struct {
+	IP          string  `json:"ip" xml:"ip,omitempty"`
+	CountryCode string  `json:"country_code" xml:"country_code,omitempty"`
+	CountryName string  `json:"country_name" xml:"country_name,omitempty"`
+	RegionCode  string  `json:"region_code" xml:"region_code,omitempty"`
+	RegionName  string  `json:"region_name" xml:"region_name,omitempty"`
+	City        string  `json:"city" xml:"city,omitempty"`
+	ZipCode     string  `json:"zip_code" xml:"zip_code,omitempty"`
+	TimeZone    string  `json:"time_zone" xml:"time_zone,omitempty"`
+	Latitude    float64 `json:"latitude" xml:"latitude,omitempty"`
+	Longitude   float64 `json:"longitude" xml:"longitude,omitempty"`
 }

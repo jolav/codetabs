@@ -13,6 +13,7 @@ import (
 func saveHit(service, mode, ip, quest string) {
 	layout := "2006-01-02 15:04:05"
 	now := time.Now().Format(layout)
+	service = strings.ToUpper(service)
 	text := fmt.Sprintf("INFO %s %s %s %s\n", now, ip, service, quest)
 
 	// save hit to DB
@@ -22,8 +23,8 @@ func saveHit(service, mode, ip, quest string) {
 		//fmt.Println(`TESTING ... DO NOT DB SAVE`)
 	}
 
-	var hitslog = c.App.HitsLog
-	hits, err := os.OpenFile(hitslog, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
+	var hitsLog = c.App.HitsLog
+	hits, err := os.OpenFile(hitsLog, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
 		log.Printf("ERROR opening hits file %s\n", err)
 		hits.Close()

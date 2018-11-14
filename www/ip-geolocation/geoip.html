@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <title>IP GeoLocation</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!--Head -->
+  <!--#include file="/_public/templates/head.html" -->
+
+  <noscript>
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="./geoip.css">
+  </noscript>
+
+</head>
+
+<body>
+
+  <header class="header">
+    <h1 class="small">
+      <img class="verticalImage" alt="Logo" src="/_public/sprites/ip32.png">
+      <span> IP GeoLocation</span>
+    </h1>
+    <h1 class="big">
+      <img class="verticalImage" alt="Logo" src="/_public/icons/ip48.png">
+      <span> IP GeoLocation</span>
+    </h1>
+    <div class="centerText">
+      API to retrieve geolocation from any IP or hostname. No Key or signup. CORS enabled
+    </div>
+  </header>
+
+  <section class="data">
+    <div class="data1">
+      <form class="form">
+        <input type="text" id="q" name="q" class="qInput" placeholder="IP or hostname" autofocus>
+      </form>
+      <table class="table">
+        <tr class="row">
+          <td class="key">IP</td>
+          <td class="value" id="value1"></td>
+        </tr>
+        <tr class="row">
+          <td class="key">City</td>
+          <td class="value" id="value2"></td>
+        </tr>
+        <tr class="row">
+          <td class="key">Region/Code</td>
+          <td class="value" id="value3"></td>
+        </tr>
+        <tr class="row">
+          <td class="key">Country/Code</td>
+          <td class="value" id="value4"></td>
+        </tr>
+        <tr class="row">
+          <td class="key">Zip Code</td>
+          <td class="value" id="value5"></td>
+        </tr>
+        <tr class="row">
+          <td class="key">Time Zone</td>
+          <td class="value" id="value6"></td>
+        </tr>
+        <tr class="row">
+          <td class="key">Lat/Lon</td>
+          <td class="value" id="value7"></td>
+        </tr>
+      </table>
+    </div>
+    <div class="data2">
+      <div class="map">
+        <div id="mapid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Version -->
+  <!--#include file="/_public/templates/version.html" -->
+
+  <section class="docs">
+    <div class="docs1">
+      <span>
+        <strong>HTTP Request template:</strong>
+      </span>
+      <br>
+      <span>GET
+        <span class="red">https://api.codetabs.com/v1/geoip/{format}?q={IP-or-hostname}</span>
+      </span>
+      <br>
+      <span>Supported formats :
+        <span class="red">json</span> and
+        <span class="red">xml</span>
+      </span>
+      <br>
+      <span>If no IP or hostname is provided it retrieves your own IP</span>
+      <br>
+      <span>IPv4 and IPv6 supported</span>
+      <br>
+      <span>CORS support out of the box makes this perfect to your front end apps or webs</span>
+      <br>
+
+      <span>
+        <strong>Examples:</strong>
+      </span>
+      <br>
+      <code>-<a class="hard" href="https://api.codetabs.com/v1/geoip/json"> https://api.codetabs.com/v1/geoip/json</a></code>
+      <br>
+      <code>-<a class="hard" href="https://api.codetabs.com/v1/geoip/json?q=jolav.me"> https://api.codetabs.com/v1/geoip/json?q=jolav.me</a></code>
+      <br>
+      <code>-<a class="hard" href="https://api.codetabs.com/v1/geoip/xml?q=8.8.8.8"> https://api.codetabs.com/v1/geoip/xml?q=8.8.8.8</a></code>
+      <br>
+      <code>-<a class="hard" href="https://api.codetabs.com/v1/geoip/xml?q=2a00:1450:4006:803::200e"> https://api.codetabs.com/v1/geoip/xml?q=2a00:1450:4006:803::200e</a></code>
+      <br>
+      <br>
+      <span>
+        <strong>Usage Limits: </strong>
+      </span>
+      <br>
+      <span>10 request per second.Nearly 1 million daily hits <br>
+        Once reached subsequent requests will result in error 429 until your quota is
+        cleared</span>
+      <br>
+      <span>This API requires no key or signup.</span>
+      <br>
+      <br>
+
+    </div>
+    <div class="docs2">
+      <span>
+        <strong>JSON response example</strong>
+      </span>
+      <pre>
+{   
+  "ip": "172.168.90.240",
+  "country_code": "FR",
+  "country_name": "France",
+  "region_code": "IDF",
+  "region_name": "Ile-de-France",
+  "city": "Paris",
+  "zip_code": "75001",
+  "time_zone": "Europe/Paris",
+  "latitude": 48.8628,
+  "longitude": 2.3292   
+}
+      </pre>
+    </div>
+  </section>
+
+  <br>
+
+  <script type="text/javascript">
+    /* CSS */
+    const style1 = document.createElement('link');
+    style1.rel = 'stylesheet';
+    style1.href = './geoip.css';
+    style1.type = 'text/css';
+    document.getElementsByTagName('link')[0].appendChild(style1);
+  </script>
+
+  <script defer src="./geoip.js"></script>
+
+  <script defer src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
+    crossorigin=""></script>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
+    crossorigin="" />
+
+  <!-- Footer -->
+  <!--#include file="/_public/templates/footerGeoip.html" -->
+  <!-- google-analytics -->
+  <!--#include file="/_public/templates/analyticstracking.html" -->
+  <!-- cookie Law -->
+  <!--#include file="/_public/templates/cookieLaw.html" -->
+
+</body>
+
+</html>

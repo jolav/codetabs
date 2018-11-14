@@ -1,5 +1,5 @@
 
 /* global */
 
-//window.mode = "dev";
-window.mode = "production";
+window.mode = "dev";
+//window.mode = "production";

@@ -177,8 +177,18 @@ func router(w http.ResponseWriter, r *http.Request) {
 		}
 		doWeatherRequest(w, r, format, city)
 
+		// GEOIP
+	case "geoip":
+		format := strings.ToLower(path[2])
+		r.ParseForm()
+		target := strings.ToLower(r.Form.Get("q"))
+		if target == "" {
+			target = lib.GetIP(r)
+		}
+		doGeoipRequest(w, format, target)
+
 	default:
-		badRequest(w, r, c.Test.ValidFormat)
+		badRequest(w, r, "DEFAULT "+c.Test.ValidFormat)
 	}
 
 }
@@ -186,7 +196,7 @@ func router(w http.ResponseWriter, r *http.Request) {
 func badRequest(w http.ResponseWriter, r *http.Request, msg string) {
 	e.Error = msg
 	if c.App.Mode != "test" {
-		log.Printf("ERROR Bad Request -> %s\n", r.URL.RequestURI())
+		//log.Printf("ERROR Bad Request -> %s\n", r.URL.RequestURI())
 	}
 	lib.SendErrorToClient(w, e)
 }

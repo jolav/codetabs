@@ -1,6 +1,7 @@
 # Ignore these directories
 _aux/
 logs/
+tmp/
 temp/loc/
 temp/videos
 _data/alexa
@@ -12,9 +13,11 @@ _data/loc
 _private.js
 _private.json
 a_private.go
-tmp/runner-build
 
 
 # binaries
 codetabs
 codetabs-*
+
+# databases
+_data/geoip/GeoLite2-City.mmdb

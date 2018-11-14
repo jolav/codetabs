@@ -30,7 +30,7 @@ func doStarsRequest(w http.ResponseWriter, r *http.Request, repo string) {
 	//fmt.Printf("%s has %d stars \n", repo, totalStars)
 	if totalStars == 0 && len(x.Errors) > 0 { // repo || user doesn't exist
 		if x.Errors[0].Message != "" {
-			log.Printf("ERROR %s\n", x.Errors[0].Message)
+			log.Printf("ERROR 1 %s\n", x.Errors[0].Message)
 			e.Error = x.Errors[0].Message
 			lib.SendErrorToClient(w, e)
 			return
@@ -42,21 +42,21 @@ func doStarsRequest(w http.ResponseWriter, r *http.Request, repo string) {
 	}
 	url := "https://api.github.com/repos/" + repo + "/stargazers?per_page=100"
 	doFirstRequest(w, r, url, true)
-	if e.Error != "" { // api limit errors go here
-		log.Printf("ERROR %s\n", e.Error)
+	/*if e.Error != "" { // api limit errors go here
+		log.Printf("ERROR 2 %s\n", e.Error)
 		lib.SendErrorToClient(w, e)
 		return
-	}
+	}*/
 	if headerLink != "" {
 		links := parseHeaderLink(headerLink)
 		doLinksRequests(links)
 		takeOutData()
 	}
-	if e.Error != "" { // fetching errors go here
-		log.Printf("ERROR %s\n", e.Error)
+	/*if e.Error != "" { // fetching errors go here
+		log.Printf("ERROR 3 %s\n", e.Error)
 		lib.SendErrorToClient(w, e)
 		return
-	}
+	}*/
 	if len(stars) > 0 {
 		convertStarsToData()
 	}
@@ -123,7 +123,7 @@ func doLinksRequests(links []string) {
 		case r := <-ch:
 			if r.err != nil {
 				//fmt.Printf("%d Error \n", r.err)
-				log.Printf("ERROR %s\n", r.err.Error())
+				log.Printf("ERROR 4 %s\n", r.err.Error())
 				e.Error = r.err.Error()
 				return
 			}
@@ -165,26 +165,26 @@ func doFirstRequest(w http.ResponseWriter, r *http.Request, url string, flag boo
 	resp, err := client.Do(req)
 	if err != nil {
 		e.Error = fmt.Sprintf("%s is not a valid resource\n", url)
-		log.Printf("ERROR %s -> %s\n", e.Error, r.URL.RequestURI())
+		log.Printf("ERROR 5 %s -> %s\n", e.Error, r.URL.RequestURI())
 		lib.SendErrorToClient(w, e)
 		return
 	}
 	if resp.StatusCode != 200 {
 		e.Error = fmt.Sprintf("Error : Status %d \n", resp.StatusCode)
-		log.Printf("ERROR %s -> %s\n", e.Error, r.URL.RequestURI())
+		log.Printf("ERROR 6 %s -> %s\n", e.Error, r.URL.RequestURI())
 		w.Write([]byte(e.Error))
 		return
 	}
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.Printf("ERROR %s -> %s\n", err, r.URL.RequestURI())
+		log.Printf("ERROR 7 %s -> %s\n", err, r.URL.RequestURI())
 		return
 	}
 	var aux []*star
 	err = json.Unmarshal(body, &aux)
 	if err != nil {
-		log.Printf("ERROR %s -> %s\n", err, r.URL.RequestURI())
+		log.Printf("ERROR 8 %s -> %s\n", err, r.URL.RequestURI())
 		return
 	}
 	if flag {

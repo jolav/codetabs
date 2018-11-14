@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	lib "./_lib" 
+	lib "./_lib"
 )
 
 func doAlexaRequest(w http.ResponseWriter, web string) {
