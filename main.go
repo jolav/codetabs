@@ -75,7 +75,8 @@ func router(w http.ResponseWriter, r *http.Request) {
 	}
 
 	c.App.Service = path[1]
-	saveHit(c.App.Service, c.App.Mode, lib.GetIP(r), r.URL.RequestURI())
+	origin := r.Header.Get("Origin")
+	saveHit(c.App.Service, c.App.Mode, lib.GetIP(r), origin, r.URL.RequestURI())
 
 	switch c.App.Service {
 

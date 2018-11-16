@@ -116,7 +116,7 @@ func getWeather(w http.ResponseWriter, o *weatherOutput, mw *myWeatherData,
 
 func getGeo(w http.ResponseWriter, r *http.Request, o *weatherOutput,
 	geo *weatherGeoData) {
-	url := "https://geoip.xyz/v1/json?q=" + lib.GetIP(r)
+	url := "https://geoip.xyz/" + lib.GetIP(r)
 	//fmt.Println(`URl =>`, url)
 	resp, err := http.Get(url)
 	if err != nil {

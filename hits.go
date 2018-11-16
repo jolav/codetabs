@@ -5,16 +5,26 @@ import (
 	"log"
 	"os"
 	"strings"
+	"sync"
 	"time"
 
 	db "./_db"
 )
 
-func saveHit(service, mode, ip, quest string) {
+var mu sync.Mutex
+
+func saveHit(service, mode, ip, from, quest string) {
+	mu.Lock()
+	defer mu.Unlock()
+
 	layout := "2006-01-02 15:04:05"
 	now := time.Now().Format(layout)
+	quest = strings.Trim(quest, fmt.Sprintf("/v1/%s", service))
+	if from == "" {
+		from = "undefined"
+	}
 	service = strings.ToUpper(service)
-	text := fmt.Sprintf("INFO %s %s %s %s\n", now, ip, service, quest)
+	text := fmt.Sprintf("INFO %s %s %s %s %s\n", now, ip, service, from, quest)
 
 	// save hit to DB
 	if mode == "production" {

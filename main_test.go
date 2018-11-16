@@ -23,13 +23,12 @@ func TestMainApi(t *testing.T) {
 		errorText  string
 		statusCode int
 	}{
-		{"empty path", "", c.Test.ValidFormat, 400},
+		{"empty path", "/", c.Test.ValidFormat, 400},
 		{"bad path", "/V1/lexa", "Bad Request, service 'lexa' unknown", 400},
 		{"bad path", "/v2/loc/", c.Test.ValidFormat, 400},
 		{"bad path", "v1/proxy/", c.Test.ValidFormat, 400},
 		{"bad path", "v1/proxy", c.Test.ValidFormat, 400},
 		{"bad path", "V1/proxy/codetabs.com", c.Test.ValidFormat, 400},
-		{"bad path", "v1", c.Test.ValidFormat, 400},
 		{"bad path", "v2/", c.Test.ValidFormat, 400},
 		{"bad path", "/v1/v1/alexa/get/codetabs.com", "Bad Request, service 'v1' unknown", 400},
 		{"bad path", "//v1/headers/codetabs.com", c.Test.ValidFormat, 400},
