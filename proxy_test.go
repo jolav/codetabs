@@ -22,8 +22,8 @@ func TestProxyApi(t *testing.T) {
 		statusCode int
 	}{
 		{"JSON api", "/v1/proxy?quest=apis-v1-jolav.glitch.me/time/", "", 200},
-		{"JSON api", "/v1/proxy?quest=https:/geoip.xyz/codetabs.com", "", 200},
-		{"image", "/v1/proxy?quest=https:/jolav.me/_public/icons/jolav128.png", "", 200},
+		{"JSON api", "/v1/proxy?quest=https://geoip.xyz/v1/xml?q=codetabs.com", "", 200},
+		{"image", "/v1/proxy?quest=https://jolav.me/_public/icons/jolav128.png", "", 200},
 		{"empty", "/v1/proxy//", c.Test.ValidFormat, 400},
 		{"empty", "/v1/proxy/?quest=&&", c.Test.ValidFormat, 400},
 		{"empty", "/v1/proxy/?quest=codetabs.com", "", 200},

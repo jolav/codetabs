@@ -1,6 +1,8 @@
 package main
 
-// GOOS=linux GOARCH=amd64 go build
+/*
+GOOS=linux GOARCH=amd64 go build
+*/
 
 import (
 	"fmt"
@@ -177,16 +179,6 @@ func router(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		doWeatherRequest(w, r, format, city)
-
-		// GEOIP
-	case "geoip":
-		format := strings.ToLower(path[2])
-		r.ParseForm()
-		target := strings.ToLower(r.Form.Get("q"))
-		if target == "" {
-			target = lib.GetIP(r)
-		}
-		doGeoipRequest(w, format, target)
 
 	default:
 		badRequest(w, r, "DEFAULT "+c.Test.ValidFormat)

@@ -1,24 +1,19 @@
 
-![Version](https://img.shields.io/badge/version-0.4.1-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.5.0-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-version 0.4.1
-
-# **##################################**
-# **NEW ENDPOINTS ARE DEFINITIVES (2018-11-10)**  
-# **##################################**
+version 0.5.0
 
 1. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
 2. [Video2Gif](#video2gif)
 3. [CORS proxy](#cors-proxy)  
 4. [Github Stars graphical history](#github-stars-graphical-history)  
-5. [Ip Geolocation](#ip-geolocation-api)
-6. [Alexa Ranking](#alexa)  
-7. [HTTP Headers](#headers)  
-8. [API weather temp](#weather)  
+5. [Alexa Ranking](#alexa)  
+6. [HTTP Headers](#headers)  
+7. [API weather temp](#weather)  
 
 <hr>
 
@@ -121,45 +116,6 @@ You can use to prevent mixed content of images and JSON data proxying the resour
 
 <hr>
 
-## ![Logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ip48.png?raw=true)  
-# **IP GEOLOCATION API**
-
-### **[DEMO online](https://codetabs.com/ip-geolocation/geoip.html)**
-
-- Free service that provides a public secure API (CORS enabled) to retrieve geolocation from any IP or hostname.  
-- 10 request per second. Once reached subsequent requests will result in error 429 until your quota is cleared.  
-- This API requires no key or signup.  
-- JSON and XML supported
-- IPv4 and IPv6 supported  
-- CORS support out of the box makes this perfect to your front end apps or webs  
-
-
-Examples
-
-https://api.codetabs.com/v1/geoip/json  
-https://api.codetabs.com/v1/geoip/json?q=codetabs.com  
-https://api.codetabs.com/v1/geoip/xml?q=8.8.8.8  
-https://api.codetabs.com/v1/geoip/xml?q=2a00:1450:4006:803::200e  
-
-Response JSON :
-
-```json
-{   
-  "ip": "172.168.90.240",
-  "country_code": "FR",
-  "country_name": "France",
-  "region_code": "IDF",
-  "region_name": "Ile-de-France",
-  "city": "Paris",
-  "zip_code": "75001",
-  "time_zone": "Europe/Paris",
-  "latitude": 48.8628,
-  "longitude": 2.3292   
-}
-```
-
-<hr>
-
 ## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/alexa48.png?raw=true)  
 # **ALEXA**
 
@@ -196,5 +152,3 @@ Tool to get list of response headers including redirect chain of a HTTP connecti
 ## **Acknowledgment**
 
 * This site includes Curtis Gagliardi <a href="https://github.com/cgag/loc">cgag/loc</a> for counting lines of code.
-
-* This site includes GeoLite2 data created by MaxMind, available from  [maxmind.com](http://maxmind.com)

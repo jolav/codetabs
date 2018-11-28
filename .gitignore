@@ -19,5 +19,3 @@ a_private.go
 codetabs
 codetabs-*
 
-# databases
-_data/geoip/GeoLite2-City.mmdb
