@@ -115,10 +115,10 @@ func IsValidURL(rawurl string) bool {
 func GetIP(r *http.Request) string {
 	ip := r.Header.Get("X-Forwarded-For")
 	if len(ip) > 0 {
-		return ip
+		return strings.Split(ip, ",")[0]
 	}
 	ip, _, _ = net.SplitHostPort(r.RemoteAddr)
-	return ip
+	return strings.Split(ip, ",")[0]
 }
 
 // LoadConfig ...

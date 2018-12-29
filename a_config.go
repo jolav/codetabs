@@ -7,10 +7,10 @@ import (
 
 var configjson = []byte(`
 {
-  "app": {
-    "version": "0.4.1",
-    "mode": "production",
-    "port": 3510,
+	"app": {
+		"version": "0.5.1",
+		"mode": "production",
+		"port": 3510,
 		"service": "",
 		"hitslog":"./logs/hits.log",
 		"errlog":"./logs/error.log",
@@ -19,7 +19,7 @@ var configjson = []byte(`
 	"test": {
 		"validFormat": "Valid format is 'api.codetabs.com/v1/{service}?{param}=value' .Please read our docs at https://codetabs.com"
 	},
-  "alexa": {
+	 "alexa": {
     "dataFilePath": "./_data/alexa/top-1m.csv",
 		"zipFile": "./_data/alexa/top-1m.csv.zip",
 		"dataDir": "./_data/alexa",

@@ -14,8 +14,6 @@ import (
 var mu sync.Mutex
 
 func saveHit(service, mode, ip, from, quest string) {
-	mu.Lock()
-	defer mu.Unlock()
 
 	layout := "2006-01-02 15:04:05"
 	now := time.Now().Format(layout)
@@ -33,8 +31,12 @@ func saveHit(service, mode, ip, from, quest string) {
 		//fmt.Println(`TESTING ... DO NOT DB SAVE`)
 	}
 
+	mu.Lock()
+	defer mu.Unlock()
+
 	var hitsLog = c.App.HitsLog
 	hits, err := os.OpenFile(hitsLog, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
+	defer hits.Close()
 	if err != nil {
 		log.Printf("ERROR opening hits file %s\n", err)
 		hits.Close()
@@ -46,5 +48,4 @@ func saveHit(service, mode, ip, from, quest string) {
 		hits.Close()
 		return
 	}
-	defer hits.Close()
 }
