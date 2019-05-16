@@ -1,0 +1,34 @@
+{
+  "name": "codetabs",
+  "version": "0.5.2",
+  "description": "alexa, headers, loc, proxy, stars, weather",
+  "main": "codetabs.js",
+  "keywords": [],
+  "scripts": {
+    "test": "mocha test/*.js --timeout 15000",
+    "start": "node codetabs.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jolav/codetabs.git"
+  },
+  "author": "jolav",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/jolav/codetabs/issues"
+  },
+  "homepage": "https://github.com/jolav/codetabs#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.16.4",
+    "formidable": "^1.2.1",
+    "graphql-request": "^1.8.2",
+    "js2xmlparser": "^4.0.0",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "chai-xml": "^0.3.2"
+  }
+}

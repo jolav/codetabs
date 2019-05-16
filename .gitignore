@@ -1,21 +1,14 @@
 # Ignore these directories
 _aux/
 logs/
+node_modules/
 tmp/
-temp/loc/
-temp/videos
-_data/alexa
-_data/loc
+_data/
 
 # Ignore these files
 .env
 .DS_Store
 _private.js
 _private.json
-a_private.go
 
-
-# binaries
-codetabs
-codetabs-*
 

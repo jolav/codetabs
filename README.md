@@ -1,19 +1,18 @@
 
-![Version](https://img.shields.io/badge/version-0.5.1-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.5.2-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-version 0.5.1
+version 0.5.2
 
 1. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
-2. [Video2Gif](#video2gif)
-3. [CORS proxy](#cors-proxy)  
-4. [Github Stars graphical history](#github-stars-graphical-history)  
-5. [Alexa Ranking](#alexa)  
-6. [HTTP Headers](#headers)  
-7. [API weather temp](#weather)  
+2. [CORS proxy](#cors-proxy)  
+3. [Github Stars graphical history](#github-stars-graphical-history)  
+4. [Alexa Ranking](#alexa)  
+5. [HTTP Headers](#headers)  
+6. [API weather temp](#weather)  
 
 <hr>
 
@@ -59,34 +58,6 @@ Response (JSON) :
  }
 ]
 ```
-
-<hr>
-
-## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/gif48.png?raw=true)  
-# **VIDEO2GIF**
-
-### **[Read DOCS online](https://codetabs.com/video2gif/video-to-gif.html)**
-
-- Tool for converting videos to animated gifs
-- File max size 100mb
-- Limit : 1 request every 30 seconds. Once reached subsequent requests will result in error 429 (too many requests) until your quota is cleared.
-
-**Parameters** 
-
-Frames : Set frame rate (frames per second). Max value 10, default 5.
-
-Start : Seek to given time position in seconds. "hh:mm:ss" syntax is also supported. Default is from start
-> - 100 - begin from second 100   
-> - 01:40 - begin from minute 1 and second 40  
-
-Duration : Restrict the captured video sequence to the duration specified in seconds. "hh:mm:ss" syntax is also supported. Default is all duration
-> - 200 - take 200 seconds from start  
-> - 03:20 - take 3 minutes and 20 seconds from start  
-
-Scale : Set width:height , if one parameter is -1 it will automatically determine the other while preserving the aspect ratio. Default is 320:160. Max 480.
-> - 480:480 set width = 480 and height = 480  
-> - 380:-1 set width = 380 and height automatically preserving the aspect ratio  
-> - -1:320 set height = 320 and width automatically preserving the aspect ratio  
 
 <hr>
 

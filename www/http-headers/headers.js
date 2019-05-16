@@ -43,11 +43,11 @@ const stars = (function () {
             </tr>
           </thead>
           <tbody class="tbody">`;
-      for (let prop in data[i].header) {
+      for (let prop in data[i]) {
         res +=
           `<tr class="tr">
         <td>${prop}</td>
-        <td>${data[i].header[prop]}</td>
+        <td>${data[i][prop]}</td>
         </tr>`;
       }
       res += `
