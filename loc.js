@@ -27,7 +27,8 @@ app.get('/*', function (req, res) {
       lib.sendError(res, msg, 400);
       return;
     }
-    repoLoc(req, res, folder);
+    //repoLoc(req, res, folder);
+    repoLocClone(req, res, folder);
   } else {
     const msg = `user/repo is empty`;
     lib.sendError(res, msg, 400);
@@ -131,7 +132,72 @@ async function repoLoc(req, res, folder) {
 
 // git clone --depth=1 https://github.com/user/repo
 async function repoLocClone(req, res, folder) {
-  console.log('clone repo');
+  //console.log('clone repo');
+  const url = "https://github.com/";
+  const repo = req.query.github;
+  const destroyTemporalFolder = `rm -r ${folder}`;
+  const createTemporalFolder = `mkdir ${folder}`;
+  const dest = __dirname + "/" + folder;
+  const countloc = `${c.loc.countLoc} ${dest}/`;
+
+  const exists = await existsRepo(url + repo);
+  if (!exists) {
+    //console.log('NO EXISTS');
+    const msg = `repo ${repo} doesn't exist`;
+    lib.sendError(res, msg, 400);
+    doCommand(destroyTemporalFolder);
+    return;
+  }
+  try {
+    await doCommand(destroyTemporalFolder);
+    await doCommand(createTemporalFolder);
+  } catch (err) {
+    console.error('ERROR destroying or creating new folder ', folder, err);
+    return;
+  }
+
+  // some repos like rethinkdb/rethinkdb uses -next instead of -master
+  const cloneRepoURL = "https://github.com/" + repo;
+  const doClone = `git clone --depth=1 ${cloneRepoURL} ${dest}/`;
+  //console.log(doClone);
+  try {
+    await doCommand(doClone);
+  } catch (err) {
+    console.error("ERROR git clone =>", err);
+    const msg = "Can't clone repo " + repo;
+    lib.sendError(res, msg, 400);
+    doCommand(destroyTemporalFolder);
+    return;
+  }
+
+  const txtlocs = await doCommand(countloc);
+  if (!txtlocs) {
+    const msg = "Error counting LOC in " + repo;
+    lib.sendError(res, msg, 400);
+    doCommand(destroyTemporalFolder);
+    return;
+  }
+
+  const errorTxt = await createTxt(dest + "/" + c.loc.order + ".txt", txtlocs);
+  if (errorTxt !== null) {
+    const msg = "Error saving data txt " + repo;
+    lib.sendError(res, msg, 400);
+    doCommand(destroyTemporalFolder);
+    return;
+  }
+
+  //const locs = await processTxt(__dirname + "/2.txt");
+  const locs = await processTxt(dest + "/" + c.loc.order + ".txt");
+  if (!locs) {
+    const msg = "Error counting LOC txt in " + repo;
+    lib.sendError(res, msg, 400);
+    doCommand(destroyTemporalFolder);
+    return;
+  }
+
+  //console.log('********** END **********');
+  lib.sendResult(req, res, locs, 200);
+  doCommand(destroyTemporalFolder);
 }
 
 async function uploadLoc(req, res, folder) {

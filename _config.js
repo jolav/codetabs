@@ -1,7 +1,7 @@
 /* */
 
 const app = {
-  'version': "0.5.2",
+  'version': "0.5.3",
   'mode': 'production',
   //'mode': 'dev',
   'port': 3510,
