@@ -92,9 +92,9 @@ describe('GITHUB STAR HISTORY', function () {
         done();
       });
   });
-  it('normal repo nodejs/node', function (done) {
+  it('normal repo nginx/nginx', function (done) {
     chai.request(url)
-      .get('/v1/stars?repo=nodejs/node')
+      .get('/v1/stars?repo=nginx/nginx')
       .query({})
       .end(function (err, res) {
         // console.log('PATH=> ', res.req.path)

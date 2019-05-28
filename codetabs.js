@@ -7,7 +7,7 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 const c = require(path.join(__dirname, '_config.js'));
-const stats = require(path.join(__dirname, '_stats/stats.js'));
+const stats = require(path.join(__dirname, '/_lib/stats.js'));
 const lib = require(path.join(__dirname, '/_lib/lib.js'));
 
 const alexa = require(path.join(__dirname, 'alexa.js'));
@@ -75,8 +75,6 @@ app.listen(c.app.port, function () {
   initApp();
 });
 
-function initApp() {
-  stats.testDB();
-}
+function initApp() { }
 
 module.exports = app; 

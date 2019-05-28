@@ -2,18 +2,7 @@
 
 const path = require('path');
 
-const lib = require(path.join(__dirname, '../_lib/lib.js'));
-const p = require(path.join(__dirname, '_private.js'));
-
-const TABLE = p.mysql.table1;
-
-const mysql = require('mysql');
-const con = mysql.createConnection({
-  host: p.mysql.host,
-  user: p.mysql.user,
-  password: p.mysql.password,
-  database: p.mysql.db1
-});
+const lib = require(path.join(__dirname, 'lib.js'));
 
 function getCleanUrl(req) {
   let quest = req.headers.origin || req.headers.host;
@@ -45,7 +34,7 @@ function updateStats(req, res, mode, next) {
       const log = `${ip} ${service} ${cleanUrl} ${quest}`;
       console.log(log);
       if (mode === 'production') {
-        insertHit(data);
+        sendHit(data.service);
       } else {
         console.log('FAKE INSERT HIT');
       }
@@ -58,35 +47,39 @@ function updateStats(req, res, mode, next) {
   next();
 }
 
-function insertHit(data) {
-  let sql = 'INSERT INTO ?? (time, alexa, loc, stars, proxy, headers, weather)';
-  sql += ' VALUES (?, 0, 0, 0, 0, 0, 0)';
-  sql += ` ON DUPLICATE KEY UPDATE ${data.service} = ${data.service} + 1;`;
-  const inserts = [TABLE, data.time];
-  sql = mysql.format(sql, inserts);
-  con.query(sql, function (err, rows) {
+const http = require("http");
+
+function sendHit(service) {
+  let path = "http://localhost:3970/addhit/" + service;
+  makeHttpRequest(path, function (err, res, data) {
     if (err) {
-      console.log('Insert HIT error =>', err);
-      // throw err
-    } else {
-      //console.log("Inserted ...", rows);
+      console.error('Error with the request:', err.message);
     }
   });
 }
 
-function testDB() {
-  // console.log(con)
-  con.connect(function (err) {
-    if (err) {
-      console.log('Error connecting to DB => ', err);
-    } else {
-      console.log('Connection to DB ...... OK');
-    }
+function makeHttpRequest(path, callback) {
+  http.get(path, function (resp) {
+    let data = '';
+    resp.on('data', function (chunk) {
+      data += chunk;
+    });
+    resp.on('end', function () {
+      try {
+        var parsed = JSON.parse(data);
+      } catch (err) {
+        //console.error('Unable to parse response as JSON', err);
+        return callback(err, null, null);
+      }
+      callback(null, resp, parsed);
+    });
+  }).on('error', (err) => {
+    //console.error('Error with the request:', err.message);
+    callback(err, null, null);
   });
 }
 
 module.exports = {
   updateStats: updateStats,
-  testDB: testDB
 };
 

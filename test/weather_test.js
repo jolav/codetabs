@@ -69,15 +69,15 @@ describe('WEATHER TEST ', function () {
         });
     });
   }
-  it('inexistent city', function (done) {
+  it('unavailable city', function (done) {
     chai.request(url)
-      .get('/v1/weather?city=inexistentcity')
+      .get('/v1/weather?city=unavailablecity')
       .query({})
       .end(function (err, res) {
         // console.log('PATH=> ', res.req.path)
         expect(err).to.be.null;
         expect(res).to.have.status(404);
-        expect(res.body).to.be.equal('Sorry, inexistentcity not found');
+        expect(res.body).to.be.equal('Sorry, unavailablecity not found');
         done();
       });
   });
