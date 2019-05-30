@@ -263,3 +263,20 @@ tr:nth-child(even) {
 tr:nth-child(odd) {
   background-color: #eee;
 }
+
+/* UPDATE */
+
+.news {
+  margin: 5px auto 5px auto;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.update {
+  border: 1px solid lightsalmon;
+  background-color: lightsalmon;
+  border-radius: 5px;
+  text-align: center;
+  padding: 0.5em;
+}

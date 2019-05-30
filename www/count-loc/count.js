@@ -127,7 +127,16 @@ const loc = (function () {
             padding: 3,
             boxWidth: 10
           }
-        }
+        },
+        onClick: function (e) {
+          const element = this.getElementAtEvent(e);
+          if (element[0]) {
+            const order = element[0]._index;
+            let line = this.active[0]._chart.config.data.datasets[0];
+            line.backgroundColor[order] = getRandomColor();
+            myChart.update();
+          }
+        },
       }
     });
   }

@@ -1,4 +1,4 @@
-/* global Chart */
+/* global Chart d*/
 
 const stars = (function () {
   'use strict';
@@ -37,8 +37,10 @@ const stars = (function () {
     }
     showLoader();
     let urlData = urlBase + '?repo=' + repo;
-    console.log(urlData);
-    getAjaxData(urlData, showData);
+    //console.log(urlData);
+    getAjaxData(urlData, function (data) {
+      showData(data, "");
+    });
   }
 
   function hideLoader() {
@@ -115,6 +117,16 @@ const stars = (function () {
         datasets: dataSets
       },
       options: {
+        onClick: function (e) {
+          const element = this.getElementAtEvent(e);
+          if (element[0]) {
+            const order = element[0]._datasetIndex;
+            const line = this.active[0]._chart.config.data.datasets[order];
+            line.backgroundColor = getRandomColor();
+            line.borderColor = line.backgroundColor;
+            myChart.update();
+          }
+        },
         tooltips: {
         },
         responsive: true,

@@ -1,11 +1,11 @@
 
-![Version](https://img.shields.io/badge/version-0.5.4-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.5.5-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-version 0.5.4
+version 0.5.5
 
 1. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
 2. [CORS proxy](#cors-proxy)  
@@ -23,7 +23,9 @@ version 0.5.4
 
 - Enter user/repo , then click add or select a zipped folder and upload it  
 - File max size 200mb;
-- Petitions are limited to 1 every 5 secs. You will get a 429 error if you exceed 
+- Petitions are limited to 1 every 5 secs. You will get a 429 error if you exceed  
+- You can edit the colors of the segments by clicking on any point of it.
+Segment will randomly change color as it is clicked.  
 
 ![Example](https://github.com/jolav/codetabs/blob/master/www/_public/images/locExample.png?raw=true)
 
@@ -81,7 +83,8 @@ You can use to prevent mixed content of images and JSON data proxying the resour
 ### **[DEMO online](https://codetabs.com/github-stars/github-star-history.html)**
 
 - Enter user/repo , then click add.
-- Petitions are limited to 1 every 5 secs. You will get a 429 error if you exceed 
+- Petitions are limited to 1 every 5 secs. You will get a 429 error if you exceed  
+- You can edit the colors of the lines by clicking on any point of it. Line will randomly change color as it is clicked.  
 
 ![Example](https://github.com/jolav/codetabs/blob/master/www/_public/images/starExample.png?raw=true)
 
