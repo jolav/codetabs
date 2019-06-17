@@ -16,9 +16,7 @@ initAlexa();
 
 function initAlexa() {
   loadAlexaDataInMemory();
-  if (parseInt(process.env.pm_id) === c.alexa.processID) {
-    onceADayTask();
-  }
+  onceADayTask();
 }
 
 app.use(function (req, res, next) {
@@ -66,6 +64,10 @@ function getRankByDomainRAM(req, res, domain) {
 function loadAlexaDataInMemory() {
   //console.log('Alexa loading Database In Memory .......');
   fs.readFile(c.alexa.dataFilePath, 'utf8', function (err, filedata) {
+    if (err) {
+      console.error('ERROR reading alexa file');
+      return;
+    }
     const data = filedata.split(/\r?\n/);
     for (let index = 0; index < data.length - 1; index++) {
       let aux = data[index].split(',');
@@ -76,19 +78,37 @@ function loadAlexaDataInMemory() {
 }
 
 function onceADayTask() {
-  let now = new Date();
-  let target = new Date(
-    now.getFullYear(),
-    now.getMonth(),
-    now.getDate() + 1, // the next day, ...
-    5, 0, 0 // ...at 05:00:00 hours server local time
-  );
-  let msToTask = target.getTime() - now.getTime();
+  if (parseInt(process.env.pm_id) % c.app.instances === 0) {
+    //console.log("Special process ", process.env.pm_id);
+    let now = new Date();
+    let target = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() + 1, // the next day, ...
+      5, 0, 0 // ...at 05:00:00 hours server local time
+    );
+    let msToTask = target.getTime() - now.getTime();
 
-  setTimeout(function () {
-    downloadDataFile(c.alexa.dataFileURL, c.alexa.zipFile, decompress);
-    onceADayTask();
-  }, msToTask);
+    setTimeout(function () {
+      downloadDataFile(c.alexa.dataFileURL, c.alexa.zipFile, decompress);
+      onceADayTask();
+    }, msToTask);
+  } else {
+    //console.log("Std process ", process.env.pm_id);
+    let now = new Date();
+    let target = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() + 1, // the next day, ...
+      5, 15, 0 // ...at 05:15:00 hours server local time
+    );
+    let msToTask = target.getTime() - now.getTime();
+
+    setTimeout(function () {
+      loadAlexaDataInMemory();
+      onceADayTask();
+    }, msToTask);
+  }
 }
 
 function downloadDataFile(url, dest, callback) {

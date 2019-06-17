@@ -53,7 +53,7 @@ function sendHit(service) {
   let path = "http://localhost:3970/addhit/" + service;
   makeHttpRequest(path, function (err, res, data) {
     if (err) {
-      console.error('Error with the request:', err.message);
+      console.error('ERROR sending hit:', err.message);
     }
   });
 }

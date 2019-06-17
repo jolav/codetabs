@@ -1,10 +1,11 @@
 /* */
 
 const app = {
-  'version': "0.5.5",
+  'version': "0.5.6",
   'mode': 'production',
   //'mode': 'dev',
   'port': 3510,
+  'instances': 4,
   'localURL': 'http://localhost:3000',
   'realURL': 'https://api.codetabs.com',
   'services':
@@ -16,7 +17,6 @@ const alexa = {
   "zipFile": "./_data/alexa/top-1m.csv.zip",
   "dataDir": "./_data/alexa",
   "dataFileURL": "https://s3.amazonaws.com/alexa-static/top-1m.csv.zip",
-  "processID": 5, //undefined, // choose one in production
   "ranking": []
 };
 

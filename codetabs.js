@@ -75,6 +75,8 @@ app.listen(c.app.port, function () {
   initApp();
 });
 
-function initApp() { }
+function initApp() {
+  console.log(process.env.NODE_ENV);
+}
 
 module.exports = app; 

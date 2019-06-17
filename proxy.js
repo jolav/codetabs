@@ -48,7 +48,7 @@ function corsProxy(req, res) {
     x.on('error', function (err) {
       let msg = "Invalid URI -> " + req.query.quest;
       lib.sendError(res, msg, 400);
-      //console.error('ERROR 1=> ', err);
+      console.error('ERROR 1=> ', err);
       res.end();
       return;
     });
