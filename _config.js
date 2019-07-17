@@ -1,9 +1,9 @@
 /* */
 
 const app = {
-  'version': "0.5.6",
-  'mode': 'production',
-  //'mode': 'dev',
+  'version': "0.5.7",
+  //'mode': 'production',
+  'mode': 'dev',
   'port': 3510,
   'instances': 4,
   'localURL': 'http://localhost:3000',
@@ -36,4 +36,3 @@ module.exports = {
   loc: loc,
   error: error
 };
-

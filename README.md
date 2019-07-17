@@ -1,11 +1,11 @@
 
-![Version](https://img.shields.io/badge/version-0.5.6-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.5.7-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-version 0.5.6
+version 0.5.7
 
 1. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
 2. [CORS proxy](#cors-proxy)  
@@ -16,8 +16,7 @@ version 0.5.6
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/loc48.png?raw=true)  
-# **COUNT LOC ONLINE** 
+# ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/loc48.png?raw=true) **COUNT LOC ONLINE** 
 
 ### **[DEMO and DOCS online](https://codetabs.com/count-loc/count-loc-online.html)**
 
@@ -63,8 +62,7 @@ Response (JSON) :
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/proxy48.png?raw=true)  
-# **CORS-PROXY**
+# ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/proxy48.png?raw=true) **CORS-PROXY**
 
 ### **[Read DOCS online](https://codetabs.com/cors-proxy/cors-proxy.html)**
 
@@ -77,8 +75,7 @@ You can use to prevent mixed content of images and JSON data proxying the resour
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/stars48.png?raw=true)  
-# **GITHUB STARS GRAPHICAL HISTORY**
+# ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/stars48.png?raw=true) **GITHUB STARS GRAPHICAL HISTORY**
 
 ### **[DEMO online](https://codetabs.com/github-stars/github-star-history.html)**
 
@@ -90,8 +87,7 @@ You can use to prevent mixed content of images and JSON data proxying the resour
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/alexa48.png?raw=true)  
-# **ALEXA**
+# ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/alexa48.png?raw=true) **ALEXA**
 
 Tool for know Alexa Ranking Top 1 million about a website.  
 
@@ -101,8 +97,7 @@ Tool for know Alexa Ranking Top 1 million about a website.
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/headers48.png?raw=true)  
-# **HEADERS**
+# ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/headers48.png?raw=true) **HEADERS**
 
 Tool to get list of response headers including redirect chain of a HTTP connection
 
@@ -112,8 +107,7 @@ Tool to get list of response headers including redirect chain of a HTTP connecti
 
 <hr>
 
-## ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/weather48.png?raw=true)  
-# **WEATHER** 
+# ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/weather48.png?raw=true) **WEATHER** 
 
 ### **[Read DOCS online](https://codetabs.com/weather/weather.html)**
 

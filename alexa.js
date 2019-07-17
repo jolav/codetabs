@@ -6,16 +6,20 @@ const app = express();
 const fs = require("fs");
 const path = require('path');
 const exec = require('child_process').exec;
-const https = require("https");
 
 const c = require(path.join(__dirname, '_config.js'));
 const lib = require(path.join(__dirname, '/_lib/lib.js'));
+
+const readline = require('readline');
 
 // download and load alexa data
 initAlexa();
 
 function initAlexa() {
   loadAlexaDataInMemory();
+  /*setInterval(() => {
+    loadAlexaDataInMemory();
+  }, 2000);*/
   onceADayTask();
 }
 
@@ -62,6 +66,88 @@ function getRankByDomainRAM(req, res, domain) {
 }
 
 function loadAlexaDataInMemory() {
+  console.log('Alexa loading Database In Memory .......', process.env.pm_id);
+  const myData = readline.createInterface({
+    input: fs.createReadStream(c.alexa.dataFilePath)
+  });
+  let lineNumber = 0;
+  myData.on('line', function readLine(line) {
+    lineNumber++;
+    let aux = line.split(',');
+    //console.log(aux[1], lineNumber);
+    c.alexa.ranking[aux[1]] = lineNumber;
+  });
+  //myData.on('close', function done() {
+  //  console.log('Done');
+  //});
+}
+
+function onceADayTask() {
+  if (parseInt(process.env.pm_id) % c.app.instances === 0) {
+    //console.log("Only Special process ", process.env.pm_id);
+    let now = new Date();
+    let target = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate() + 1, // the next day, ...
+      5, 0, 0 // ...at 05:00:00 hours server local time
+    );
+    const msToDownload = target.getTime() - now.getTime();
+
+    setTimeout(function () {
+      downloadDataFile();
+      //onceADayTask();
+    }, msToDownload);
+  }
+  //console.log("Std process ", process.env.pm_id);
+  let now = new Date();
+  let target = new Date(
+    now.getFullYear(),
+    now.getMonth(),
+    now.getDate() + 1, // the next day, ...
+    5, 15, 0 // ...at 05:15:00 hours server local time
+  );
+  const msToTask = target.getTime() - now.getTime();
+
+  setTimeout(function () {
+    loadAlexaDataInMemory();
+    onceADayTask();
+  }, msToTask);
+
+}
+
+function downloadDataFile() {
+  console.log('Download Daily File .......', process.env.pm_id);
+  const deleteOld = `rm -r ${c.alexa.dataDir}`;
+  const downloadNew = "wget -P " + c.alexa.dataDir + " " + c.alexa.dataFileURL;
+  const unzipNew = `unzip ${c.alexa.zipFile} -d ${c.alexa.dataDir}`;
+  //console.log(deleteOld);
+  //console.log(downloadNew);
+  //console.log(unzipNew);
+  exec(deleteOld, function deleteData(err, stdout, stderr) {
+    if (err) {
+      console.error("ERROR deleting old files data => ", err);
+      return;
+    }
+    exec(downloadNew, function downloadData(err, stdout, stderr) {
+      if (err) {
+        console.error("ERROR downloading new file data => ", err);
+        return;
+      }
+      exec(unzipNew, function unzipData(err, stdout, stderr) {
+        if (err) {
+          console.error("ERROR unziping new file data => ", err);
+          return;
+        }
+      });
+    });
+  });
+
+}
+
+// memory leak
+/*
+function loadAlexaDataInMemory() {
   //console.log('Alexa loading Database In Memory .......');
   fs.readFile(c.alexa.dataFilePath, 'utf8', function (err, filedata) {
     if (err) {
@@ -75,40 +161,6 @@ function loadAlexaDataInMemory() {
       c.alexa.ranking[aux[1]] = index + 1;
     }
   });
-}
-
-function onceADayTask() {
-  if (parseInt(process.env.pm_id) % c.app.instances === 0) {
-    //console.log("Special process ", process.env.pm_id);
-    let now = new Date();
-    let target = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate() + 1, // the next day, ...
-      5, 0, 0 // ...at 05:00:00 hours server local time
-    );
-    let msToTask = target.getTime() - now.getTime();
-
-    setTimeout(function () {
-      downloadDataFile(c.alexa.dataFileURL, c.alexa.zipFile, decompress);
-      onceADayTask();
-    }, msToTask);
-  } else {
-    //console.log("Std process ", process.env.pm_id);
-    let now = new Date();
-    let target = new Date(
-      now.getFullYear(),
-      now.getMonth(),
-      now.getDate() + 1, // the next day, ...
-      5, 15, 0 // ...at 05:15:00 hours server local time
-    );
-    let msToTask = target.getTime() - now.getTime();
-
-    setTimeout(function () {
-      loadAlexaDataInMemory();
-      onceADayTask();
-    }, msToTask);
-  }
 }
 
 function downloadDataFile(url, dest, callback) {
@@ -125,7 +177,7 @@ function downloadDataFile(url, dest, callback) {
   });
 }
 
-function decompress() {
+function unzipFile() {
   const deleteOld = `rm ${c.alexa.dataFilePath}`;
   exec(deleteOld, function deleteData(err, stdout, stderr) {
     if (err) {
@@ -142,5 +194,7 @@ function decompress() {
     });
   });
 }
+
+*/
 
 module.exports = app;

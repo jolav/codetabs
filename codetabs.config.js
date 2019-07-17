@@ -9,7 +9,7 @@ module.exports = {
   apps: [{
     name: 'codetabs',
     script: 'codetabs.js',
-    ignore_watch: ["node_modules", "tmp"],
+    ignore_watch: ["node_modules", "tmp", "_data"],
     output: './../logs/hits.log',
     error: './../logs/errors.log',
     env: {
