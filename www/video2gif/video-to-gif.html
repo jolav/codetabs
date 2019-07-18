@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <title>Video2GIF Converter</title>
+
+  <!--Head -->
+  <!--#include file="/_public/templates/head.html" -->
+
+</head>
+
+<body>
+
+  <header class="header">
+    <h1 class="small">
+      <img class="verticalImage" alt="Logo" src="/_public/sprites/gif32.png">
+      <span> Video2Gif</span>
+    </h1>
+    <h1 class="big">
+      <img class="verticalImage" alt="Logo" src="/_public/icons/gif48.png">
+      <span> Video2GIF</span>
+    </h1>
+  </header>
+
+  <h2 class="centerText deprecated" style="border: 5px solid #ff6565;
+  background-color: #ff6565;">EXPERIMENTAL</h2>
+
+  <section class="centerText">
+    - No file name with space or special characters<br>
+    - Only few seconds or will hang
+  </section>
+
+  <div class="container">
+
+    <section id="fileForm">
+      <form class="upload" method="post" enctype="multipart/form-data">
+        <div class="centerText">
+          <input type="file" class="input" id="inputFile" name="inputFile">
+          <button type="submit" id="upload" class="action">UPLOAD</button>
+        </div>
+        <br>
+        <div class="v2gFields">
+          <input class="input2" type="text" name="fps" id="fps" placeholder="frames">
+          <input class="input2" type="text" id="start" placeholder="start">
+          <input class="input2" type="text" id="duration" placeholder="duration  ">
+          <input class="input2" type="text" id="scale" placeholder="scale">
+        </div>
+        <br>
+      </form>
+    </section>
+
+    <div class="result">
+      <div class="gif">
+        <!--<div id="gif"></div>-->
+        <!--<div id="download"></div>-->
+      </div>
+    </div>
+    <br>
+    <div class="loader"></div>
+
+  </div>
+
+  <!-- Version -->
+  <!--#include file="/_public/templates/version.html" -->
+
+  <section class="description">
+    <div class="centerText">
+      <strong>Description</strong>
+    </div>
+    <div class="leftText">
+      <span>
+        - Tool for converting videos to animated gifs
+        <br> - File max size 100mb
+      </span>
+      <br>
+      <span>
+        -
+        <span class="red">Limit</span> : 1 request every 30 seconds. Once reached subsequent requests will result in
+        error 429 (too many requests)
+        until your quota is cleared.
+        <br>
+      </span>
+    </div>
+  </section>
+
+  <section class="description">
+    <div class="centerText">
+      <strong>Parameters</strong>
+    </div>
+    <div class="leftText">
+      <span class="red">Frames</span> : Set frame rate (frames per second). Max value 10, default 5.<br>
+      <span class="red">Start</span> : Seek to given time position in seconds. "hh:mm:ss" syntax is also
+      supported. Default is from start<br>
+      * 100 - begin from second 100<br>
+      * 01:40 - begin from minute 1 and second 40<br>
+      <span class="red">Duration</span> : Restrict the captured video sequence to the duration specified in
+      seconds. "hh:mm:ss" syntax is also supported. Default is all duration <br>
+      * 200 - take 200 seconds from start<br>
+      * 03:20 - take 3 minutes and 20 seconds from start<br>
+      <span class="red">Scale</span> : Set width:height , if one parameter is -1 it will automatically determine the
+      other while preserving the aspect ratio. Default is 320:160: MAX 480<br>
+      * 400:400 set width = 400 and height = 400<br>
+      * 380:-1 set width = 380 and height automatically preserving the aspect ratio<br>
+      * -1:320 set height = 320 and width automatically preserving the aspect ratio<br>
+
+    </div>
+  </section>
+
+  <br>
+
+  <!-- Footer -->
+  <!--#include file="/_public/templates/footer.html" -->
+
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="./../apis.css">
+
+  <!-- google-analytics -->
+  <!--#include file="/_public/templates/analyticstracking.html" -->
+  <!-- cookie Law -->
+  <!--#include file="/_public/templates/cookieLaw.html" -->
+
+  <script type='text/javascript' src='./../mode.js'></script>
+  <script async src="./video2gif.js"></script>
+
+  <!-- Open Sans + Titillium Web -->
+  <link href="https://fonts.googleapis.com/css?family=Titillium+Web:400,700" rel="stylesheet">
+
+</body>
+
+</html>
