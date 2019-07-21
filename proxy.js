@@ -47,9 +47,9 @@ function corsProxy(req, res) {
     const x = request(url);
     x.on('error', function (err) {
       let msg = "Invalid URI -> " + req.query.quest;
+      console.error('ERROR PROXY 1=> ', err);
       lib.sendError(res, msg, 400);
-      console.error('ERROR 1=> ', err);
-      res.end();
+      //res.end();
       return;
     });
     req.pipe(x, {
@@ -57,9 +57,9 @@ function corsProxy(req, res) {
     });
     x.pipe(res);
   } catch (err) {
-    console.error('ERROR => ', err);
-    let msg = "Invalid URI -> " + url;
-    lib.sendError(res, msg, 400);
+    console.error('ERROR PROXY 2 => ', err);
+    //let msg = "Invalid URI -> " + url;
+    //lib.sendError(res, msg, 400);
   }
   /*
   request
