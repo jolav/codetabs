@@ -43,21 +43,24 @@ function corsProxy(req, res) {
     url = 'http://' + url;
   }
 
+  const options = {
+    timeout: 3000
+  };
   try {
-    const x = request(url);
+    const x = request(url, options);
     x.on('error', function (err) {
       let msg = "Invalid URI -> " + req.query.quest;
-      console.error('ERROR PROXY 1=> ', err);
+      console.error('ERROR PROXY 1 => ', req.originalUrl, " === ", err);
       lib.sendError(res, msg, 400);
       //res.end();
       return;
     });
-    req.pipe(x, {
+    /*req.pipe(x, {
       end: true
-    });
+    });*/
     x.pipe(res);
   } catch (err) {
-    console.error('ERROR PROXY 2 => ', err);
+    console.error('ERROR PROXY 2 => ', req.originalUrl, " === ", err);
     //let msg = "Invalid URI -> " + url;
     //lib.sendError(res, msg, 400);
   }

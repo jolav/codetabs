@@ -1,7 +1,7 @@
 /* */
 
 const app = {
-  'version': "0.6.1",
+  'version': "0.6.2",
   'mode': 'production',
   //'mode': 'dev',
   'port': 3510,
@@ -56,3 +56,4 @@ you can use two different time unit formats: sexagesimal (HOURS:MM:SS.MILLISECON
 ffmpeg -i video.mp4 -r 10 -ss 15 -t 20 -vf scale=160:90 out.gif -hide_banner
 
 */
+

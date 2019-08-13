@@ -130,14 +130,36 @@ const loc = (function () {
         },
         onClick: function (e) {
           const element = this.getElementAtEvent(e);
+          //console.log(element[0]);
           if (element[0]) {
             const order = element[0]._index;
             let line = this.active[0]._chart.config.data.datasets[0];
             line.backgroundColor[order] = getRandomColor();
+            //const newColor = line.backgroundColor[order];
+            //this.config.options.tooltips.legendColorBackground = newColor;
+            //this.config.options.tooltips.callbacks.legendColor(this, myChart);
+            //this.config.options.tooltips.updateLegendColor(newColor);
             myChart.update();
           }
         },
-      }
+        tooltips: {
+          /*callbacks: {
+            legendColor: function (tooltipItem, chart) {
+              const helper = chart.config.options.tooltips.legendColorBackground;
+              return {
+                legendColorBackground: helper,
+              };
+            },
+          },*/
+          /*updateLegendColor: function (color) {
+            return {
+              legendColorBackground: color,
+            };
+          },*/
+          displayColors: false,
+          //legendColorBackground: "blue",
+        }
+      },
     });
   }
 
