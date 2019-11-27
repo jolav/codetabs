@@ -16,7 +16,7 @@ const readline = require('readline');
 initAlexa();
 
 function initAlexa() {
-  loadAlexaDataInMemory();
+  //loadAlexaDataInMemory();
   /*setInterval(() => {
     loadAlexaDataInMemory();
   }, 2000);*/
@@ -77,9 +77,9 @@ function loadAlexaDataInMemory() {
     //console.log(aux[1], lineNumber);
     c.alexa.ranking[aux[1]] = lineNumber;
   });
-  //myData.on('close', function done() {
-  //  console.log('Done');
-  //});
+  myData.on('close', function done() {
+    console.log('Alexa loaded Database In Memory .......', process.env.pm_id);
+  });
 }
 
 function onceADayTask() {
@@ -93,10 +93,9 @@ function onceADayTask() {
       5, 0, 0 // ...at 05:00:00 hours server local time
     );
     const msToDownload = target.getTime() - now.getTime();
-
+    console.log('Alexa will download at ', target.toString());
     setTimeout(function () {
       downloadDataFile();
-      //onceADayTask();
     }, msToDownload);
   }
   //console.log("Std process ", process.env.pm_id);
@@ -108,12 +107,11 @@ function onceADayTask() {
     5, 15, 0 // ...at 05:15:00 hours server local time
   );
   const msToTask = target.getTime() - now.getTime();
-
   setTimeout(function () {
-    loadAlexaDataInMemory();
     onceADayTask();
   }, msToTask);
 
+  loadAlexaDataInMemory();
 }
 
 function downloadDataFile() {

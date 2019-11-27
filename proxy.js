@@ -44,7 +44,12 @@ function corsProxy(req, res) {
   }
 
   const options = {
-    timeout: 3000
+    timeout: 3000,
+    // avoid ESOCKETTIMEOUT
+    agent: false,
+    pool: {
+      maxSockets: 1000
+    }
   };
   try {
     const x = request(url, options);
@@ -52,26 +57,25 @@ function corsProxy(req, res) {
       let msg = "Invalid URI -> " + req.query.quest;
       console.error('ERROR PROXY 1 => ', req.originalUrl, " === ", err);
       lib.sendError(res, msg, 400);
-      //res.end();
       return;
     });
     /*req.pipe(x, {
       end: true
     });*/
-    x.pipe(res);
+    //x.pipe(res);
+    x.on('response', function (data) {
+      //const type = data.headers["content-type"];
+      //console.log('TIPO =>', type);
+      try {
+        x.pipe(res);
+      } catch (err) {
+        console.error("ERROR PROXY 2 =>", err);
+      }
+      return;
+    });
   } catch (err) {
-    console.error('ERROR PROXY 2 => ', req.originalUrl, " === ", err);
-    //let msg = "Invalid URI -> " + url;
-    //lib.sendError(res, msg, 400);
+    console.error('ERROR PROXY 3 => ', req.originalUrl, " === ", err);
   }
-  /*
-  request
-    .get(url)
-    .on('error', function (err) {
-      console.log(err);
-    })
-    .pipe(res);
-  */
 }
 
 module.exports = app;

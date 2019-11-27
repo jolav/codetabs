@@ -1,6 +1,6 @@
 {
   "name": "codetabs",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "alexa, headers, loc, proxy, stars, weather",
   "main": "codetabs.js",
   "keywords": [],

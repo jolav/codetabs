@@ -22,6 +22,8 @@ describe('CORS-PROXY TEST ', function () {
     done();
   });
   it('json api', function (done) {
+    // disable timeout https://github.com/mochajs/mocha/issues/2025 
+    this.timeout(0);
     chai.request(url)
       .get('/v1/proxy?quest=apis-v1-jolav.glitch.me/time/')
       .query({})
@@ -224,6 +226,23 @@ describe('CORS-PROXY TEST ', function () {
       .query({})
       .end(function (err, res) {
         // console.log('PATH=> ', res.req.path)
+        expect(err).to.be.null;
+        expect(res).to.have.status(400);
+        expect(res).to.be.json;
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('Error', t);
+        done();
+      });
+  });
+  it('invalid URI 6', function (done) {
+    const t = "Invalid URI -> https://codetabs.com:3000";
+    // disable timeout https://github.com/mochajs/mocha/issues/2025 
+    this.timeout(0);
+    chai.request(url)
+      .get('/v1/proxy?quest=https://codetabs.com:3000')
+      .query({})
+      .end(function (err, res) {
+        //console.log('PATH=> ', res.req.path);
         expect(err).to.be.null;
         expect(res).to.have.status(400);
         expect(res).to.be.json;

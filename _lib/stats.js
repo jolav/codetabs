@@ -34,7 +34,11 @@ function updateStats(req, res, mode, next) {
       const log = `${ip} ${service} ${cleanUrl} ${quest}`;
       console.log(log);
       if (mode === 'production') {
-        sendHit(data.service);
+        try {
+          sendHit(data.service);
+        } catch (err) {
+          console.log('ERROR SENDING HIT 2', err);
+        }
       } else {
         console.log('FAKE INSERT HIT');
       }
