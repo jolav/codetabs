@@ -1,6 +1,6 @@
 {
   "name": "codetabs",
-  "version": "0.6.3",
+  "version": "0.6.4",
   "description": "alexa, headers, loc, proxy, stars, weather",
   "main": "codetabs.js",
   "keywords": [],
@@ -24,7 +24,7 @@
     "formidable": "^1.2.1",
     "graphql-request": "^1.8.2",
     "js2xmlparser": "^4.0.0",
-    "request": "^2.88.0"
+    "superagent": "^5.1.3"
   },
   "devDependencies": {
     "chai": "^4.2.0",

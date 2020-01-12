@@ -144,7 +144,7 @@ describe('CORS-PROXY TEST ', function () {
         done();
       });
   });
-  it('non existent domain', function (done) {
+  it('non existent domain ENOTFOUND', function (done) {
     const t = "Invalid URI -> i-do-not-exist-as-domain";
     chai.request(url)
       .get('/v1/proxy?quest=i-do-not-exist-as-domain')
@@ -159,7 +159,7 @@ describe('CORS-PROXY TEST ', function () {
         done();
       });
   });
-  it('invalid URI 1', function (done) {
+  it('invalid URI 1 ENOTFOUND', function (done) {
     const t = "Invalid URI -> https:/code%%tabs.com";
     chai.request(url)
       .get('/v1/proxy?quest=https:/code%%tabs.com')
@@ -174,7 +174,7 @@ describe('CORS-PROXY TEST ', function () {
         done();
       });
   });
-  it('invalid URI 2', function (done) {
+  it('invalid URI 2 ENOTFOUND', function (done) {
     const t = "Invalid URI -> https:/codetabs.com";
     chai.request(url)
       .get('/v1/proxy?quest=https:/codetabs.com')
@@ -189,7 +189,7 @@ describe('CORS-PROXY TEST ', function () {
         done();
       });
   });
-  it('invalid URI 3', function (done) {
+  it('invalid URI 3 ENOTFOUND', function (done) {
     const t = "Invalid URI -> https:/code%%tabs.com";
     chai.request(url)
       .get('/v1/proxy?quest=https:/code%%tabs.com')
@@ -204,7 +204,7 @@ describe('CORS-PROXY TEST ', function () {
         done();
       });
   });
-  it('invalid URI 4', function (done) {
+  it('invalid URI 4 ENOTFOUND', function (done) {
     const t = "Invalid URI -> https://code%%tabs.com";
     chai.request(url)
       .get('/v1/proxy?quest=https://code%%tabs.com')
@@ -219,7 +219,7 @@ describe('CORS-PROXY TEST ', function () {
         done();
       });
   });
-  it('invalid URI 5', function (done) {
+  it('invalid URI 5 ENOTFOUND', function (done) {
     const t = "Invalid URI -> /https://codetabs.com";
     chai.request(url)
       .get('/v1/proxy?quest=/https://codetabs.com')
@@ -234,7 +234,7 @@ describe('CORS-PROXY TEST ', function () {
         done();
       });
   });
-  it('invalid URI 6', function (done) {
+  it('Invalid Uri 6 ETIMEDOUT', function (done) {
     const t = "Invalid URI -> https://codetabs.com:3000";
     // disable timeout https://github.com/mochajs/mocha/issues/2025 
     this.timeout(0);

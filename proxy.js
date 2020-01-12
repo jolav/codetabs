@@ -4,10 +4,11 @@ const express = require('express');
 const app = express();
 
 const path = require('path');
-const request = require('request');
 
 const c = require(path.join(__dirname, '_config.js'));
 const lib = require(path.join(__dirname, '/_lib/lib.js'));
+
+const superagent = require('superagent');
 
 app.use(function (req, res, next) {
   next();
@@ -43,39 +44,36 @@ function corsProxy(req, res) {
     url = 'http://' + url;
   }
 
-  const options = {
-    timeout: 3000,
-    // avoid ESOCKETTIMEOUT
-    agent: false,
-    pool: {
-      maxSockets: 1000
-    }
-  };
-  try {
-    const x = request(url, options);
-    x.on('error', function (err) {
-      let msg = "Invalid URI -> " + req.query.quest;
-      console.error('ERROR PROXY 1 => ', req.originalUrl, " === ", err);
-      lib.sendError(res, msg, 400);
-      return;
-    });
-    /*req.pipe(x, {
-      end: true
-    });*/
-    //x.pipe(res);
-    x.on('response', function (data) {
-      //const type = data.headers["content-type"];
-      //console.log('TIPO =>', type);
-      try {
-        x.pipe(res);
-      } catch (err) {
-        console.error("ERROR PROXY 2 =>", err);
+  superagent
+    .get(url)
+    .timeout({
+      response: 3000,
+      //deadline: 5000,
+    })
+    .on('abort', function (err) {
+      if (err) {
+        let msg = "Invalid URI -> " + req.query.quest;
+        console.error('ERROR PROXY 0 => ', req.originalUrl, " === ", err);
+        lib.sendError(res, msg, 400);
+        return;
       }
-      return;
-    });
-  } catch (err) {
-    console.error('ERROR PROXY 3 => ', req.originalUrl, " === ", err);
-  }
+    })
+    .on('error', function (err) {
+      if (err) {
+        let msg = "Invalid URI -> " + req.query.quest;
+        console.error('ERROR PROXY 1 => ', req.originalUrl, " === ", err.code, err.errno);
+        console.error(err);
+        lib.sendError(res, msg, 400);
+        return;
+      }
+    })
+    .on("response", function (response) {
+      if (response.type === 'application/json') {
+        res.setHeader("Content-Type", "application/json");
+      }
+    })
+    .pipe(res);
+
 }
 
 module.exports = app;

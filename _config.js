@@ -1,9 +1,9 @@
 /* */
 
 const app = {
-  'version': "0.6.2",
-  'mode': 'production',
-  //'mode': 'dev',
+  'version': "0.6.4",
+  //'mode': 'production',
+  'mode': 'dev',
   'port': 3510,
   'instances': 4,
   'localURL': 'http://localhost:3000',
