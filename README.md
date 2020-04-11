@@ -1,19 +1,20 @@
 
-![Version](https://img.shields.io/badge/version-0.6.4-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.7.0-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-version 0.6.4
+version 0.7.0
 
 1. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
 2. [CORS proxy](#cors-proxy)  
 3. [Github Stars graphical history](#github-stars-graphical-history)  
-4. [Alexa Ranking](#alexa)  
-5. [HTTP Headers](#headers)  
-6. [API weather temp](#weather)  
-7. [Video To Gif](#video2gif)
+4. [IP GeoLocation](#ip-geolocation)  
+5. [Alexa Ranking](#alexa)  
+6. [HTTP Headers](#headers)  
+7. [API weather temp](#weather)  
+8. [Video To Gif](#video2gif)
 
 <hr>
 
@@ -63,7 +64,8 @@ Response (JSON) :
 
 <hr>
 
-# ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/proxy48.png?raw=true) **CORS-PROXY**
+# ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/proxy48.png?raw=true)  **CORS-PROXY**
+
 
 ### **[Read DOCS online](https://codetabs.com/cors-proxy/cors-proxy.html)**
 
@@ -85,6 +87,45 @@ You can use to prevent mixed content of images and JSON data proxying the resour
 - You can edit the colors of the lines by clicking on any point of it. Line will randomly change color as it is clicked.  
 
 ![Example](https://github.com/jolav/codetabs/blob/master/www/_public/images/starExample.png?raw=true)
+
+<hr>
+
+# ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ip48.png?raw=true) **IP GEOLOCATION**
+
+### **[Demo and Docs online](https://codetabs.com/ip-geolocation/ip-geolocation.html)**
+
+
+- Free service that provides a public secure API (CORS enabled) to retrieve geolocation from any IP or hostname.  
+- 10 request per second. Once reached subsequent requests will result in error 429 until your quota is cleared.  
+- This API requires no key or signup.  
+- JSON and XML supported
+- IPv4 and IPv6 supported  
+- CORS support out of the box makes this perfect to your front end apps or webs  
+
+
+Examples
+
+https://api.codetabs.com/v1/geolocation/json  
+https://api.codetabs.com/v1/geolocation/json?q=codetabs.com  
+https://api.codetabs.com/v1/geolocation/xml?q=8.8.8.8  
+https://api.codetabs.com/v1/geolocation/xml?q=2a00:1450:4006:803::200e  
+
+Response JSON :
+
+```json
+{   
+  "ip": "172.168.90.240",
+  "country_code": "FR",
+  "country_name": "France",
+  "region_code": "IDF",
+  "region_name": "Ile-de-France",
+  "city": "Paris",
+  "zip_code": "75001",
+  "time_zone": "Europe/Paris",
+  "latitude": 48.8628,
+  "longitude": 2.3292   
+}
+```
 
 <hr>
 
@@ -148,3 +189,6 @@ Scale : Set width:height , if one parameter is -1 it will automatically determin
 ## **Acknowledgment**
 
 * This site includes Curtis Gagliardi <a href="https://github.com/cgag/loc">cgag/loc</a> for counting lines of code.
+
+
+* This site includes GeoLite2 data created by MaxMind, available from  [maxmind.com](http://maxmind.com)

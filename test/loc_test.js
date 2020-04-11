@@ -82,7 +82,7 @@ describe('LOC TEST ', function () {
   });
   /*it('normal repo', function (done) {
     chai.request(url)
-      .get('/v1/loc?github=jolav/geoip-xyz')
+      .get('/v1/loc?github=jolav/codetabs')
       .query({})
       .end(function (err, res) {
         // console.log('PATH=> ', res.req.path)

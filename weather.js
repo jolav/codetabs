@@ -51,7 +51,7 @@ app.get('/*', function (req, res) {
 });
 
 function getFromGeo(req, res, format) {
-  let getipurl = 'https://geoip.xyz/v1/json?q=' + lib.getIP(req);
+  let getipurl = 'https://api.codetabs.com/v1/geolocation/json?q=' + lib.getIP(req);
   //console.log(getipurl);
   lib.makeHttpsRequest(getipurl, function (res2, data) {
     if (res2.statusCode !== 200) {

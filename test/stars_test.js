@@ -80,9 +80,9 @@ describe('GITHUB STAR HISTORY', function () {
         done();
       });
   });
-  it('normal repo geoip-xyz', function (done) {
+  it('normal repo codetabs', function (done) {
     chai.request(url)
-      .get('/v1/stars?repo=jolav/geoip-xyz')
+      .get('/v1/stars?repo=jolav/codetabs')
       .query({})
       .end(function (err, res) {
         // console.log('PATH=> ', res.req.path)

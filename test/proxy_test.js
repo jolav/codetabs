@@ -40,7 +40,7 @@ describe('CORS-PROXY TEST ', function () {
   });
   it('json api', function (done) {
     chai.request(url)
-      .get('/v1/proxy?quest=geoip.xyz/v1/json')
+      .get('/v1/proxy?quest=api.codetabs.com/v1/geolocation/json')
       .query({})
       .end(function (err, res) {
         // console.log('PATH=> ', res.req.path)
@@ -53,7 +53,7 @@ describe('CORS-PROXY TEST ', function () {
   });
   it('json api www', function (done) {
     chai.request(url)
-      .get('/v1/proxy?quest=www.geoip.xyz/v1/json')
+      .get('/v1/proxy?quest=www.api.codetabs.com/v1/geolocation/json')
       .query({})
       .end(function (err, res) {
         // console.log('PATH=> ', res.req.path)
@@ -66,7 +66,7 @@ describe('CORS-PROXY TEST ', function () {
   });
   it('json api http', function (done) {
     chai.request(url)
-      .get('/v1/proxy?quest=http://www.geoip.xyz/v1/json')
+      .get('/v1/proxy?quest=http://www.api.codetabs.com/v1/geolocation/json')
       .query({})
       .end(function (err, res) {
         // console.log('PATH=> ', res.req.path)
@@ -79,7 +79,7 @@ describe('CORS-PROXY TEST ', function () {
   });
   it('xml api', function (done) {
     chai.request(url)
-      .get('/v1/proxy?quest=https://geoip.xyz/v1/xml')
+      .get('/v1/proxy?quest=https://api.codetabs.com/v1/geolocation/xml')
       .query({})
       .end(function (err, res) {
         //console.log('PATH=> ', res.req.path);

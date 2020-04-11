@@ -1,15 +1,24 @@
 /* */
 
+const os = require("os");
+const server = os.hostname().toLowerCase();
+
 const app = {
-  'version': "0.6.4",
-  //'mode': 'production',
-  'mode': 'dev',
+  'version': "0.7.0",
+  'mode': 'production',
   'port': 3510,
   'instances': 4,
   'localURL': 'http://localhost:3000',
   'realURL': 'https://api.codetabs.com',
-  'services':
-    ["alexa", "headers", "loc", "proxy", "stars", "weather", "video2gif"]
+  'services': [
+    "alexa",
+    "headers",
+    "loc",
+    "proxy",
+    "stars",
+    "weather",
+    "video2gif",
+    "geolocation"]
 };
 
 const alexa = {
@@ -36,6 +45,10 @@ const video2gif = {
 const error = {
   "Error": "",
 };
+
+if (server === "work" || server === "littlepc") {
+  app.mode = "dev";
+}
 
 module.exports = {
   app: app,

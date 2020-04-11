@@ -27,6 +27,9 @@ function updateStats(req, res, mode, next) {
       'service': res.locals.service,
       'time': time
     };
+    if (data.service === "geolocation") {
+      data.service = "geoip";
+    }
     if (data.service) {
       const service = data.service.toUpperCase();
       const cleanUrl = getCleanUrl(req);
@@ -40,7 +43,7 @@ function updateStats(req, res, mode, next) {
           console.log('ERROR SENDING HIT 2', err);
         }
       } else {
-        console.log('FAKE INSERT HIT');
+        console.log('FAKE INSERT HIT', data.service);
       }
     } else {
       console.log('Not Service from ', ip);
@@ -54,7 +57,7 @@ function updateStats(req, res, mode, next) {
 const http = require("http");
 
 function sendHit(service) {
-  let path = "http://localhost:3970/addhit/" + service;
+  let path = "http://localhost:3970/addHit/" + service;
   makeHttpRequest(path, function (err, res, data) {
     if (err) {
       console.error('ERROR sending hit:', err.message);

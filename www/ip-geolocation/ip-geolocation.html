@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <title>IP GeoLocation</title>
+
+  <!--Head -->
+  <!--#include file="/_public/templates/head.html" -->
+
+</head>
+
+<body>
+
+  <header class="header">
+    <h1 class="small">
+      <img class="verticalImage" alt="Logo" src="/_public/sprites/ip32.png">
+      <span>IP GeoLocation</span>
+    </h1>
+    <h1 class="big">
+      <img class="verticalImage" alt="Logo" src="/_public/icons/ip48.png">
+      <span>IP GeoLocation</span>
+    </h1>
+  </header>
+  <br>
+  <section class="data">
+    <div class="data1">
+      <form class="form">
+        <input type="text" id="q" name="q" class="qInput" placeholder="IP or hostname" autofocus>
+      </form>
+      <table class="table">
+        <tr class="row">
+          <td class="key">IP</td>
+          <td class="value" id="value1"></td>
+        </tr>
+        <tr class="row">
+          <td class="key">City</td>
+          <td class="value" id="value2"></td>
+        </tr>
+        <tr class="row">
+          <td class="key">Region/Code</td>
+          <td class="value" id="value3"></td>
+        </tr>
+        <tr class="row">
+          <td class="key">Country/Code</td>
+          <td class="value" id="value4"></td>
+        </tr>
+        <tr class="row">
+          <td class="key">Zip Code</td>
+          <td class="value" id="value5"></td>
+        </tr>
+        <tr class="row">
+          <td class="key">Time Zone</td>
+          <td class="value" id="value6"></td>
+        </tr>
+        <tr class="row">
+          <td class="key">Lat/Lon</td>
+          <td class="value" id="value7"></td>
+        </tr>
+      </table>
+    </div>
+    <div class="data2">
+      <div class="map">
+        <div id="mapid"></div>
+      </div>
+    </div>
+  </section>
+
+  <br>
+
+  <!-- Version -->
+  <!--#include file="/_public/templates/version.html" -->
+
+  <section class="description">
+    <div class="centerText">
+      <strong>Description</strong>
+    </div>
+    <div class="leftText">
+      <span>
+        - This API requires <span class="red">no key or signup</span>.
+      </span>
+      <br>
+      <span>
+        -
+        <span class="red">Limit</span> : 10 requests per second. Once reached subsequent requests will result in error
+        429 (too many requests)
+        until your quota is cleared.
+        <br>
+      </span>
+      <span>
+        - Supported formats : <span class="red">json</span> and <span class="red">xml</span>
+      </span>
+      <br>
+      <span>
+        - If no IP or hostname is provided it retrieves your own IP
+      </span>
+      <br>
+      <span>
+        - <span class="red">IPv4</span> and <span class="red">IPv6</span> supported
+      </span>
+      <br>
+      <span>
+        - <span class="red">CORS support</span> out of the box makes this perfect to your front end apps or webs
+      </span>
+      <br>
+    </div>
+  </section>
+
+  <section class="endpoint">
+    <div class="centerText">
+      <strong>Endpoint - Get IP or Hostname IP Geolocation</strong>
+      <br>This endpoint retrieves geolocation information from any IPv4, IPv6 or hostname in JSON or XML format
+    </div>
+    <div class="leftText">
+      <strong>http Request : </strong>
+      <code class="red">
+          GET https://api.codetabs.com/v1/headers?domain=domain.tld 
+        </code>
+      <br>
+      <strong>examples : </strong>
+      <br>
+      <code>-<a class="hard" href="https://api.codetabs.com/v1/geolocation/json"> https://api.codetabs.com/v1/geolocation/json</a></code>
+      <br>
+      <code>-<a class="hard" href="https://api.codetabs.com/v1/geolocation/json?q=jolav.me"> https://api.codetabs.com/v1/geolocation/json?q=jolav.me</a></code>
+      <br>
+      <code>-<a class="hard" href="https://api.codetabs.com/v1/geolocation/xml?q=8.8.8.8"> https://api.codetabs.com/v1/geolocation/xml?q=8.8.8.8</a></code>
+      <br>
+      <code>-<a class="hard" href="https://api.codetabs.com/v1/geolocation/xml?q=2a00:1450:4006:803::200e"> https://api.codetabs.com/v1/geolocation/xml?q=2a00:1450:4006:803::200e</a></code>
+      <br>
+      <strong>response : </strong>
+      <pre class="marginLeft">
+        {   
+          "ip": "172.168.90.240",
+          "country_code": "FR",
+          "country_name": "France",
+          "region_code": "IDF",
+          "region_name": "Ile-de-France",
+          "city": "Paris",
+          "zip_code": "75001",
+          "time_zone": "Europe/Paris",
+          "latitude": 48.8628,
+          "longitude": 2.3292   
+        }      
+            </pre>
+    </div>
+  </section>
+
+  <br>
+
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="./ip-geolocation.css">
+
+  <script defer src="./ipGeolocation.js"></script>
+
+  <script defer src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+    crossorigin=""></script>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin="" />
+
+  <!-- Footer -->
+  <!--#include file="/_public/templates/footerIP.html" -->
+
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="./ip-geolocation.css">
+
+
+  <!-- google-analytics -->
+  <!--#include file="/_public/templates/analyticstracking.html" -->
+  <!-- cookie Law -->
+  <!--#include file="/_public/templates/cookieLaw.html" -->
+
+  <script type='text/javascript' src='./../mode.js'></script>
+  <script async src="./ipGeolocation.js"></script>
+
+  <!-- Titillium Web + Varela-->
+  <link href="https://fonts.googleapis.com/css?family=Varela|Titillium+Web:400,700" rel="stylesheet">
+
+</body>
+
+</html>
