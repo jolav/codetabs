@@ -11,6 +11,9 @@ const formidable = require('formidable');
 const c = require(path.join(__dirname, '_config.js'));
 const lib = require(path.join(__dirname, '/_lib/lib.js'));
 
+let tokens = require(path.join(__dirname, '_private.js'));
+tokens = tokens.tokens;
+
 app.use(function (req, res, next) {
   next();
 });
@@ -148,6 +151,39 @@ async function repoLocClone(req, res, folder) {
     doCommand(destroyTemporalFolder);
     return;
   }
+
+  // limit repo size to XMB
+  let size = 0;
+  try {
+    const options = {
+      timeout: 3000,
+      host: 'api.github.com',
+      port: 443,
+      path: '/repos/' + repo,
+      method: 'GET',
+      headers: {
+        "User-Agent": "jolav/codetabs",
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' + tokens[lib.getRandomNumber(0, 9)],
+        'Accept-Charset': 'utf-8'
+      }
+    };
+    const repoData = await lib.makeRequestAsync(options, undefined);
+    size = Math.floor(repoData.size / 1000);
+  } catch (err) {
+    console.error(err);
+    const msg = `Internal error`;
+    lib.sendError(res, msg, 503);
+    doCommand(destroyTemporalFolder);
+    return;
+  }
+  if (size > c.loc.maxSize) {
+    const msg = `repo ${repo} too big (>${c.loc.maxSize}MB) = ${size} MB`;
+    lib.sendError(res, msg, 400);
+    doCommand(destroyTemporalFolder);
+    return;
+  }
+
   try {
     await doCommand(destroyTemporalFolder);
     await doCommand(createTemporalFolder);

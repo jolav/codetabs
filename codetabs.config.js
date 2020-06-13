@@ -19,7 +19,7 @@ module.exports = {
       NODE_ENV: "production",
     },
     instances: c.app.instances,
-    max_memory_restart: "1G",
+    max_memory_restart: "800M",
     merge_logs: true,
     log_date_format: 'YYYY-MM-DD HH:mm:ss',
   }]

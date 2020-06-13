@@ -4,10 +4,10 @@ const os = require("os");
 const server = os.hostname().toLowerCase();
 
 const app = {
-  'version': "0.7.0",
+  'version': "0.7.1",
   'mode': 'production',
   'port': 3510,
-  'instances': 4,
+  'instances': 2,
   'localURL': 'http://localhost:3000',
   'realURL': 'https://api.codetabs.com',
   'services': [
@@ -33,6 +33,7 @@ const loc = {
   "countLoc": "./_data/loc/./locLinux",
   "counter": 0,
   "order": "0",
+  "maxSize": 500,
 };
 
 const video2gif = {

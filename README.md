@@ -1,11 +1,11 @@
 
-![Version](https://img.shields.io/badge/version-0.7.0-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.7.1-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-version 0.7.0
+version 0.7.1
 
 1. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
 2. [CORS proxy](#cors-proxy)  
@@ -23,7 +23,8 @@ version 0.7.0
 ### **[DEMO and DOCS online](https://codetabs.com/count-loc/count-loc-online.html)**
 
 - Enter user/repo , then click add or select a zipped folder and upload it  
-- File max size 200mb;
+- Max Github Repo size : 500 mb, greater repos will not work.  
+- File max size for upload 200mb;
 - Petitions are limited to 1 every 5 secs. You will get a 429 error if you exceed  
 - You can edit the colors of the segments by clicking on any point of it.
 Segment will randomly change color as it is clicked.  
