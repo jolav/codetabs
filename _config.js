@@ -4,7 +4,7 @@ const os = require("os");
 const server = os.hostname().toLowerCase();
 
 const app = {
-  'version': "0.7.1",
+  'version': "0.7.2",
   'mode': 'production',
   'port': 3510,
   'instances': 2,
@@ -19,14 +19,6 @@ const app = {
     "weather",
     "video2gif",
     "geolocation"]
-};
-
-const alexa = {
-  "dataFilePath": "./_data/alexa/top-1m.csv",
-  "zipFile": "./_data/alexa/top-1m.csv.zip",
-  "dataDir": "./_data/alexa",
-  "dataFileURL": "https://s3.amazonaws.com/alexa-static/top-1m.csv.zip",
-  "ranking": []
 };
 
 const loc = {
@@ -53,7 +45,6 @@ if (server === "work" || server === "littlepc") {
 
 module.exports = {
   app: app,
-  alexa: alexa,
   loc: loc,
   video2gif: video2gif,
   error: error

@@ -3,12 +3,24 @@ _aux/
 logs/
 node_modules/
 tmp/
+_tmp/
 _data/
 
-# Ignore these files
+#Ignore these files
+.air.conf
 .env
 .DS_Store
 _private.js
 _private.json
+a_private.go
+# 
+
+# 
+
+
+# ignore binaries
+codetabs
+
+
 
 

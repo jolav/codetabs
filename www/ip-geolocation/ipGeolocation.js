@@ -27,7 +27,7 @@ const geolocation = (function () {
     }
     value1.innerText = data.ip;
     value2.innerText = data.city;
-    value3.innerText = data.region_name + ' ' + data.region_code;
+    value3.innerText = data.region_name; //+ ' ' + data.region_code;
     value4.innerText = data.country_name + ' ' + data.country_code;
     value5.innerText = data.zip_code;
     value6.innerText = data.time_zone;
