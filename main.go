@@ -17,9 +17,10 @@ import (
 	ax "github.com/jolav/codetabs/alexa"
 	gl "github.com/jolav/codetabs/geolocation"
 	he "github.com/jolav/codetabs/headers"
+	we "github.com/jolav/codetabs/weather"
 )
 
-var version = "0.7.2"
+var version = "0.7.3"
 var when = "undefined"
 
 type Conf struct {
@@ -54,12 +55,14 @@ func main() {
 	go alexa.OnceADayTask()
 	geoip := gl.NewGeoLocation(false)
 	headers := he.NewHeaders(false)
+	weather := we.NewWeather(false)
 
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/v1/alexa/", mw(alexa.Router, "alexa", c))
 	mux.HandleFunc("/v1/geolocation/", mw(geoip.Router, "geoip", c))
 	mux.HandleFunc("/v1/headers/", mw(headers.Router, "headers", c))
+	mux.HandleFunc("/v1/weather/", mw(weather.Router, "weather", c))
 
 	mux.HandleFunc("/", u.BadRequest)
 

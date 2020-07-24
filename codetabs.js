@@ -13,7 +13,6 @@ const lib = require(path.join(__dirname, '/_lib/lib.js'));
 const loc = require(path.join(__dirname, 'loc.js'));
 const proxy = require(path.join(__dirname, 'proxy.js'));
 const stars = require(path.join(__dirname, 'stars.js'));
-const weather = require(path.join(__dirname, 'weather.js'));
 const video2gif = require(path.join(__dirname, 'video2gif.js'));
 
 if (c.app.mode === 'dev') {
@@ -59,7 +58,6 @@ app.use(function (req, res, next) {
 app.use('/v1/loc', loc);
 app.use('/v1/proxy', proxy);
 app.use('/v1/stars', stars);
-app.use('/v1/weather', weather);
 app.use("/v1/video2gif", video2gif);
 
 app.get('/*', function (req, res) {

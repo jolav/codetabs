@@ -1,11 +1,11 @@
 
-![Version](https://img.shields.io/badge/version-0.7.2-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.7.3-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-version 0.7.2
+version 0.7.3
 
 1. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
 2. [CORS proxy](#cors-proxy)  
@@ -216,13 +216,15 @@ Scale : Set width:height , if one parameter is -1 it will automatically determin
 
 ### IP GeoLocation  
 
-[ ] Time Zone show region like (Europe/Paris)  
+- [ ]  Time Zone show region like (Europe/Paris)  
 
 ### Alexa  
 
 ### HTTP Headers  
 
 ### API weather temp  
+
+- [ ]  Search more sources for weather data
 
 ### Video To Gif  
 
@@ -232,4 +234,4 @@ Scale : Set width:height , if one parameter is -1 it will automatically determin
 * This site includes Curtis Gagliardi <a href="https://github.com/cgag/loc">cgag/loc</a> for counting lines of code.
 
 
-* This site includes GeoLite2 data created by MaxMind, available from  [maxmind.com](http://maxmind.com)
+* This site includes IP2Location LITE data available from <a href="https://lite.ip2location.com">https://lite.ip2location.com</a>.

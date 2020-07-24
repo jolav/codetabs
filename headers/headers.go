@@ -102,8 +102,5 @@ func parseHeadString(rawData string, hs *headers) {
 
 func NewHeaders(test bool) headers {
 	h := headers{}
-	if test {
-		fmt.Println(test)
-	}
 	return h
 }
