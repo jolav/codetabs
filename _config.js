@@ -4,7 +4,7 @@ const os = require("os");
 const server = os.hostname().toLowerCase();
 
 const app = {
-  'version': "0.7.3",
+  'version': "0.7.4",
   'mode': 'production',
   'port': 3510,
   'instances': 2,
@@ -26,13 +26,6 @@ const loc = {
   "counter": 0,
   "order": "0",
   "maxSize": 500,
-};
-
-const video2gif = {
-  "form": [],
-  "counter": 0,
-  "order": "0",
-  "processID": 0
 };
 
 const error = {

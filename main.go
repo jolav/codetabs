@@ -17,10 +17,11 @@ import (
 	ax "github.com/jolav/codetabs/alexa"
 	gl "github.com/jolav/codetabs/geolocation"
 	he "github.com/jolav/codetabs/headers"
+	vg "github.com/jolav/codetabs/video2gif"
 	we "github.com/jolav/codetabs/weather"
 )
 
-var version = "0.7.3"
+var version = "0.7.4"
 var when = "undefined"
 
 type Conf struct {
@@ -39,7 +40,7 @@ func main() {
 	var c Conf
 	u.LoadJSONConfig(getGlobalConfigJSON(), &c)
 	checkMode(&c)
-	u.PrettyPrintStruct(c)
+	//u.PrettyPrintStruct(c)
 
 	// Custom Error Log File + Custom Hits Log File
 	var mylog *os.File
@@ -56,6 +57,7 @@ func main() {
 	geoip := gl.NewGeoLocation(false)
 	headers := he.NewHeaders(false)
 	weather := we.NewWeather(false)
+	video2gif := vg.NewVideo2Gif(false)
 
 	mux := http.NewServeMux()
 
@@ -63,6 +65,7 @@ func main() {
 	mux.HandleFunc("/v1/geolocation/", mw(geoip.Router, "geoip", c))
 	mux.HandleFunc("/v1/headers/", mw(headers.Router, "headers", c))
 	mux.HandleFunc("/v1/weather/", mw(weather.Router, "weather", c))
+	mux.HandleFunc("/v1/video2gif/", mw(video2gif.Router, "video2gif", c))
 
 	mux.HandleFunc("/", u.BadRequest)
 

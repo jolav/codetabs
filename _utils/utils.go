@@ -34,6 +34,16 @@ func GenericCommandSH(comm string) (chunk []byte, err error) {
 	return chunk, err
 }
 
+// GenericCommand ...
+func GenericCommand(args []string) (err error) {
+	_, err = exec.Command(args[0], args[1:len(args)]...).CombinedOutput()
+	if err != nil {
+		//fmt.Println("ERROR CMD= ", err)
+		return err
+	}
+	return err
+}
+
 // CreateCustomErrorLogFile ...
 func CreateCustomErrorLogFile(f string) *os.File {
 	mylog, err := os.OpenFile(f, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)

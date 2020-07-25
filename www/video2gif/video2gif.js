@@ -6,9 +6,9 @@ const video2gif = (function () {
 
   console.log(window.mode);
 
-  let baseUrl = 'https://api.codetabs.com/v1/video2gif';
+  let baseUrl = 'https://api.codetabs.com/v1/video2gif/';
   if (window.mode === "dev") {
-    baseUrl = 'http://localhost:3000/v1/video2gif';
+    baseUrl = 'http://localhost:3000/v1/video2gif/';
   }
 
   function init() {
