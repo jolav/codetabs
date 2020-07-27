@@ -4,9 +4,9 @@ const stars = (function () {
   'use strict';
   /* code here */
 
-  let urlBase = 'https://api.codetabs.com/v1/stars';
+  let urlBase = 'https://api.codetabs.com/v1/stars/';
   if (window.mode === "dev") {
-    urlBase = 'http://localhost:3000/v1/stars';
+    urlBase = 'http://localhost:3000/v1/stars/';
   }
 
   const ctx = document.getElementById('myChart');

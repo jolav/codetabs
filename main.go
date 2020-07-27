@@ -17,11 +17,12 @@ import (
 	ax "github.com/jolav/codetabs/alexa"
 	gl "github.com/jolav/codetabs/geolocation"
 	he "github.com/jolav/codetabs/headers"
+	st "github.com/jolav/codetabs/stars"
 	vg "github.com/jolav/codetabs/video2gif"
 	we "github.com/jolav/codetabs/weather"
 )
 
-var version = "0.7.4"
+var version = "0.7.5"
 var when = "undefined"
 
 type Conf struct {
@@ -58,6 +59,7 @@ func main() {
 	headers := he.NewHeaders(false)
 	weather := we.NewWeather(false)
 	video2gif := vg.NewVideo2Gif(false)
+	stars := st.NewStars(false)
 
 	mux := http.NewServeMux()
 
@@ -66,6 +68,7 @@ func main() {
 	mux.HandleFunc("/v1/headers/", mw(headers.Router, "headers", c))
 	mux.HandleFunc("/v1/weather/", mw(weather.Router, "weather", c))
 	mux.HandleFunc("/v1/video2gif/", mw(video2gif.Router, "video2gif", c))
+	mux.HandleFunc("/v1/stars/", mw(stars.Router, "stars", c))
 
 	mux.HandleFunc("/", u.BadRequest)
 
