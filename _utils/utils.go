@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"strings"
 )
 
 // PrettyPrintStruct ...
@@ -52,4 +53,21 @@ func CreateCustomErrorLogFile(f string) *os.File {
 	}
 	log.SetOutput(mylog)
 	return mylog
+}
+
+// RemoveProtocolFromURL ...
+func RemoveProtocolFromURL(url string) string {
+	if strings.HasPrefix(url, "https://") {
+		return url[8:]
+	}
+	if strings.HasPrefix(url, "https:/") {
+		return url[7:]
+	}
+	if strings.HasPrefix(url, "http://") {
+		return url[7:]
+	}
+	if strings.HasPrefix(url, "http:/") {
+		return url[6:]
+	}
+	return url
 }

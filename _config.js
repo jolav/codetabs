@@ -4,7 +4,7 @@ const os = require("os");
 const server = os.hostname().toLowerCase();
 
 const app = {
-  'version': "0.7.5",
+  'version': "0.7.6",
   'mode': 'production',
   'port': 3510,
   'instances': 2,

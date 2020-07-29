@@ -11,7 +11,6 @@ const stats = require(path.join(__dirname, '/_lib/stats.js'));
 const lib = require(path.join(__dirname, '/_lib/lib.js'));
 
 const loc = require(path.join(__dirname, 'loc.js'));
-const proxy = require(path.join(__dirname, 'proxy.js'));
 
 if (c.app.mode === 'dev') {
   c.app.port = 3000;
@@ -54,7 +53,6 @@ app.use(function (req, res, next) {
 });
 
 app.use('/v1/loc', loc);
-app.use('/v1/proxy', proxy);
 
 app.get('/*', function (req, res) {
   c.error.Error = "404 Not found";

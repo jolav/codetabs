@@ -160,8 +160,9 @@ func (s *stars) doLinksRequests(links []string) {
 			req.Header.Add("Authorization", "token "+githubToken[rndToken])
 			client := &http.Client{
 				Transport: &http.Transport{
-					TLSHandshakeTimeout: 120 * time.Second,
+					TLSHandshakeTimeout: 60 * time.Second,
 				},
+				Timeout: 10 * time.Second,
 			}
 			resp, err := client.Do(req)
 			id, _ := strconv.Atoi(strings.Split(link, "page=")[2])

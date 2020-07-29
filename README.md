@@ -1,11 +1,11 @@
 
-![Version](https://img.shields.io/badge/version-0.7.5-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.7.6-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-version 0.7.5
+version 0.7.6
 
 1. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
 2. [CORS proxy](#cors-proxy)  
@@ -80,7 +80,7 @@ Response (JSON) :
 - Free CORS proxy server to bypass same-origin policy related to performing standard AJAX requests to 3rd party services.
 You can use to prevent mixed content of images and JSON data proxying the resources to serve them under https.
 - API URL => append the url with the resource you want to "https://api.codetabs.com/v1/proxy/"
-- Each request is limited to 5mb (2mb for old endpoint) size download to avoid abuse.
+- Each request is limited to 5mb size download to avoid abuse.
 - Only suppports GET request.
 - Limit : 5 request per second. Once reached subsequent requests will result in error 429 (too many requests) until your quota is cleared. 
 
@@ -216,6 +216,7 @@ Scale : Set width:height , if one parameter is -1 it will automatically determin
 
 - [ ] Save Historical Data >40k stars (unstar = problem)  
 - [ ] Gitlab ?  
+- [ ] Optimize doing far fewer requests. Extrapolate data  
 
 ### IP GeoLocation  
 

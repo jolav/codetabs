@@ -17,12 +17,13 @@ import (
 	ax "github.com/jolav/codetabs/alexa"
 	gl "github.com/jolav/codetabs/geolocation"
 	he "github.com/jolav/codetabs/headers"
+	px "github.com/jolav/codetabs/proxy"
 	st "github.com/jolav/codetabs/stars"
 	vg "github.com/jolav/codetabs/video2gif"
 	we "github.com/jolav/codetabs/weather"
 )
 
-var version = "0.7.5"
+var version = "0.7.6"
 var when = "undefined"
 
 type Conf struct {
@@ -60,6 +61,7 @@ func main() {
 	weather := we.NewWeather(false)
 	video2gif := vg.NewVideo2Gif(false)
 	stars := st.NewStars(false)
+	proxy := px.NewProxy(false)
 
 	mux := http.NewServeMux()
 
@@ -69,6 +71,7 @@ func main() {
 	mux.HandleFunc("/v1/weather/", mw(weather.Router, "weather", c))
 	mux.HandleFunc("/v1/video2gif/", mw(video2gif.Router, "video2gif", c))
 	mux.HandleFunc("/v1/stars/", mw(stars.Router, "stars", c))
+	mux.HandleFunc("/v1/proxy/", mw(proxy.Router, "proxy", c))
 
 	mux.HandleFunc("/", u.BadRequest)
 
@@ -86,7 +89,7 @@ func main() {
 
 func mw(next http.HandlerFunc, service string, c Conf) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		u.AddHit(w, r, service, c.Mode, c.hitsLog)
+		go u.AddHit(w, r, service, c.Mode, c.hitsLog)
 		next.ServeHTTP(w, r)
 	})
 }
