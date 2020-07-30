@@ -71,3 +71,13 @@ func RemoveProtocolFromURL(url string) string {
 	}
 	return url
 }
+
+// WriteFile ...
+func WriteFile(filePath string, content string) {
+	file, err := os.Create(filePath)
+	if err != nil {
+		log.Printf("Error WriteFile %v\n", err)
+	}
+	defer file.Close()
+	file.WriteString(content)
+}

@@ -4,9 +4,9 @@ const loc = (function () {
   'use strict';
   /* code here */
 
-  let urlBase = 'https://api.codetabs.com/v1/loc';
+  let urlBase = 'https://api.codetabs.com/v1/loc/';
   if (window.mode === "dev") {
-    urlBase = 'http://localhost:3000/v1/loc';
+    urlBase = 'http://localhost:3000/v1/loc/';
   }
 
   const ctx = document.getElementById('myPie');

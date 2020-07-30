@@ -17,13 +17,14 @@ import (
 	ax "github.com/jolav/codetabs/alexa"
 	gl "github.com/jolav/codetabs/geolocation"
 	he "github.com/jolav/codetabs/headers"
+	lo "github.com/jolav/codetabs/loc"
 	px "github.com/jolav/codetabs/proxy"
 	st "github.com/jolav/codetabs/stars"
 	vg "github.com/jolav/codetabs/video2gif"
 	we "github.com/jolav/codetabs/weather"
 )
 
-var version = "0.7.6"
+var version = "0.7.7"
 var when = "undefined"
 
 type Conf struct {
@@ -54,6 +55,8 @@ func main() {
 	c.hitsLog = u.NewHitsFile(c.HitsLogFile)
 	//////////
 
+	cleanTmpFolder()
+
 	alexa := ax.NewAlexa(false)
 	go alexa.OnceADayTask()
 	geoip := gl.NewGeoLocation(false)
@@ -62,6 +65,7 @@ func main() {
 	video2gif := vg.NewVideo2Gif(false)
 	stars := st.NewStars(false)
 	proxy := px.NewProxy(false)
+	loc := lo.NewLoc(false)
 
 	mux := http.NewServeMux()
 
@@ -72,6 +76,7 @@ func main() {
 	mux.HandleFunc("/v1/video2gif/", mw(video2gif.Router, "video2gif", c))
 	mux.HandleFunc("/v1/stars/", mw(stars.Router, "stars", c))
 	mux.HandleFunc("/v1/proxy/", mw(proxy.Router, "proxy", c))
+	mux.HandleFunc("/v1/loc/", mw(loc.Router, "loc", c))
 
 	mux.HandleFunc("/", u.BadRequest)
 
@@ -112,6 +117,13 @@ func checkMode(c *Conf) {
 		c.Mode = "dev"
 		c.Port = 3000
 	}
+}
+
+func cleanTmpFolder() {
+	u.GenericCommand([]string{"rm", "-r", "./_tmp/"})
+	u.GenericCommand([]string{"mkdir", "./_tmp/"})
+	u.GenericCommand([]string{"mkdir", "./_tmp/loc/"})
+	u.GenericCommand([]string{"mkdir", "./_tmp/videos/"})
 }
 
 func FAKE__getGlobalConfigJSON() (configjson []byte) {

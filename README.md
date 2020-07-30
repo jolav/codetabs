@@ -1,11 +1,11 @@
 
-![Version](https://img.shields.io/badge/version-0.7.6-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.7.7-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-version 0.7.6
+version 0.7.7
 
 1. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
 2. [CORS proxy](#cors-proxy)  
@@ -210,7 +210,10 @@ Scale : Set width:height , if one parameter is -1 it will automatically determin
 
 ### Count LOC  
 
-### CORS proxy  
+- [ ] Save Historical Data  
+- [ ] Gitlab, bitbucket ??  
+- [ ] Use same colours for languages as github ??  
+- [ ] Change cgag/loc ??
 
 ### Github Stars graphical history  
 
@@ -221,6 +224,7 @@ Scale : Set width:height , if one parameter is -1 it will automatically determin
 ### IP GeoLocation  
 
 - [ ] Show Time Zone region like (Europe/Paris)  
+- [ ] Use csv data instead bin for remove dependency and load all data in memory ??   
 
 ### API weather temp  
 

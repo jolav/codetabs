@@ -15,7 +15,10 @@ func AddHit(w http.ResponseWriter, r *http.Request,
 	service, mode string, hLog *log.Logger) {
 	ip := GetIP(r)
 	sv := strings.ToUpper(service)
-	host := r.Host
+	host := r.Header.Get("Origin")
+	if host == "" {
+		host = "?"
+	}
 	quest := strings.Split(r.URL.String(), "v1/")[1]
 	if mode == "production" {
 		hLog.Println(ip, sv, host, quest)
@@ -33,7 +36,8 @@ func NewHitsFile(f string) *log.Logger {
 	if err != nil {
 		log.Fatalf("ERROR opening Info log file %s\n", err)
 	}
-	hitsLog := log.New(infoLog, "HIT :\t", log.Ldate|log.Ltime)
+	hitsLog := log.New(infoLog, "HIT -> ", log.Ldate|log.Ltime)
+	//hitsLog := log.New(infoLog, "HIT :\t", log.Ldate|log.Ltime)
 	return hitsLog
 }
 

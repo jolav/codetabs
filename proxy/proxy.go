@@ -6,6 +6,7 @@ import (
 	"bufio"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 	"time"
@@ -29,12 +30,12 @@ func (p *proxy) Router(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	r.ParseForm()
-	quest := r.Form.Get("quest")
-	if quest == "" || len(path) != 2 {
+	p.quest = r.Form.Get("quest")
+	if p.quest == "" || len(path) != 2 {
 		u.BadRequest(w, r)
 		return
 	}
-	p.quest = quest
+	p.quest = strings.Split(r.URL.RawQuery, "quest=")[1]
 	p.doProxyRequest(w, r)
 }
 
@@ -42,11 +43,11 @@ func (p *proxy) doProxyRequest(w http.ResponseWriter, r *http.Request) {
 	p.quest = "http://" + u.RemoveProtocolFromURL(p.quest)
 	var data interface{}
 	var netClient = &http.Client{
-		Timeout: time.Second * 5,
+		Timeout: time.Second * 10,
 	}
 	resp, err := netClient.Get(p.quest)
 	if err != nil {
-		fmt.Println("Error requesting resource => ", err)
+		log.Printf("Error PROXY => %s", err)
 		msg := fmt.Sprintf("%s is not a valid resource", p.quest)
 		u.ErrorResponse(w, msg)
 		return
@@ -57,8 +58,6 @@ func (p *proxy) doProxyRequest(w http.ResponseWriter, r *http.Request) {
 	if len(resp.Header["Content-Type"]) > 0 {
 		contentType = resp.Header["Content-Type"][0]
 	}
-
-	fmt.Println(contentType)
 
 	if strings.Contains(contentType, "application/json") {
 		json.NewDecoder(resp.Body).Decode(&data)

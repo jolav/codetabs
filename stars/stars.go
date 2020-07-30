@@ -157,12 +157,12 @@ func (s *stars) doLinksRequests(links []string) {
 			req.Header.Add("Accept", "application/vnd.github.v3.star+json")
 			req.Header.Add("User-Agent", "github stars repos")
 			rndToken := u.GetRandomInt(0, 9)
-			req.Header.Add("Authorization", "token "+githubToken[rndToken])
+			req.Header.Add("Authorization", "token "+u.GITHUB_TOKEN[rndToken])
 			client := &http.Client{
 				Transport: &http.Transport{
 					TLSHandshakeTimeout: 60 * time.Second,
 				},
-				Timeout: 10 * time.Second,
+				Timeout: 30 * time.Second,
 			}
 			resp, err := client.Do(req)
 			id, _ := strconv.Atoi(strings.Split(link, "page=")[2])
@@ -212,7 +212,7 @@ func (s *stars) doFirstRequest(w http.ResponseWriter, r *http.Request,
 	req.Header.Add("Accept", "application/vnd.github.v3.star+json")
 	req.Header.Add("User-Agent", "github stars repos")
 	rndToken := u.GetRandomInt(0, 9)
-	req.Header.Add("Authorization", "token "+githubToken[rndToken])
+	req.Header.Add("Authorization", "token "+u.GITHUB_TOKEN[rndToken])
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
@@ -311,7 +311,7 @@ func (s *stars) getTotalStars() int {
 		return 0
 	}
 	rndToken := u.GetRandomInt(0, 9)
-	req.Header.Set("Authorization", "bearer "+githubToken[rndToken])
+	req.Header.Set("Authorization", "bearer "+u.GITHUB_TOKEN[rndToken])
 	req.Header.Set("Content-Type", "x-www-form-urlencoded")
 	resp, err := http.DefaultClient.Do(req)
 	if err != nil {
