@@ -1,11 +1,11 @@
 
-![Version](https://img.shields.io/badge/version-0.7.7-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.7.8-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-version 0.7.7
+version 0.7.8
 
 1. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
 2. [CORS proxy](#cors-proxy)  
@@ -208,32 +208,21 @@ Scale : Set width:height , if one parameter is -1 it will automatically determin
 
 ## TO DO
 
-### Count LOC  
+- [ ] **LOC** Save Historical Data  
+- [ ] **LOC** Gitlab, bitbucket ??  
+- [ ] **LOC** Use same colours for languages as github ??  
+- [ ] **LOC** Change cgag/loc ??
 
-- [ ] Save Historical Data  
-- [ ] Gitlab, bitbucket ??  
-- [ ] Use same colours for languages as github ??  
-- [ ] Change cgag/loc ??
+- [ ] **STARS** Save Historical Data >40k stars (unstar = problem)  
+- [ ] **STARS** Gitlab ?  
+- [ ] **STARS** Optimize doing far fewer requests. Extrapolate data  
 
-### Github Stars graphical history  
+- [ ] **GEOLOCATION** Show Time Zone region like (Europe/Paris)  
+- [ ] **GEOLOCATION** Use csv data instead bin for remove dependency and load all data in memory ??   
 
-- [ ] Save Historical Data >40k stars (unstar = problem)  
-- [ ] Gitlab ?  
-- [ ] Optimize doing far fewer requests. Extrapolate data  
+- [ ] **WEATHER** Search more sources for weather data
 
-### IP GeoLocation  
-
-- [ ] Show Time Zone region like (Europe/Paris)  
-- [ ] Use csv data instead bin for remove dependency and load all data in memory ??   
-
-### API weather temp  
-
-- [ ] Search more sources for weather data
-
-### Video To Gif  
-
-- [ ] Get better compression
-
+- [ ] **VIDEO2GIF** Get better compression
 
 ## **Acknowledgment**
 

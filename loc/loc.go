@@ -253,6 +253,7 @@ func (l *loc) existRepo(repo string) bool {
 		log.Printf("ERROR exists repo %s\n", err)
 		return false
 	}
+	defer resp.Body.Close()
 	if resp.StatusCode == 200 {
 		return true
 	}
@@ -269,7 +270,6 @@ func (l *loc) exceedsSize(w http.ResponseWriter) bool {
 	var netClient = &http.Client{
 		Timeout: time.Second * 3,
 	}
-
 	resp, err := netClient.Do(req)
 	if err != nil || resp.StatusCode != 200 {
 		msg := fmt.Sprintf("Error getting repo size %s\n", err)

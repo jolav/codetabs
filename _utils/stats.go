@@ -17,7 +17,7 @@ func AddHit(w http.ResponseWriter, r *http.Request,
 	sv := strings.ToUpper(service)
 	host := r.Header.Get("Origin")
 	if host == "" {
-		host = "?"
+		host = " ? "
 	}
 	quest := strings.Split(r.URL.String(), "v1/")[1]
 	if mode == "production" {
@@ -27,7 +27,6 @@ func AddHit(w http.ResponseWriter, r *http.Request,
 	} else {
 		log.Println(ip, sv, host, quest)
 	}
-
 }
 
 // CreateCustomHitsLogFile ...
@@ -36,7 +35,7 @@ func NewHitsFile(f string) *log.Logger {
 	if err != nil {
 		log.Fatalf("ERROR opening Info log file %s\n", err)
 	}
-	hitsLog := log.New(infoLog, "HIT -> ", log.Ldate|log.Ltime)
+	hitsLog := log.New(infoLog, "HIT: ", log.Ldate|log.Ltime)
 	//hitsLog := log.New(infoLog, "HIT :\t", log.Ldate|log.Ltime)
 	return hitsLog
 }
@@ -50,7 +49,7 @@ func saveHit(w http.ResponseWriter, url string) {
 		log.Println("Error 1 saving Hit,", err)
 		return
 	}
-
+	defer resp.Body.Close()
 	if resp.StatusCode != 200 {
 		log.Println("Error 2 saving Hit,", resp.StatusCode)
 		return

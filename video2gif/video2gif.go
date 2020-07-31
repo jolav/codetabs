@@ -136,6 +136,7 @@ func (vg *video2gif) doVideo2GifRequest(w http.ResponseWriter, r *http.Request, 
 		u.GenericCommand(destroyTemporalDir)
 		return
 	}
+	defer gifFileData.Close()
 	reader := bufio.NewReader(gifFileData)
 	content, err := ioutil.ReadAll(reader)
 	if err != nil {
