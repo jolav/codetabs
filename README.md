@@ -1,11 +1,11 @@
 
-![Version](https://img.shields.io/badge/version-0.7.10-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.7.11-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-**version 0.7.10**
+**version 0.7.11**
 
 1. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
 2. [CORS proxy](#cors-proxy)  
@@ -18,6 +18,10 @@
 
 
 [To Do List](#to-do)
+
+In order to run this program you need installed
+
+`apt install curl git p7zip zip unzip ffmepg gifsicle`
 
 <hr>
 
@@ -211,7 +215,11 @@ Scale : Set width:height , if one parameter is -1 it will automatically determin
 - [ ] **LOC** Save Historical Data  
 - [ ] **LOC** Gitlab, bitbucket ??  
 - [ ] **LOC** Use same colours for languages as github ??  
-- [ ] **LOC** Change cgag/loc ??
+- [ ] **LOC** Change cgag/loc ??  
+- [ ] **LOC** Select different branch than master  
+- [ ] **LOC** toggle pie chart to showing non blank lines  
+- [ ] **LOC** box to ignore patterns such as ./vendor  
+- [ ] **LOC** update line count when hiding languages  
 
 - [ ] **STARS** Save Historical Data >40k stars (unstar = problem)  
 - [ ] **STARS** Gitlab ?  
@@ -220,9 +228,9 @@ Scale : Set width:height , if one parameter is -1 it will automatically determin
 - [ ] **GEOLOCATION** Show Time Zone region like (Europe/Paris)  
 - [ ] **GEOLOCATION** Use csv data instead bin for remove dependency and load all data in memory ??   
 
-- [ ] **WEATHER** Search more sources for weather data
+- [X] **WEATHER** Search more sources for weather data
 
-- [ ] **VIDEO2GIF** Get better compression
+- [X] **VIDEO2GIF** Get better compression
 
 ## **Acknowledgment**
 

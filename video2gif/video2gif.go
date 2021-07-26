@@ -127,6 +127,19 @@ func (vg *video2gif) doVideo2GifRequest(w http.ResponseWriter, r *http.Request, 
 		return
 	}
 
+	// compress
+	comm = "gifsicle -O3 --colors=32 --lossy=35 "
+	comm += fmt.Sprintf("%s -o %s", outputPath, outputPath)
+	//fmt.Println(`Compress Command ->`, comm)
+	_, err = u.GenericCommandSH(comm)
+	if err != nil {
+		log.Printf("ERROR compressing file %s\n", err)
+		msg := "Error compressing file " + inputFile
+		u.ErrorResponse(w, msg)
+		u.GenericCommand(destroyTemporalDir)
+		return
+	}
+
 	// open gif to grab data
 	gifFileData, err := os.Open(outputPath)
 	if err != nil {
