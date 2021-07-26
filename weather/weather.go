@@ -12,80 +12,46 @@ import (
 	u "github.com/jolav/codetabs/_utils"
 )
 
-type weather struct{}
-
-type weatherGeoData struct {
-	IP          string `json:"ip" xml:"ip,omitempty"`
-	City        string `json:"city" xml:"city,omitempty"`
-	CountryCode string `json:"country_code" xml:"country_code,omitempty"`
-	Lat         float64
-	Lon         float64
-	latString   string `json:"latitude" xml:"latitude,omitempty"`
-	lonString   string `json:"longitude" xml:"longitude,omitempty"`
+type weather struct {
+	Out output
 }
 
-type weatherOutput struct {
-	TempC   float64 `json:"tempC"`
-	TempF   float64 `json:"tempF"`
-	City    string  `json:"city"`
-	Country string  `json:"country"`
-	Lat     float64 `json:"latitude"`
-	Lon     float64 `json:"longitude"`
-	active  bool
+type output struct {
+	TempC     float64 `json:"tempC"`
+	TempF     float64 `json:"tempF"`
+	City      string  `json:"city"`
+	Country   string  `json:"country"`
+	Lat       float64 `json:"latitude"`
+	Lon       float64 `json:"longitude"`
+	format    string
+	hasLatLon bool
 }
 
-type myWeatherData struct {
+type apiData struct {
+	// OpenWeather
 	Coord struct {
 		Lon float64 `json:"lon"`
 		Lat float64 `json:"lat"`
 	} `json:"coord"`
 	Main struct {
-		Open float64 `json:"temp,omitempty"`
+		Temp float64 `json:"temp,omitempty"`
 	} `json:"main"`
 	Sys struct {
 		Country string `json:"country"`
 	} `json:"sys"`
-	Unlocked float64 `json:"temp_c,omitempty"`
-}
-
-type myWeatherDataFull struct {
-	Coord struct {
-		Lon float64 `json:"lon"`
-		Lat float64 `json:"lat"`
-	} `json:"coord"`
-	Weather []struct {
-		ID          int    `json:"id"`
-		Main        string `json:"main"`
-		Description string `json:"description"`
-		Icon        string `json:"icon"`
-	} `json:"weather"`
-	Base string `json:"base"`
-	Main struct {
-		Temp     float64 `json:"temp"`
-		Pressure int     `json:"pressure"`
-		Humidity int     `json:"humidity"`
-		TempMin  float64 `json:"temp_min"`
-		TempMax  float64 `json:"temp_max"`
-	} `json:"main"`
-	Visibility int `json:"visibility"`
-	Wind       struct {
-		Speed int `json:"speed"`
-	} `json:"wind"`
-	Clouds struct {
-		All int `json:"all"`
-	} `json:"clouds"`
-	Dt  int `json:"dt"`
-	Sys struct {
-		Type    int     `json:"type"`
-		ID      int     `json:"id"`
-		Message float64 `json:"message"`
+	// WeatherApi
+	Current struct {
+		TempC float64 `json:"temp_c"`
+		TempF float64 `json:"temp_f"`
+	} `json:"current"`
+	Location struct {
 		Country string  `json:"country"`
-		Sunrise int     `json:"sunrise"`
-		Sunset  int     `json:"sunset"`
-	} `json:"sys"`
-	ID   int    `json:"id"`
-	Name string `json:"name"`
-	Cod  int    `json:"cod"`
+		Lat     float64 `json:"lat"`
+		Lon     float64 `json:"lon"`
+	} `json:"location"`
+	// WeatherUnlocked
+	TempC float64 `json:"temp_c"`
+	TempF float64 `json:"temp_f"`
 }
 
 func (wt *weather) Router(w http.ResponseWriter, r *http.Request) {
@@ -104,130 +70,103 @@ func (wt *weather) Router(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	r.ParseForm()
-	format := strings.ToLower(r.Form.Get("format"))
-	city := strings.ToLower(r.Form.Get("city"))
-	if format == "" {
-		format = "json"
+	wt.Out.format = strings.ToLower(r.Form.Get("format"))
+	wt.Out.City = strings.ToLower(r.Form.Get("city"))
+	if wt.Out.format == "" {
+		wt.Out.format = "json"
 	}
-	if format != "xml" && format != "json" {
+	if wt.Out.format != "xml" && wt.Out.format != "json" {
 		u.BadRequest(w, r)
 		return
 	}
-	wt.doWeatherRequest(w, r, format, city)
+	wt.doWeatherRequest(w, r)
 }
 
-func (wt *weather) doWeatherRequest(w http.ResponseWriter, r *http.Request,
-	format, city string) {
-	var geo = weatherGeoData{}
-	o := weatherOutput{
-		active: true,
+func (wt *weather) doWeatherRequest(w http.ResponseWriter, r *http.Request) {
+	if wt.Out.City == "" {
+		wt.getGeo(w, r)
 	}
-	mw := myWeatherData{
-		Unlocked: -1000,
-		Main: struct {
-			Open float64 `json:"temp,omitempty"`
-		}{
-			Open: -1000,
-		},
+	wt.getWeather(w, r)
+	if wt.Out.format == "xml" {
+		u.SendXMLToClient(w, &wt.Out, 200)
+		return
 	}
-	if city == "" {
-		wt.getGeo(w, r, &o, &geo)
-		if o.active {
-			wt.getWeather(w, &o, &mw, &geo)
-		}
-	} else {
-		o.City = city
-		var url string
-		url = "https://api.openweathermap.org/data/2.5/weather?"
-		url += "q=" + city
-		url += "&APPID=" + OPENWEATHER_KEY
-		//fmt.Println(url)
-		resp, err := http.Get(url)
-		if err != nil {
-			msg := fmt.Sprintf("ERROR gathering weather from city %s", city)
-			u.ErrorResponse(w, msg)
-			return
-		}
-		defer resp.Body.Close()
-		decoder := json.NewDecoder(resp.Body)
-		err = decoder.Decode(&mw)
-		if err != nil {
-			msg := fmt.Sprintf("ERROR decoding weather from city %s", city)
-			u.ErrorResponse(w, msg)
-
-			return
-		}
-	}
-
-	if o.active {
-		wt.prepareOutput(&o, &mw)
-		if format == "xml" {
-			u.SendXMLToClient(w, &o, 200)
-			return
-		}
-		u.SendJSONToClient(w, &o, 200)
-	}
+	u.SendJSONToClient(w, &wt.Out, 200)
 }
 
-func (wt *weather) prepareOutput(o *weatherOutput, mw *myWeatherData) {
-	if mw.Main.Open == -1000 {
-		o.TempC = mw.Unlocked
-	} else {
-		o.TempC = mw.Main.Open - 273.15
-	}
-	o.TempF = (9 / 5 * o.TempC) + 32
-	o.TempC = u.ToFixedFloat64(o.TempC, 2)
-	o.TempF = u.ToFixedFloat64(o.TempF, 2)
-	o.Country = mw.Sys.Country
-	o.Lat = mw.Coord.Lat
-	o.Lon = mw.Coord.Lon
-}
-
-func (wt *weather) getWeather(w http.ResponseWriter, o *weatherOutput,
-	mw *myWeatherData,
-	geo *weatherGeoData) {
+func (wt *weather) getWeather(w http.ResponseWriter, r *http.Request) {
 	var url string
-	source := u.GetRandomInt(1, 2)
-	if source == 1 { // openWeather
-		url = "https://api.openweathermap.org/data/2.5/weather?"
-		url += "lat=" + strconv.FormatFloat(geo.Lat, 'f', -1, 64)
-		url += "&lon=" + strconv.FormatFloat(geo.Lon, 'f', -1, 64)
-		url += "&APPID=" + OPENWEATHER_KEY
-	} else { // weatherUnlocked
+	var api = apiData{}
+	source := u.GetRandomInt(1, 3)
+	if !wt.Out.hasLatLon {
+		source = u.GetRandomInt(2, 3)
+	}
+	if source == 1 {
 		url = "http://api.weatherunlocked.com/api/current/"
-		url += strconv.FormatFloat(geo.Lat, 'f', -1, 64) + ","
-		url += strconv.FormatFloat(geo.Lon, 'f', -1, 64)
+		url += strconv.FormatFloat(wt.Out.Lat, 'f', -1, 64) + ","
+		url += strconv.FormatFloat(wt.Out.Lon, 'f', -1, 64)
 		url += "?app_id=" + WEATHERUNLOCKED_APPID
 		url += "&app_key=" + WEATHERUNLOCKED_KEY
 		w.Header().Set("Accept", "application/json")
+	} else if source == 2 {
+		url = "https://api.openweathermap.org/data/2.5/weather?"
+		url += "q=" + wt.Out.City
+		url += "&APPID=" + OPENWEATHER_KEY
+	} else if source == 3 {
+		url = "https://api.weatherapi.com/v1/current.json"
+		url += "?key=" + WEATHERAPI_KEY
+		url += "&q=" + wt.Out.City + "&aqui=no"
 	}
 	resp, err := http.Get(url)
 	if err != nil {
 		msg := fmt.Sprint("ERROR requesting GetWeather URL")
 		u.ErrorResponse(w, msg)
-		o.active = false
 		return
 	}
 	defer resp.Body.Close()
 	decoder := json.NewDecoder(resp.Body)
-	err = decoder.Decode(&mw)
+	err = decoder.Decode(&api)
 	if err != nil {
 		msg := fmt.Sprint("ERROR decoding GetWeather URL")
 		u.ErrorResponse(w, msg)
-		o.active = false
 		return
 	}
+	wt.prepareOutput(api)
 }
 
-func (wt *weather) getGeo(w http.ResponseWriter, r *http.Request,
-	o *weatherOutput, geo *weatherGeoData) {
+func (wt *weather) prepareOutput(api apiData) {
+	if api.Main.Temp != 0 { // openweather
+		wt.Out.TempC = api.Main.Temp - 273.15
+		wt.Out.TempF = wt.Out.TempC*9/5 + 32
+		wt.Out.Lat = api.Coord.Lat
+		wt.Out.Lon = api.Coord.Lon
+		wt.Out.Country = api.Sys.Country
+	} else if api.TempC == 0 && api.TempF == 0 { // weatherApi
+		wt.Out.TempC = api.Current.TempC
+		wt.Out.TempF = api.Current.TempF
+		wt.Out.Country = api.Location.Country
+	} else { // weatherUnlocked
+		wt.Out.TempC = api.TempC
+		wt.Out.TempF = api.TempF
+	}
+	wt.Out.TempC = u.ToFixedFloat64(wt.Out.TempC, 2)
+	wt.Out.TempF = u.ToFixedFloat64(wt.Out.TempF, 2)
+}
+
+type geoData struct {
+	City    string  `json:"city" xml:"city,omitempty"`
+	Country string  `json:"country_code" xml:"country_code,omitempty"`
+	Lat     float64 `json:"latitude" xml:"latitude,omitempty"`
+	Lon     float64 `json:"longitude" xml:"longitude,omitempty"`
+}
+
+func (wt *weather) getGeo(w http.ResponseWriter, r *http.Request) {
+	var geo = geoData{}
 	url := "https://api.codetabs.com/v1/geolocation/json?q=" + u.GetIP(r)
-	//fmt.Println(`URl =>`, url)
 	resp, err := http.Get(url)
 	if err != nil {
 		msg := fmt.Sprint("ERROR requesting GetGeo URL")
 		u.ErrorResponse(w, msg)
-		o.active = false
 		return
 	}
 	defer resp.Body.Close()
@@ -236,15 +175,13 @@ func (wt *weather) getGeo(w http.ResponseWriter, r *http.Request,
 	if err != nil {
 		msg := fmt.Sprint("ERROR decoding GetGeo URL")
 		u.ErrorResponse(w, msg)
-		o.active = false
 		return
 	}
-	o.City = geo.City
-	o.Country = geo.CountryCode
-	o.Lat = geo.Lat
-	o.Lon = geo.Lon
-	o.Lat, _ = strconv.ParseFloat(geo.latString, 64)
-	o.Lon, _ = strconv.ParseFloat(geo.lonString, 64)
+	wt.Out.City = geo.City
+	wt.Out.Country = geo.Country
+	wt.Out.Lat = geo.Lat
+	wt.Out.Lon = geo.Lon
+	wt.Out.hasLatLon = true
 }
 
 func NewWeather(test bool) weather {
