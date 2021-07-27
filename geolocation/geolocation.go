@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/ip2location/ip2location-go"
+	"github.com/ip2location/ip2location-go/v9"
 	u "github.com/jolav/codetabs/_utils"
 )
 
@@ -93,6 +93,7 @@ func (g *geoip) getGeoDataFromDB() {
 		g.cleanGeoData()
 		return
 	}
+	u.PrettyPrintStruct(results)
 	g.geoData.Country_code = results.Country_short
 	g.geoData.Country_name = results.Country_long
 	g.geoData.Region_name = results.Region
