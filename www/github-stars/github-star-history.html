@@ -3,7 +3,7 @@
 
 <head>
 
-  <title>GitHub Star History</title>
+  <title>GitHub/Gitlab Star History</title>
 
   <!--Head -->
   <!--#include file="/_public/templates/head.html" -->
@@ -19,25 +19,35 @@
     </h1>
     <h1 class="big">
       <img class="verticalImage" alt="Logo" src="/_public/icons/stars48.png">
-      <span>GitHub Star History</span>
+      <span>GitHub/GitLab Star History</span>
     </h1>
   </header>
 
-  <div class="news">
+  <!--<div class="news">
     <span class="centerText update">UPDATE:<br>
       Now you can edit the colors of the lines by clicking on any point of it.<br>
       Line will randomly change color as it is clicked.
     </span>
-  </div>
+  </div>-->
 
   <section class="container">
     <div id="addForm">
       <form class="addRepo big" onsubmit="return false">
+        <select name="source">
+          <option value="01">GitHub</option>
+          <option value="02">GitLab</option>
+        </select>
         <input type="text" required id="repoName" placeholder="user/repo">
         <span id="addRepo" class="action">ADD</span>
         <span id="clearAll" class="action">CLEAR</span>
       </form>
       <form class="addRepo small" onsubmit="return false">
+        <div>
+          <select name="source">
+            <option value="01">GitHub</option>
+            <option value="02">GitLab</option>
+          </select>
+        </div>
         <div>
           <input type="text" required id="repoName" placeholder="user/repo">
         </div>

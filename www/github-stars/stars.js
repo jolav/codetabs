@@ -25,6 +25,8 @@ const stars = (function () {
 
   function addRepo(e) {
     repo = document.getElementById('repoName').value;
+    const select = document.getElementsByName("source")[0];
+    const source = select.options[select.selectedIndex].value;
     if (repo === '') {
       alert('user/repo cannot be empty');
       return;
@@ -36,10 +38,10 @@ const stars = (function () {
       }
     }
     showLoader();
-    let urlData = urlBase + '?repo=' + repo;
-    //console.log(urlData);
+    let urlData = urlBase + '?repo=' + source + repo;
+    console.log(urlData);
     getAjaxData(urlData, function (data) {
-      showData(data, "");
+      showData(data, getSource(source));
     });
   }
 
@@ -61,7 +63,7 @@ const stars = (function () {
   function cutData(dataRepo) {
     let hop = Math.ceil(dataRepo.length / 100);
     let data = [];
-    console.log('POINTS', dataRepo.length, 'HOP', hop);
+    //console.log('POINTS', dataRepo.length, 'HOP', hop);
     for (let i = 0; i < dataRepo.length; i++) {
       if (i === 0) { // ensure first star
         data.push(dataRepo[i]);
@@ -90,11 +92,11 @@ const stars = (function () {
     alert('Rate limit exceeded, wait a few seconds');
   }
 
-  function showData(dataRepo) {
-    console.log('Receive .......... => ', dataRepo);
+  function showData(dataRepo, source) {
+    console.log('Receive .......... => ', repo, dataRepo);
     hideLoader();
     let newDataRepo = {};
-    newDataRepo.label = repo;
+    newDataRepo.label = source + "/" + repo;
     newDataRepo.data = cutData(dataRepo);
     newDataRepo.fill = false;
     newDataRepo.backgroundColor = getRandomColor();
@@ -108,6 +110,15 @@ const stars = (function () {
       return;
     }
     drawHistory();
+  }
+
+  function getSource(source) {
+    if (source === "01") {
+      return "github";
+    }
+    if (source === "02") {
+      return "gitlab";
+    }
   }
 
   function drawHistory() {
@@ -132,7 +143,7 @@ const stars = (function () {
         responsive: true,
         title: {
           display: false,
-          text: 'GitHub Star History'
+          text: 'Repo Star History'
         },
         elements: {
           line: {
@@ -179,7 +190,7 @@ const stars = (function () {
   function getAjaxData(urlData, callback) {
     const xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
-      console.log('STATUS =>', xhr.status);
+      //console.log('STATUS =>', xhr.status);
       if (xhr.readyState === 4) { // 4 = "DONE"
         if (xhr.status === 200) { // 200 ="OK"
           callback(JSON.parse(xhr.responseText));
@@ -191,7 +202,7 @@ const stars = (function () {
             showError(xhr.responseText);
           } else {
             // Error parsed from backend myError
-            console.log(xhr.status + ' ' + xhr.responseText);
+            //console.log(xhr.status + ' ' + xhr.responseText);
             showError(JSON.parse(xhr.responseText));
           }
         }

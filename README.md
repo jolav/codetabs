@@ -1,15 +1,15 @@
 
-![Version](https://img.shields.io/badge/version-0.7.12-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.7.13-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-**version 0.7.12**
+**version 0.7.13**
 
 1. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
 2. [CORS proxy](#cors-proxy)  
-3. [Github Stars graphical history](#github-stars-graphical-history)  
+3. [Github/Gitlab Stars graphical history](#github-stars-graphical-history)  
 4. [IP GeoLocation](#ip-geolocation)  
 5. [Alexa Ranking](#alexa)  
 6. [HTTP Headers](#headers)  
@@ -92,15 +92,18 @@ You can use to prevent mixed content of images and JSON data proxying the resour
 
 ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/stars48.png?raw=true) 
 
-## **GITHUB STARS GRAPHICAL HISTORY**
+## **GITHUB/GITLAB STARS GRAPHICAL HISTORY**
 
 ### **[DEMO online](https://codetabs.com/github-stars/github-star-history.html)**
 
+- Select Github or GitLab source.  
 - Enter user/repo , then click add.
 - Petitions are limited to 1 every 5 secs. You will get a 429 error if you exceed  
 - You can edit the colors of the lines by clicking on any point of it. Line will randomly change color as it is clicked.  
 
-![Example](https://github.com/jolav/codetabs/blob/master/www/_public/images/starExample.png?raw=true)
+![Example2](https://github.com/jolav/codetabs/blob/master/www/_public/images/starExample2.png?raw=true)
+
+![Example1](https://github.com/jolav/codetabs/blob/master/www/_public/images/starExample.png?raw=true)
 
 <hr>
 
@@ -221,8 +224,8 @@ Scale : Set width:height , if one parameter is -1 it will automatically determin
 - [ ] **LOC** box to ignore patterns such as ./vendor  
 - [ ] **LOC** update line count when hiding languages  
 
-- [ ] **STARS** Save Historical Data >40k stars (unstar = problem)  
-- [ ] **STARS** Gitlab ?  
+- [ ] **STARS** Save Historical Data (unstar = problem)  
+- [X] **STARS** Gitlab  
 - [ ] **STARS** Optimize doing far fewer requests. Extrapolate data  
 
 - [ ] **GEOLOCATION** Use csv data instead bin for remove dependency and load all data in memory ???   
