@@ -3,42 +3,56 @@
 package loc
 
 import (
-	"bufio"
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
-	"os/exec"
 	"strconv"
 	"strings"
-	"time"
 
 	u "github.com/jolav/codetabs/_utils"
 )
 
 const (
-	LOC_LINUX = "./_data/loc/locLinux"
-	MAX_SIZE  = 500
+	SCC      = "./_data/loc/scc"
+	MAX_SIZE = 500
 )
 
 type loc struct {
-	order     string
-	orderInt  int
-	repo      string
-	size      int
-	languages []language
+	order        string
+	orderInt     int
+	repo         string
+	source       string
+	date         string
+	size         int
+	sr           sourceReader
+	languagesIN  []languageIN
+	languagesOUT []languageOUT
 }
 
-type language struct {
+type languageIN struct {
+	Name     string `json:"Name"`
+	Files    int    `json:"count"`
+	Lines    int    `json:"lines"`
+	Blanks   int    `json:"blank"`
+	Comments int    `json:"comment"`
+	Code     int    `json:"code"`
+}
+
+type languageOUT struct {
 	Name     string `json:"language"`
 	Files    int    `json:"files"`
 	Lines    int    `json:"lines"`
 	Blanks   int    `json:"blanks"`
 	Comments int    `json:"comments"`
 	Code     int    `json:"linesOfCode"`
+}
+
+type sourceReader interface {
+	existRepo(string) bool
+	exceedsSize(http.ResponseWriter, *loc) bool
 }
 
 func (l *loc) Router(w http.ResponseWriter, r *http.Request) {
@@ -52,7 +66,16 @@ func (l *loc) Router(w http.ResponseWriter, r *http.Request) {
 		u.BadRequest(w, r)
 		return
 	}
-	l.languages = []language{}
+	// clean
+	l = &loc{
+		repo:         "",
+		source:       "",
+		date:         "",
+		size:         0,
+		languagesIN:  []languageIN{},
+		languagesOUT: []languageOUT{},
+	}
+
 	if r.Method == "POST" {
 		l.orderInt++
 		l.order = strconv.Itoa(l.orderInt)
@@ -60,7 +83,10 @@ func (l *loc) Router(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	r.ParseForm()
-	l.repo = r.Form.Get("github")
+	for k, _ := range r.URL.Query() {
+		l.source = k
+		l.repo = r.URL.Query()[k][0]
+	}
 	aux := strings.Split(l.repo, "/")
 	if len(aux) != 2 || aux[0] == "" || aux[1] == "" {
 		msg := fmt.Sprintf("Incorrect user/repo")
@@ -71,27 +97,43 @@ func (l *loc) Router(w http.ResponseWriter, r *http.Request) {
 		u.BadRequest(w, r)
 		return
 	}
+	switch l.source {
+	case "github":
+		l.sr = github{}
+	case "gitlab":
+		l.sr = gitlab{}
+	}
 	l.orderInt++
 	l.order = strconv.Itoa(l.orderInt)
 	l.doLocRepoRequest(w, r)
-
 }
 
 func (l *loc) doLocRepoRequest(w http.ResponseWriter, r *http.Request) {
-	folder := l.order
-	repo := l.repo
-	//repouser := strings.Split(repo, "/")[0]
-	folderNum := folder
-	folder = "_tmp/loc/" + folder
-	//reponame := strings.Split(repo, "/")[1]
 
-	if !l.existRepo(repo) {
-		msg := repo + " doesn't exist"
+	// MOCK
+	/*_ = json.Unmarshal([]byte(data), &l.languagesIN)
+	total := languageOUT{
+		Name: "Total",
+	}
+	for _, v := range l.languagesIN {
+		l.languagesOUT = append(l.languagesOUT, languageOUT(v))
+		total.Blanks += v.Blanks
+		total.Code += v.Code
+		total.Comments += v.Comments
+		total.Files += v.Files
+		total.Lines += v.Lines
+	}
+	l.languagesOUT = append(l.languagesOUT, total)
+	u.SendJSONToClient(w, l.languagesOUT, 200)
+	return*/
+	//
+
+	if !l.sr.existRepo(l.repo) {
+		msg := l.repo + " doesn't exist"
 		u.ErrorResponse(w, msg)
 		return
 	}
-
-	if l.exceedsSize(w) {
+	if l.sr.exceedsSize(w, l) {
 		msg := fmt.Sprintf(`repo %s too big (>%dMB) = %d MB`,
 			l.repo,
 			MAX_SIZE,
@@ -101,23 +143,25 @@ func (l *loc) doLocRepoRequest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	destroyTemporalDir := []string{"rm", "-r", folder}
+	folder := "_tmp/loc/" + l.order
+	destroyTemporalDir := []string{"rm", "-rf", folder}
 	createTemporalDir := []string{"mkdir", folder}
+
 	err := u.GenericCommand(createTemporalDir)
 	if err != nil {
 		log.Printf("ERROR cant create temporal dir %s\n", err)
-		msg := "Cant create temporal dir for " + repo
+		msg := "Cant create temporal dir for " + l.repo
 		u.ErrorResponse(w, msg)
 		return
 	}
 
-	url := "https://github.com/" + repo
+	url := "https://" + l.source + ".com/" + l.repo
 	dest := "./" + folder
 	cloneRepo := []string{"git", "clone", url, dest}
 	err = u.GenericCommand(cloneRepo)
 	if err != nil {
 		log.Printf("ERROR Cant clone repo %s -> %s\n", err, r.URL.RequestURI())
-		msg := "Can't clone repo " + repo
+		msg := "Can't clone repo " + l.repo
 		u.ErrorResponse(w, msg)
 		u.GenericCommand(destroyTemporalDir)
 		return
@@ -126,25 +170,48 @@ func (l *loc) doLocRepoRequest(w http.ResponseWriter, r *http.Request) {
 	info, err := l.countLines(repoPath)
 	if err != nil {
 		log.Printf("ERROR counting loc %s -> %s\n", err, r.URL.RequestURI())
-		msg := "Error counting LOC in " + repo
+		msg := "Error counting LOC in " + l.repo
 		u.ErrorResponse(w, msg)
 		u.GenericCommand(destroyTemporalDir)
 		return
 	}
 
-	resultPath := "./" + folder + "/" + folderNum + ".txt"
-	u.WriteFile(resultPath, string(info))
-	l.readFileLineByLine(resultPath)
-	//fmt.Println(languages)
-	u.SendJSONToClient(w, l.languages, 200)
+	err = json.Unmarshal(info, &l.languagesIN)
+	if err != nil {
+		log.Printf("ERROR unmarshal LOC %s\n", err)
+	}
+
+	total := languageOUT{
+		Name: "Total",
+	}
+	for _, v := range l.languagesIN {
+		l.languagesOUT = append(l.languagesOUT, languageOUT(v))
+		total.Blanks += v.Blanks
+		total.Code += v.Code
+		total.Comments += v.Comments
+		total.Files += v.Files
+		total.Lines += v.Lines
+	}
+	l.languagesOUT = append(l.languagesOUT, total)
+
+	u.SendJSONToClient(w, l.languagesOUT, 200)
 	u.GenericCommand(destroyTemporalDir)
 }
 
+func (l *loc) countLines(repoPath string) (info []byte, err error) {
+	comm := SCC + " " + repoPath + " -f json "
+	fmt.Println("COMMAND => ", comm)
+	info, err = u.GenericCommandSH(comm)
+	if err != nil {
+		log.Println(fmt.Sprintf("ERROR in countLines %s\n", err))
+		return nil, err
+	}
+	return info, err
+}
+
 func (l *loc) doLocUploadRequest(w http.ResponseWriter, r *http.Request) {
-	folder := l.order
-	folderNum := folder
-	folder = "_tmp/loc/" + folder
-	destroyTemporalDir := []string{"rm", "-r", folder}
+	folder := "_tmp/loc/" + l.order
+	destroyTemporalDir := []string{"rm", "-rf", folder}
 	createTemporalDir := []string{"mkdir", folder}
 	err := u.GenericCommand(createTemporalDir)
 	if err != nil {
@@ -199,130 +266,38 @@ func (l *loc) doLocUploadRequest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	resultPath := "./" + folder + "/" + folderNum + ".txt"
-	u.WriteFile(resultPath, string(info))
-	l.readFileLineByLine(resultPath)
-	//fmt.Println(languages)
-	u.SendJSONToClient(w, l.languages, 200)
+	err = json.Unmarshal(info, &l.languagesIN)
+	if err != nil {
+		log.Printf("ERROR unmarshal LOC %s\n", err)
+	}
+
+	total := languageOUT{
+		Name: "Total",
+	}
+	for _, v := range l.languagesIN {
+		l.languagesOUT = append(l.languagesOUT, languageOUT(v))
+		total.Blanks += v.Blanks
+		total.Code += v.Code
+		total.Comments += v.Comments
+		total.Files += v.Files
+		total.Lines += v.Lines
+	}
+	l.languagesOUT = append(l.languagesOUT, total)
+
+	u.SendJSONToClient(w, l.languagesOUT, 200)
 	u.GenericCommand(destroyTemporalDir)
-}
-
-func (l *loc) readFileLineByLine(filePath string) {
-	file, err := os.Open(filePath)
-	if err != nil {
-		log.Printf("ERROR opening file line by line %s\n", err)
-		return
-	}
-	defer file.Close()
-	scanner := bufio.NewScanner(file)
-	number := 1
-	for scanner.Scan() {
-		line := scanner.Text() // string
-		if number > 3 && string(line[0]) != "-" {
-			l.processLine(line)
-		}
-		number++
-	}
-	if err := scanner.Err(); err != nil {
-		log.Printf("ERROR scan file %s\n", err)
-	}
-}
-
-func (l *loc) processLine(line string) {
-	parts := strings.Split(strings.Join(strings.Fields(line), " "), " ")
-	var lang language
-	var index = 0
-	if len(parts) > 6 { // two word language name
-		lang.Name = parts[0] + " " + parts[1]
-		index++
-	} else {
-		lang.Name = parts[0]
-	}
-	lang.Files = stringToInt(parts[index+1])
-	lang.Lines = stringToInt(parts[index+2])
-	lang.Blanks = stringToInt(parts[index+3])
-	lang.Comments = stringToInt(parts[index+4])
-	lang.Code = stringToInt(parts[index+5])
-	l.languages = append(l.languages, lang)
-}
-
-func (l *loc) existRepo(repo string) bool {
-	url := "https://github.com/" + repo
-	resp, err := http.Get(url)
-	if err != nil {
-		log.Printf("ERROR exists repo %s\n", err)
-		return false
-	}
-	defer resp.Body.Close()
-	if resp.StatusCode == 200 {
-		return true
-	}
-	return false
-}
-
-func (l *loc) exceedsSize(w http.ResponseWriter) bool {
-	url := "https://api.github.com/repos/" + l.repo
-	req, err := http.NewRequest("GET", url, nil)
-	req.Header.Add("Accept", "application/vnd.github.v3.star+json")
-	req.Header.Add("User-Agent", "github stars repos")
-	rndToken := u.GetRandomInt(0, 9)
-	req.Header.Add("Authorization", "token "+u.GITHUB_TOKEN[rndToken])
-	var netClient = &http.Client{
-		Timeout: time.Second * 3,
-	}
-	resp, err := netClient.Do(req)
-	if err != nil || resp.StatusCode != 200 {
-		msg := fmt.Sprintf("Error getting repo size %s\n", err)
-		u.ErrorResponse(w, msg)
-		return true
-	}
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		log.Printf("ERROR lOC 7 %s\n", err)
-		return true
-	}
-	var aux struct {
-		Size int `json:"size"`
-	}
-	err = json.Unmarshal(body, &aux)
-	if err != nil {
-		log.Printf("ERROR LOC 8 %s\n", err)
-		return true
-	}
-	l.size = aux.Size / 1000
-	if l.size > MAX_SIZE {
-		return true
-	}
-	return false
-}
-
-func (l *loc) countLines(repoPath string) (info []byte, err error) {
-	l.languages = make([]language, 0)
-	info, err = exec.Command(LOC_LINUX, repoPath).CombinedOutput()
-	if err != nil {
-		log.Println(fmt.Sprintf("ERROR in countLines %s\n", err))
-		return nil, err
-	}
-	return info, err
-}
-
-func stringToInt(s string) int {
-	num, err := strconv.Atoi(s)
-	if err != nil {
-		log.Printf("ERROR string to Int %s\n", err)
-		return 0
-	}
-	return num
 }
 
 func NewLoc(test bool) loc {
 	l := loc{
-		order:     "0",
-		orderInt:  0,
-		repo:      "",
-		size:      0,
-		languages: []language{},
+		order:        "0",
+		orderInt:     0,
+		repo:         "",
+		source:       "",
+		date:         "",
+		size:         0,
+		languagesIN:  []languageIN{},
+		languagesOUT: []languageOUT{},
 	}
 	return l
 }

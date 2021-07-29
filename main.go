@@ -24,7 +24,7 @@ import (
 	we "github.com/jolav/codetabs/weather"
 )
 
-var version = "0.7.13"
+var version = "0.7.14"
 var when = "undefined"
 
 type Conf struct {
@@ -120,7 +120,7 @@ func checkMode(c *Conf) {
 }
 
 func cleanTmpFolder() {
-	u.GenericCommand([]string{"rm", "-r", "./_tmp/"})
+	u.GenericCommand([]string{"rm", "-rf", "./_tmp/"})
 	u.GenericCommand([]string{"mkdir", "./_tmp/"})
 	u.GenericCommand([]string{"mkdir", "./_tmp/loc/"})
 	u.GenericCommand([]string{"mkdir", "./_tmp/videos/"})

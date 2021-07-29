@@ -1,15 +1,15 @@
 
-![Version](https://img.shields.io/badge/version-0.7.13-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.7.14-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-**version 0.7.13**
+**version 0.7.14**
 
 1. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
 2. [CORS proxy](#cors-proxy)  
-3. [Github/Gitlab Stars graphical history](#github-stars-graphical-history)  
+3. [Github Gitlab Stars graphical history](#github-gitlab-stars-graphical-history)  
 4. [IP GeoLocation](#ip-geolocation)  
 5. [Alexa Ranking](#alexa)  
 6. [HTTP Headers](#headers)  
@@ -32,9 +32,11 @@ In order to run this program you need installed
 ### **[DEMO and DOCS online](https://codetabs.com/count-loc/count-loc-online.html)**
 
 - Enter user/repo , then click add or select a zipped folder and upload it  
-- Max Github Repo size : 500 mb, greater repos will not work.  
+- Can count GitHub and GitLab repos  
+- Max GitHub/GitLab Repo size : 500 mb, greater repos will not work.  
 - File max size for upload 200mb;
 - Petitions are limited to 1 every 5 secs. You will get a 429 error if you exceed  
+- Default colors are the same as github.  
 - You can edit the colors of the segments by clicking on any point of it.
 Segment will randomly change color as it is clicked.  
 
@@ -43,10 +45,13 @@ Segment will randomly change color as it is clicked.
 **API LOC**
 
 *  Make a GET HTTP Request   
-`https://api.codetabs.com/v1/loc?github=USERNAME/REPONAME`
+`https://api.codetabs.com/v1/loc?github=USERNAME/REPONAME`  
+`https://api.codetabs.com/v1/loc?gitlab=USERNAME/REPONAME`
 
 Example :   
-https://api.codetabs.com/v1/loc?github=jolav/codetabs
+https://api.codetabs.com/v1/loc?github=jolav/codetabs  
+https://api.codetabs.com/v1/loc?gitlab=jolav/codetabs
+
 
 Response (JSON) :
 
@@ -92,7 +97,7 @@ You can use to prevent mixed content of images and JSON data proxying the resour
 
 ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/stars48.png?raw=true) 
 
-## **GITHUB/GITLAB STARS GRAPHICAL HISTORY**
+## **GITHUB GITLAB STARS GRAPHICAL HISTORY**
 
 ### **[DEMO online](https://codetabs.com/github-stars/github-star-history.html)**
 
@@ -215,10 +220,13 @@ Scale : Set width:height , if one parameter is -1 it will automatically determin
 
 ## TO DO
 
+- [ ] **ALL** Update Tests
+
 - [ ] **LOC** Save Historical Data  
-- [ ] **LOC** Gitlab, bitbucket ??  
-- [ ] **LOC** Use same colours for languages as github ??  
-- [ ] **LOC** Change cgag/loc ??  
+- [X] **LOC** Gitlab  
+- [ ] **LOC** Bitbucket  
+- [X] **LOC** Use same colours for languages as github   
+- [X] **LOC** Change cgag/loc  
 - [ ] **LOC** Select different branch than master  
 - [ ] **LOC** toggle pie chart to showing non blank lines  
 - [ ] **LOC** box to ignore patterns such as ./vendor  
@@ -236,7 +244,6 @@ Scale : Set width:height , if one parameter is -1 it will automatically determin
 
 ## **Acknowledgment**
 
-* This site includes Curtis Gagliardi <a href="https://github.com/cgag/loc">cgag/loc</a> for counting lines of code.
-
+* This site includes Ben Boyter <a href="https://github.com/boyter/scc">boyter/scc</a> for counting lines of code.
 
 * This site includes IP2Location LITE data available from <a href="https://lite.ip2location.com">https://lite.ip2location.com</a>.
