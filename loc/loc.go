@@ -24,6 +24,7 @@ type loc struct {
 	order        string
 	orderInt     int
 	repo         string
+	branch       string
 	source       string
 	date         string
 	size         int
@@ -69,6 +70,7 @@ func (l *loc) Router(w http.ResponseWriter, r *http.Request) {
 	// clean
 	l = &loc{
 		repo:         "",
+		branch:       "",
 		source:       "",
 		date:         "",
 		size:         0,
@@ -83,10 +85,13 @@ func (l *loc) Router(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	r.ParseForm()
-	for k, _ := range r.URL.Query() {
-		l.source = k
-		l.repo = r.URL.Query()[k][0]
+	for k, v := range r.URL.Query() {
+		if k == "github" || k == "gitlab" {
+			l.repo = v[0] //r.URL.Query()[k][0]
+			l.source = k
+		}
 	}
+	l.branch = r.Form.Get("branch")
 	aux := strings.Split(l.repo, "/")
 	if len(aux) != 2 || aux[0] == "" || aux[1] == "" {
 		msg := fmt.Sprintf("Incorrect user/repo")
@@ -112,20 +117,21 @@ func (l *loc) doLocRepoRequest(w http.ResponseWriter, r *http.Request) {
 
 	// MOCK
 	/*_ = json.Unmarshal([]byte(data), &l.languagesIN)
-	total := languageOUT{
+	total2 := languageOUT{
 		Name: "Total",
 	}
 	for _, v := range l.languagesIN {
 		l.languagesOUT = append(l.languagesOUT, languageOUT(v))
-		total.Blanks += v.Blanks
-		total.Code += v.Code
-		total.Comments += v.Comments
-		total.Files += v.Files
-		total.Lines += v.Lines
+		total2.Blanks += v.Blanks
+		total2.Code += v.Code
+		total2.Comments += v.Comments
+		total2.Files += v.Files
+		total2.Lines += v.Lines
 	}
-	l.languagesOUT = append(l.languagesOUT, total)
+	l.languagesOUT = append(l.languagesOUT, total2)
 	u.SendJSONToClient(w, l.languagesOUT, 200)
-	return*/
+	return
+	*/
 	//
 
 	if !l.sr.existRepo(l.repo) {
@@ -157,14 +163,27 @@ func (l *loc) doLocRepoRequest(w http.ResponseWriter, r *http.Request) {
 
 	url := "https://" + l.source + ".com/" + l.repo
 	dest := "./" + folder
-	cloneRepo := []string{"git", "clone", url, dest}
-	err = u.GenericCommand(cloneRepo)
-	if err != nil {
-		log.Printf("ERROR Cant clone repo %s -> %s\n", err, r.URL.RequestURI())
-		msg := "Can't clone repo " + l.repo
-		u.ErrorResponse(w, msg)
-		u.GenericCommand(destroyTemporalDir)
-		return
+	if l.branch == "" {
+		cloneRepo := []string{"git", "clone", url, dest}
+		err = u.GenericCommand(cloneRepo)
+		if err != nil {
+			log.Printf("ERROR Cant clone repo %s -> %s\n", err, r.URL.RequestURI())
+			msg := "Can't clone repo " + l.repo
+			u.ErrorResponse(w, msg)
+			u.GenericCommand(destroyTemporalDir)
+			return
+		}
+	} else {
+		cloneRepo :=
+			[]string{"git", "clone", "-b", l.branch, "--single-branch", url, dest}
+		err = u.GenericCommand(cloneRepo)
+		if err != nil {
+			log.Printf("ERROR Cant clone repo branch %s ,%s -> %s\n", l.branch, err, r.URL.RequestURI())
+			msg := "Can't clone repo " + l.repo + " branch=" + l.branch
+			u.ErrorResponse(w, msg)
+			u.GenericCommand(destroyTemporalDir)
+			return
+		}
 	}
 	repoPath := "./" + folder
 	info, err := l.countLines(repoPath)
@@ -200,7 +219,7 @@ func (l *loc) doLocRepoRequest(w http.ResponseWriter, r *http.Request) {
 
 func (l *loc) countLines(repoPath string) (info []byte, err error) {
 	comm := SCC + " " + repoPath + " -f json "
-	fmt.Println("COMMAND => ", comm)
+	//fmt.Println("COMMAND => ", comm)
 	info, err = u.GenericCommandSH(comm)
 	if err != nil {
 		log.Println(fmt.Sprintf("ERROR in countLines %s\n", err))
@@ -293,6 +312,7 @@ func NewLoc(test bool) loc {
 		order:        "0",
 		orderInt:     0,
 		repo:         "",
+		branch:       "",
 		source:       "",
 		date:         "",
 		size:         0,

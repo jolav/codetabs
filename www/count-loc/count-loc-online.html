@@ -46,6 +46,7 @@
           <option value="gitlab">GitLab</option>
         </select>
         <input type="text" required id="repoName" placeholder="user/repo">
+        <input type="text" required id="branch" placeholder="master">
         <span id="addRepo" class="action">ADD</span>
       </form>
     </section>
@@ -94,8 +95,12 @@
       <br> This endpoint retrieves LOC from any github repo based on programming language.
     </div>
     <div class="leftText">
-      <strong>http Request : </strong>
+      <strong>curl Request :</strong> add -L flag<br>
+      <code class="red">curl -L https://api.codetabs.com/v1/loc?source=username/reponame</code><br>
+      <strong>http Request : </strong><br>
       <code class="red"> GET https://api.codetabs.com/v1/loc?github=username/reponame 
+        </code><br>
+      <code class="red"> GET https://api.codetabs.com/v1/loc?gitlab=username/reponame 
         </code>
       <br>
       <strong>example : </strong>
@@ -104,6 +109,11 @@
           <a href="https://api.codetabs.com/v1/loc?github=jolav/betazone     ">https://api.codetabs.com/v1/loc?github=jolav/betazone</a>  
         </code>
       <br>
+      <code>
+          <a href="https://api.codetabs.com/v1/loc?gitlab=jolav/codetabs     ">https://api.codetabs.com/v1/loc?gitlab=jolav/codetabs</a>  
+        </code><br>
+      <strong>Select branch</strong><br>If you want a different branch than master<br>
+      <code class="red">https://api.codetabs.com/v1/loc?SOURCE=USERNAME/REPONAME&branch=branchName</code><br>
       <strong>response :</strong>
       <pre class="marginLeft">
   [{
@@ -129,46 +139,7 @@
 
   <section class="endpoint">
     <div class="centerText">
-      <strong>Endpoint - Get Lines of Code from GitLab repo</strong>
-      <br> This endpoint retrieves LOC from any gitlab repo based on programming language.
-    </div>
-    <div class="leftText">
-      <strong>http Request : </strong>
-      <code class="red"> GET https://api.codetabs.com/v1/loc?gitlab=username/reponame 
-        </code>
-      <br>
-      <strong>example : </strong>
-      <br>
-      <code>
-          <a href="https://api.codetabs.com/v1/loc?gitlab=jolav/codetabs     ">https://api.codetabs.com/v1/loc?gitlab=jolav/codetabs</a>  
-        </code>
-      <br>
-      <strong>response :</strong>
-      <pre class="marginLeft">
-  [{
-    "language": "Go",
-    "files": 24,
-    "lines": 3062,
-    "blanks": 264,
-    "comments": 155,
-    "linesOfCode": 2643
-  }, 
-  ... more languages
-  {
-    "language": "Total",
-    "files": 8,
-    "lines": 921,
-    "blanks": 148,
-    "comments": 46,
-    "linesOfCode": 743
-  }] 
-        </pre>
-    </div>
-  </section>
-
-  <section class="endpoint">
-    <div class="centerText">
-      <strong>Endpoint - Get Lines of Code from an zipped director</strong>
+      <strong>Endpoint - Get Lines of Code from an zipped directory</strong>
       <br> This endpoint retrieves LOC from any zipped directory
     </div>
     <div class="leftText">

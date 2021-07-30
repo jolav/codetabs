@@ -184,6 +184,10 @@ hr {
   margin-top: 5px;
 }
 
+#branch {
+  max-width: 100px;
+}
+
 /* LOADER */
 
 .loader {

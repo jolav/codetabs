@@ -1,11 +1,11 @@
 
-![Version](https://img.shields.io/badge/version-0.7.14-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.7.15-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-**version 0.7.14**
+**version 0.7.15**
 
 1. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
 2. [CORS proxy](#cors-proxy)  
@@ -44,9 +44,17 @@ Segment will randomly change color as it is clicked.
 
 **API LOC**
 
+* curl Request  
+add -L flag  
+`curl -L https://api.codetabs.com/v1/loc?source=username/reponame`
+
 *  Make a GET HTTP Request   
 `https://api.codetabs.com/v1/loc?github=USERNAME/REPONAME`  
-`https://api.codetabs.com/v1/loc?gitlab=USERNAME/REPONAME`
+`https://api.codetabs.com/v1/loc?gitlab=USERNAME/REPONAME`  
+
+If you want a different branch than master  
+`https://api.codetabs.com/v1/loc?SOURCE=USERNAME/REPONAME&branch=branchName`  
+
 
 Example :   
 https://api.codetabs.com/v1/loc?github=jolav/codetabs  
@@ -220,14 +228,17 @@ Scale : Set width:height , if one parameter is -1 it will automatically determin
 
 ## TO DO
 
-- [ ] **ALL** Update Tests
+- [ ] **WWW** clean unused parts, css, etc
+- [ ] **WWW** change web design
+
+- [ ] **ALL** Update Tests  
 
 - [ ] **LOC** Save Historical Data  
 - [X] **LOC** Gitlab  
 - [ ] **LOC** Bitbucket  
 - [X] **LOC** Use same colours for languages as github   
 - [X] **LOC** Change cgag/loc  
-- [ ] **LOC** Select different branch than master  
+- [X] **LOC** Select different branch than master  
 - [ ] **LOC** toggle pie chart to showing non blank lines  
 - [ ] **LOC** box to ignore patterns such as ./vendor  
 - [ ] **LOC** update line count when hiding languages  

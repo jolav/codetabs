@@ -25,12 +25,17 @@ const loc = (function () {
     repo = document.getElementById('repoName').value;
     const select = document.getElementsByName("source")[0];
     const source = select.options[select.selectedIndex].value;
+    const branch = document.getElementById("branch").value;
+    console.log('branch', branch);
     if (repo === '') {
       alert('user/repo cannot be empty');
       return;
     }
     showLoader();
     let urlData = urlBase + '?' + source + '=' + repo;
+    if (branch) {
+      urlData += "&branch=" + branch;
+    }
     console.log(urlData);
     // console.log('1', myChart)
     if (myChart !== undefined) {
