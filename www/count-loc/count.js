@@ -12,11 +12,15 @@ const loc = (function () {
   const ctx = document.getElementById('myPie');
   let myChart;
   let repo = '';
+  let addComments = false;
+  let jsonData = [];
 
   function init() {
     console.log('Init Count Loc');
     document.getElementById('addRepo').addEventListener('click', addRepo);
     document.getElementById('upload').addEventListener('click', upload);
+    document.getElementById("toggle").addEventListener('click', toggle);
+    document.getElementById("toggle").style.display = "none";
     document.getElementsByClassName('pie')[0].style.display = 'none';
     hideLoader();
   }
@@ -62,7 +66,7 @@ const loc = (function () {
       return;
     }
     formData.append('inputFile', inputFile.files[0]);
-    console.log('REQUEST => ', urlData, prepareData, formData);
+    //console.log('REQUEST => ', urlData, prepareData, formData);
     makeAjaxRequest(urlData, 'POST', prepareData, formData);
   }
 
@@ -74,6 +78,7 @@ const loc = (function () {
   function showLoader() {
     document.getElementsByClassName('loader')[0].style.visibility = 'visible';
     document.getElementsByClassName('loader')[0].style.display = 'block';
+    document.getElementById("toggle").style.display = "block";
   }
 
   function showError(dataError) {
@@ -90,7 +95,21 @@ const loc = (function () {
     alert('Rate limit exceeded, wait a few seconds');
   }
 
+  function toggle() {
+    myChart.destroy();
+    let text = document.getElementById("toggle");
+    if (addComments) {
+      addComments = false;
+      text.innerHTML = "Include Comments in Pie Chart";
+    } else {
+      addComments = true;
+      text.innerHTML = "Exclude Comments from Pie Chart";
+    }
+    prepareData(jsonData);
+  }
+
   function prepareData(dataRepo) {
+    jsonData = dataRepo;
     console.log('RECEIVE => ', dataRepo);
     if (dataRepo.length === 1) {
       if (dataRepo[0].linesOfCode === 0 || dataRepo[0].linesOfCode === undefined) {
@@ -99,6 +118,29 @@ const loc = (function () {
       }
     }
     hideLoader();
+    let data = [];
+    if (addComments) {
+      data = locWithComments(dataRepo);
+    } else {
+      data = locNotComments(dataRepo);
+    }
+    const linesOfCode = data[0];
+    const labels = data[1];
+    drawChart(linesOfCode, labels);
+    showTotal(dataRepo);
+  }
+
+  function locWithComments(dataRepo) {
+    let linesOfCode = [];
+    let labels = [];
+    for (let i = 0; i < dataRepo.length - 1; i++) { // -1 avoid "Total" line
+      linesOfCode.push(dataRepo[i].linesOfCode + dataRepo[i].comments);
+      labels.push(dataRepo[i].language);
+    }
+    return [linesOfCode, labels];
+  }
+
+  function locNotComments(dataRepo) {
     let linesOfCode = [];
     let labels = [];
     for (let i = 0; i < dataRepo.length - 1; i++) {
@@ -107,8 +149,7 @@ const loc = (function () {
       labels.push(dataRepo[i].language);
       //}
     }
-    drawChart(linesOfCode, labels);
-    showTotal(dataRepo);
+    return [linesOfCode, labels];
   }
 
   function drawChart(loc, langs) {
@@ -159,13 +200,13 @@ const loc = (function () {
           }
         },
         /*onClick: function (e, element) {
-          if (element[0]) {
-            const order = element[0]._index;
-            let line = this.active[0]._chart.config.data.datasets[0];
-            line.backgroundColor[order] = getRandomColor();
-            myChart.update();
-          }
-        },*/
+        if (element[0]) {
+          const order = element[0]._index;
+          let line = this.active[0]._chart.config.data.datasets[0];
+          line.backgroundColor[order] = getRandomColor();
+          myChart.update();
+        }
+      },*/
         tooltips: {
           /*callbacks: {
             legendColor: function (tooltipItem, chart) {
@@ -176,10 +217,10 @@ const loc = (function () {
             },
           },*/
           /*updateLegendColor: function (color) {
-            return {
-              legendColorBackground: color,
-            };
-          },*/
+          return {
+            legendColorBackground: color,
+          };
+        },*/
           displayColors: false,
           //legendColorBackground: "blue",
         }

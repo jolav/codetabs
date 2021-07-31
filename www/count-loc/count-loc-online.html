@@ -27,6 +27,8 @@
     <span class="centerText update">UPDATE:<br>
       You can choose GitLab repos too for counting lines of code.<br>
       Default colors are the same as github.<br>
+      Can select another branch than master.<br>
+      Buttom under pie chart for include/exclude comments in pie chart.<br>
     </span>
   </div>
 
@@ -60,6 +62,9 @@
       <div id="totalResume"></div>
     </div>
 
+    <div><br> <button id="toggle" class="action">Include Comments in Pie Chart</button>
+    </div>
+
   </div>
 
   <!-- Version -->
@@ -74,7 +79,8 @@
         - Tool for counting lines of code from github/gitlab repositories.
         <br> - Max Repo size : 500 mb, greater repos will not work.
         <br> - File max size for upload 200mb
-        <br> - You can edit the colors of the segments by clicking on any point of it. Segment will randomly change
+        <br> - Can select a branch different than master using &branch=branchName
+        <br> - Can edit the colors of the segments by clicking on any point of it. Segment will randomly change
         color as it is clicked.
         <br> - Deafult colors are the same as github
       </span>

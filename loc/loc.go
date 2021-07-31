@@ -116,21 +116,22 @@ func (l *loc) Router(w http.ResponseWriter, r *http.Request) {
 func (l *loc) doLocRepoRequest(w http.ResponseWriter, r *http.Request) {
 
 	// MOCK
-	/*_ = json.Unmarshal([]byte(data), &l.languagesIN)
-	total2 := languageOUT{
-		Name: "Total",
-	}
-	for _, v := range l.languagesIN {
-		l.languagesOUT = append(l.languagesOUT, languageOUT(v))
-		total2.Blanks += v.Blanks
-		total2.Code += v.Code
-		total2.Comments += v.Comments
-		total2.Files += v.Files
-		total2.Lines += v.Lines
-	}
-	l.languagesOUT = append(l.languagesOUT, total2)
-	u.SendJSONToClient(w, l.languagesOUT, 200)
-	return
+	/*
+		_ = json.Unmarshal([]byte(data), &l.languagesIN)
+		total2 := languageOUT{
+			Name: "Total",
+		}
+		for _, v := range l.languagesIN {
+			l.languagesOUT = append(l.languagesOUT, languageOUT(v))
+			total2.Blanks += v.Blanks
+			total2.Code += v.Code
+			total2.Comments += v.Comments
+			total2.Files += v.Files
+			total2.Lines += v.Lines
+		}
+		l.languagesOUT = append(l.languagesOUT, total2)
+		u.SendJSONToClient(w, l.languagesOUT, 200)
+		return
 	*/
 	//
 
@@ -164,7 +165,7 @@ func (l *loc) doLocRepoRequest(w http.ResponseWriter, r *http.Request) {
 	url := "https://" + l.source + ".com/" + l.repo
 	dest := "./" + folder
 	if l.branch == "" {
-		cloneRepo := []string{"git", "clone", url, dest}
+		cloneRepo := []string{"git", "clone", "--depth=1", url, dest}
 		err = u.GenericCommand(cloneRepo)
 		if err != nil {
 			log.Printf("ERROR Cant clone repo %s -> %s\n", err, r.URL.RequestURI())
@@ -175,7 +176,8 @@ func (l *loc) doLocRepoRequest(w http.ResponseWriter, r *http.Request) {
 		}
 	} else {
 		cloneRepo :=
-			[]string{"git", "clone", "-b", l.branch, "--single-branch", url, dest}
+			[]string{"git", "clone", "--depth=1", "-b",
+				l.branch, "--single-branch", url, dest}
 		err = u.GenericCommand(cloneRepo)
 		if err != nil {
 			log.Printf("ERROR Cant clone repo branch %s ,%s -> %s\n", l.branch, err, r.URL.RequestURI())

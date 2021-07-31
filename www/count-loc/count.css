@@ -152,7 +152,7 @@ hr {
   margin: 0px auto 10px auto;
 }
 
-.addRepo .action, .upload .action {
+.addRepo .action, .upload .action, #toggle.action {
   padding: 5px 10px;
   border-radius: 5px;
   color: #fafafa;
@@ -166,7 +166,7 @@ hr {
   font-size: 0.9em;
 }
 
-#addRepo, #addRepo2, #upload {
+#addRepo, #addRepo2, #upload, #toggle {
   border: 1px solid #6f96ff;
   background-color: #6f96ff;
 }
