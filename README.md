@@ -1,11 +1,11 @@
 
-![Version](https://img.shields.io/badge/version-0.7.16-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.7.17-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-**version 0.7.16**
+**version 0.7.17**
 
 1. [Count LOC (lines of code) online from github repos or zipped uploaded folder](#count-loc-online)  
 2. [CORS proxy](#cors-proxy)  
@@ -35,7 +35,8 @@ In order to run this program you need installed
 - Can count GitHub and GitLab repos  
 - Max GitHub/GitLab Repo size : 500 mb, greater repos will not work.  
 - File max size for upload 200mb;  
-- You can select a branch different than master using &branch=branchName  
+- Can select a branch different than master using &branch=branchName  
+- Can ignore files or directories writing them separated by commas in the ignoreBox.  
 - Petitions are limited to 1 every 5 secs. You will get a 429 error if you exceed  
 - Default colors are the same as github.  
 - You can edit the colors of the segments by clicking on any point of it.
@@ -56,10 +57,15 @@ add -L flag
 If you want a different branch than master  
 `https://api.codetabs.com/v1/loc?SOURCE=USERNAME/REPONAME&branch=branchName`  
 
+Ignore files or directories  
+`https://api.codetabs.com/v1/loc?SOURCE=USERNAME/REPONAME&ignored=DIRNAME1,DIRNAME2,FILENAME`
+
 
 Example :   
-https://api.codetabs.com/v1/loc?github=jolav/codetabs  
-https://api.codetabs.com/v1/loc?gitlab=jolav/codetabs
+https://api.codetabs.com/v1/loc?github=jolav/betazone  
+https://api.codetabs.com/v1/loc?gitlab=jolav/chuletas  
+https://api.codetabs.com/v1/loc?github=imageMagick/imageMagick&branch=gh-pages  
+https://api.codetabs.com/v1/loc?github=jolav/betazone&ignored=www,main.go   
 
 
 Response (JSON) :
@@ -240,8 +246,8 @@ Scale : Set width:height , if one parameter is -1 it will automatically determin
 - [X] **LOC** Use same colours for languages as github   
 - [X] **LOC** Change cgag/loc  
 - [X] **LOC** Select different branch than master  
-- [ ] **LOC** toggle pie chart to showing non blank lines  
-- [ ] **LOC** box to ignore patterns such as ./vendor  
+- [X] **LOC** toggle pie chart to showing non blank lines  
+- [X] **LOC** box to ignore patterns such as ./vendor  
 - [ ] **LOC** update line count when hiding languages  
 
 - [ ] **STARS** Save Historical Data (unstar = problem)  

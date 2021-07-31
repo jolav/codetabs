@@ -188,6 +188,17 @@ hr {
   max-width: 100px;
 }
 
+.ignore {
+  width: 30%;
+  max-width: 500px;
+}
+
+input#ignored {
+  align-items: centre;
+  margin: 0 auto;
+  width: 100%;
+}
+
 /* LOADER */
 
 .loader {

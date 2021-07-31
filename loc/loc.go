@@ -26,6 +26,7 @@ type loc struct {
 	repo         string
 	branch       string
 	source       string
+	ignored      []string
 	date         string
 	size         int
 	sr           sourceReader
@@ -71,6 +72,7 @@ func (l *loc) Router(w http.ResponseWriter, r *http.Request) {
 	l = &loc{
 		repo:         "",
 		branch:       "",
+		ignored:      []string{},
 		source:       "",
 		date:         "",
 		size:         0,
@@ -85,13 +87,16 @@ func (l *loc) Router(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	r.ParseForm()
+	l.branch = r.Form.Get("branch")
+	if r.Form.Get("ignored") != "" {
+		l.ignored = strings.Split(r.Form.Get("ignored"), ",")
+	}
 	for k, v := range r.URL.Query() {
 		if k == "github" || k == "gitlab" {
 			l.repo = v[0] //r.URL.Query()[k][0]
 			l.source = k
 		}
 	}
-	l.branch = r.Form.Get("branch")
 	aux := strings.Split(l.repo, "/")
 	if len(aux) != 2 || aux[0] == "" || aux[1] == "" {
 		msg := fmt.Sprintf("Incorrect user/repo")
@@ -102,6 +107,7 @@ func (l *loc) Router(w http.ResponseWriter, r *http.Request) {
 		u.BadRequest(w, r)
 		return
 	}
+
 	switch l.source {
 	case "github":
 		l.sr = github{}
@@ -220,7 +226,16 @@ func (l *loc) doLocRepoRequest(w http.ResponseWriter, r *http.Request) {
 }
 
 func (l *loc) countLines(repoPath string) (info []byte, err error) {
-	comm := SCC + " " + repoPath + " -f json "
+	comm := SCC + " "
+	if len(l.ignored) < 1 {
+		comm += repoPath + " -f json "
+	} else {
+		var ignored string
+		for _, v := range l.ignored {
+			ignored += " -M " + v + " "
+		}
+		comm += ignored + repoPath + " -f json "
+	}
 	//fmt.Println("COMMAND => ", comm)
 	info, err = u.GenericCommandSH(comm)
 	if err != nil {
@@ -315,6 +330,7 @@ func NewLoc(test bool) loc {
 		orderInt:     0,
 		repo:         "",
 		branch:       "",
+		ignored:      []string{},
 		source:       "",
 		date:         "",
 		size:         0,

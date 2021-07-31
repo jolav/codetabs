@@ -30,7 +30,8 @@ const loc = (function () {
     const select = document.getElementsByName("source")[0];
     const source = select.options[select.selectedIndex].value;
     const branch = document.getElementById("branch").value;
-    console.log('branch', branch);
+    const ignored = document.getElementById("ignored").value;
+    //console.log('branch=', branch, "  ignored=", ignored);
     if (repo === '') {
       alert('user/repo cannot be empty');
       return;
@@ -39,6 +40,9 @@ const loc = (function () {
     let urlData = urlBase + '?' + source + '=' + repo;
     if (branch) {
       urlData += "&branch=" + branch;
+    }
+    if (ignored) {
+      urlData += "&ignored=" + ignored;
     }
     console.log(urlData);
     // console.log('1', myChart)

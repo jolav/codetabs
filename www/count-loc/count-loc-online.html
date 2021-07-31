@@ -23,15 +23,6 @@
     </h1>
   </header>
 
-  <div class="news">
-    <span class="centerText update">UPDATE:<br>
-      You can choose GitLab repos too for counting lines of code.<br>
-      Default colors are the same as github.<br>
-      Can select another branch than master.<br>
-      Buttom under pie chart for include/exclude comments in pie chart.<br>
-    </span>
-  </div>
-
   <div class="container">
 
     <section id="fileForm">
@@ -53,6 +44,10 @@
       </form>
     </section>
 
+    <div class="ignore">
+      <input type="text" id="ignored" placeholder="ignore files/dirs comma separated">
+    </div>
+
     <div class="loader"></div>
 
     <div class="pie">
@@ -70,6 +65,16 @@
   <!-- Version -->
   <!--#include file="/_public/templates/version.html" -->
 
+  <div class="news">
+    <span class="centerText update">UPDATE:<br>
+      You can choose GitLab repos too for counting lines of code.<br>
+      Default colors are the same as github.<br>
+      Can select another branch than master.<br>
+      Buttom under pie chart for include/exclude comments in pie chart.<br>
+      Can ignore files or directories writing them separated by commas in the ignoreBox.<br>
+    </span>
+  </div>
+
   <section class="description">
     <div class="centerText">
       <strong>Description</strong>
@@ -80,6 +85,7 @@
         <br> - Max Repo size : 500 mb, greater repos will not work.
         <br> - File max size for upload 200mb
         <br> - Can select a branch different than master using &branch=branchName
+        <br> - Can ignore files or directories writing them separated by commas in the ignoreBox.
         <br> - Can edit the colors of the segments by clicking on any point of it. Segment will randomly change
         color as it is clicked.
         <br> - Deafult colors are the same as github
@@ -109,17 +115,29 @@
       <code class="red"> GET https://api.codetabs.com/v1/loc?gitlab=username/reponame 
         </code>
       <br>
+      <strong>Select branch</strong><br>If you want a different branch than master<br>
+      <code class="red">https://api.codetabs.com/v1/loc?SOURCE=USERNAME/REPONAME&branch=branchName</code><br>
+      <strong>Ignore files or directories</strong><br>Can ignore files or directories using param ignored<br>
+      <code
+        class="red">https://api.codetabs.com/v1/loc?SOURCE=USERNAME/REPONAME&ignored=DIRNAME1,DIRNAME2,FILENAME</code><br>
       <strong>example : </strong>
       <br>
       <code>
-          <a href="https://api.codetabs.com/v1/loc?github=jolav/betazone     ">https://api.codetabs.com/v1/loc?github=jolav/betazone</a>  
-        </code>
+        <a href="https://api.codetabs.com/v1/loc?github=jolav/betazone     ">https://api.codetabs.com/v1/loc?github=jolav/betazone</a>  
+      </code>
       <br>
       <code>
-          <a href="https://api.codetabs.com/v1/loc?gitlab=jolav/codetabs     ">https://api.codetabs.com/v1/loc?gitlab=jolav/codetabs</a>  
-        </code><br>
-      <strong>Select branch</strong><br>If you want a different branch than master<br>
-      <code class="red">https://api.codetabs.com/v1/loc?SOURCE=USERNAME/REPONAME&branch=branchName</code><br>
+        <a href="https://api.codetabs.com/v1/loc?gitlab=jolav/chuletas     ">https://api.codetabs.com/v1/loc?gitlab=jolav/chuletas</a>  
+      </code>
+      <br>
+      <code>
+        <a href="https://api.codetabs.com/v1/loc?github=imageMagick/imageMagick&branch=gh-pages">https://api.codetabs.com/v1/loc?github=imageMagick/imageMagick&branch=gh-pages</a>  
+      </code>
+      <br>
+      <code>
+        <a href="https://api.codetabs.com/v1/loc?github=jolav/betazone&ignored=www,main.go">https://api.codetabs.com/v1/loc?github=jolav/betazone&ignored=www,main.go</a>  
+      </code>
+      <br>
       <strong>response :</strong>
       <pre class="marginLeft">
   [{
