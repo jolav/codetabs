@@ -69,16 +69,14 @@ func (l *loc) Router(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// clean
-	l = &loc{
-		repo:         "",
-		branch:       "",
-		ignored:      []string{},
-		source:       "",
-		date:         "",
-		size:         0,
-		languagesIN:  []languageIN{},
-		languagesOUT: []languageOUT{},
-	}
+	l.repo = ""
+	l.branch = ""
+	l.ignored = []string{}
+	l.source = ""
+	l.date = ""
+	l.size = 0
+	l.languagesIN = []languageIN{}
+	l.languagesOUT = []languageOUT{}
 
 	if r.Method == "POST" {
 		l.orderInt++
