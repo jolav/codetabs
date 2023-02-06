@@ -19,7 +19,7 @@ func AddHit(w http.ResponseWriter, r *http.Request,
 	if host == "" {
 		host = " ? "
 	}
-	quest := strings.Split(r.URL.String(), "v1/")[1]
+	quest := r.Form.Get("quest")
 	if mode == "production" {
 		hLog.Println(ip, sv, host, quest)
 		hitUrl := "http://localhost:3970/addHit/" + service

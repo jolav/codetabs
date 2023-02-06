@@ -35,7 +35,6 @@ func (p *proxy) Router(w http.ResponseWriter, r *http.Request) {
 		u.BadRequest(w, r)
 		return
 	}
-	p.quest = strings.Split(r.URL.RawQuery, "quest=")[1]
 	p.doProxyRequest(w, r)
 }
 
