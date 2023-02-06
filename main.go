@@ -24,7 +24,7 @@ import (
 	we "github.com/jolav/codetabs/weather"
 )
 
-var version = "0.7.18"
+var version = "0.7.19"
 var when = "undefined"
 
 type Conf struct {
@@ -95,6 +95,12 @@ func main() {
 func mw(next http.HandlerFunc, service string, c Conf) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		go u.AddHit(w, r, service, c.Mode, c.hitsLog)
+		if service == "proxy" {
+			if isBanned(r) {
+				http.Error(w, "Unauthorized", http.StatusUnauthorized)
+				return
+			}
+		}
 		next.ServeHTTP(w, r)
 	})
 }
