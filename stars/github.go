@@ -27,6 +27,7 @@ func (s *stars) doGHStarsRequest(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if totalStars == 0 { // repo exists but has no stars
+		s.storeData()
 		u.SendJSONToClient(w, s.data, 200)
 		return
 	}
@@ -47,6 +48,7 @@ func (s *stars) doGHStarsRequest(w http.ResponseWriter, r *http.Request) {
 		last.Quantity = totalStars
 		s.data = append(s.data, last)
 	}
+	s.storeData()
 	u.SendJSONToClient(w, s.data, 200)
 }
 

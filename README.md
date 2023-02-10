@@ -1,11 +1,11 @@
 
-![Version](https://img.shields.io/badge/version-0.7.20-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.8.0-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-**version 0.7.20**
+**version 0.8.0**
 
 1. [Count LOC (lines of code) online from github/gitlab repos or zipped uploaded folder](#count-loc-online)  
 2. [CORS proxy](#cors-proxy)  

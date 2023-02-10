@@ -3,12 +3,15 @@
 package stars
 
 import (
+	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 	"time"
 
 	u "github.com/jolav/codetabs/_utils"
+	"github.com/jolav/codetabs/store"
 )
 
 type star struct {
@@ -77,6 +80,24 @@ func (s *stars) Router(w http.ResponseWriter, r *http.Request) {
 		u.ErrorResponse(w, msg)
 		return
 	}
+}
+
+func (s *stars) storeData() {
+	d := store.NewDataStars()
+
+	dataJSON, err := json.Marshal(s.data)
+	if err != nil {
+		log.Printf("ERROR Marshaling %s\n", err)
+		d.Data = string(`{}`)
+	} else {
+		d.Data = string(dataJSON)
+	}
+	d.Date = time.Now().Format("2006-01-02 15:04:05.000")
+	d.Repo = s.source + "/" + s.repo
+	d.Source = s.source
+	d.Total = len(s.stars)
+	//u.PrettyPrintStruct(d)
+	go d.SaveDataStars()
 }
 
 func (s *stars) cleanStarsStruct() {

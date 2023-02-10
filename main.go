@@ -20,11 +20,12 @@ import (
 	lo "github.com/jolav/codetabs/loc"
 	px "github.com/jolav/codetabs/proxy"
 	st "github.com/jolav/codetabs/stars"
+	"github.com/jolav/codetabs/store"
 	vg "github.com/jolav/codetabs/video2gif"
 	we "github.com/jolav/codetabs/weather"
 )
 
-var version = "0.7.20"
+var version = "0.8.0"
 var when = "undefined"
 
 type Conf struct {
@@ -44,6 +45,13 @@ func main() {
 	u.LoadJSONConfig(getGlobalConfigJSON(), &c)
 	checkMode(&c)
 	//u.PrettyPrintStruct(c)
+
+	// Database
+	db, err := store.NewDB()
+	if err != nil {
+		log.Fatal("Error connecting DataBase => ", err)
+	}
+	store.MyDB = db
 
 	// Custom Error Log File + Custom Hits Log File
 	var mylog *os.File
@@ -101,9 +109,30 @@ func mw(next http.HandlerFunc, service string, c Conf) http.HandlerFunc {
 				return
 			}
 		}
+
 		next.ServeHTTP(w, r)
 	})
 }
+
+/*
+mux.HandleFunc("/vnstats/v1/", checkValid(
+	func(w http.ResponseWriter, r *http.Request) {
+		vnstatsRouter(w, r, a)
+	}, a.c.APIKey),
+)
+
+func checkValid(next http.HandlerFunc, test string) http.HandlerFunc {
+return func(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	valid := r.Form.Get("test")
+	if valid != test {
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		return
+	}
+	next.ServeHTTP(w, r)
+}
+}
+*/
 
 func checkFlags() {
 	versionFlag := flag.Bool("v", false, "Show current version and exit")

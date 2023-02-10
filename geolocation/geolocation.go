@@ -93,7 +93,7 @@ func (g *geoip) getGeoDataFromDB() {
 		g.cleanGeoData()
 		return
 	}
-	u.PrettyPrintStruct(results)
+	//u.PrettyPrintStruct(results)
 	g.geoData.Country_code = results.Country_short
 	g.geoData.Country_name = results.Country_long
 	g.geoData.Region_name = results.Region

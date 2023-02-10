@@ -11,8 +11,10 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 
 	u "github.com/jolav/codetabs/_utils"
+	"github.com/jolav/codetabs/store"
 )
 
 const (
@@ -84,6 +86,7 @@ func (l *loc) Router(w http.ResponseWriter, r *http.Request) {
 		l.doLocUploadRequest(w, r)
 		return
 	}
+
 	r.ParseForm()
 	l.branch = r.Form.Get("branch")
 	if r.Form.Get("ignored") != "" {
@@ -134,6 +137,7 @@ func (l *loc) doLocRepoRequest(w http.ResponseWriter, r *http.Request) {
 			total2.Lines += v.Lines
 		}
 		l.languagesOUT = append(l.languagesOUT, total2)
+		l.storeData()
 		u.SendJSONToClient(w, l.languagesOUT, 200)
 		return
 	*/
@@ -218,7 +222,12 @@ func (l *loc) doLocRepoRequest(w http.ResponseWriter, r *http.Request) {
 		total.Lines += v.Lines
 	}
 	l.languagesOUT = append(l.languagesOUT, total)
-
+	if l.branch == "" { // cant call gitlab with master
+		l.branch = "master"
+	}
+	if len(l.ignored) == 0 && l.branch == "master" {
+		l.storeData()
+	}
 	u.SendJSONToClient(w, l.languagesOUT, 200)
 	u.GenericCommand(destroyTemporalDir)
 }
@@ -317,9 +326,27 @@ func (l *loc) doLocUploadRequest(w http.ResponseWriter, r *http.Request) {
 		total.Lines += v.Lines
 	}
 	l.languagesOUT = append(l.languagesOUT, total)
-
+	//l.storeData()
 	u.SendJSONToClient(w, l.languagesOUT, 200)
 	u.GenericCommand(destroyTemporalDir)
+}
+
+func (l *loc) storeData() {
+	d := store.NewDataLoc()
+
+	dataJSON, err := json.Marshal(l.languagesOUT)
+	if err != nil {
+		log.Printf("ERROR Marshaling %s\n", err)
+		d.Data = string(`{}`)
+	} else {
+		d.Data = string(dataJSON)
+	}
+	d.Date = time.Now().Format("2006-01-02 15:04:05.000")
+	d.Repo = l.source + "/" + l.repo
+	d.Source = l.source
+	//u.PrettyPrintStruct(d)
+	go d.SaveDataLoc()
+	//go store.SaveDataLoc(d)
 }
 
 func NewLoc(test bool) loc {

@@ -27,6 +27,7 @@ func (s *stars) doGLStarsRequest(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	if totalStars == 0 { // repo exists but has no stars
+		s.storeData()
 		u.SendJSONToClient(w, s.data, 200)
 		return
 	}
@@ -36,6 +37,7 @@ func (s *stars) doGLStarsRequest(w http.ResponseWriter, r *http.Request) {
 	if len(s.stars) > 0 {
 		s.convertGLStarsToData()
 	}
+	s.storeData()
 	u.SendJSONToClient(w, s.data, 200)
 }
 
