@@ -18,7 +18,7 @@ type proxy struct {
 	quest string
 }
 
-func (p *proxy) Router(w http.ResponseWriter, r *http.Request) {
+func Router(w http.ResponseWriter, r *http.Request) {
 	params := strings.Split(strings.ToLower(r.URL.Path), "/")
 	path := params[1:len(params)]
 	if path[len(path)-1] == "" { // remove last empty slot after /
@@ -29,6 +29,8 @@ func (p *proxy) Router(w http.ResponseWriter, r *http.Request) {
 		u.BadRequest(w, r)
 		return
 	}
+
+	p := newProxy(false)
 	r.ParseForm()
 	p.quest = r.Form.Get("quest")
 	if p.quest == "" || len(path) != 2 {
@@ -82,7 +84,9 @@ func (p *proxy) doProxyRequest(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func NewProxy(test bool) proxy {
-	p := proxy{}
+func newProxy(test bool) proxy {
+	p := proxy{
+		quest: "",
+	}
 	return p
 }

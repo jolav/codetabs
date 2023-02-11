@@ -10,6 +10,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"os/user"
 	"strings"
 	"time"
 
@@ -18,14 +19,14 @@ import (
 	gl "github.com/jolav/codetabs/geolocation"
 	he "github.com/jolav/codetabs/headers"
 	lo "github.com/jolav/codetabs/loc"
-	px "github.com/jolav/codetabs/proxy"
+	"github.com/jolav/codetabs/proxy"
 	st "github.com/jolav/codetabs/stars"
 	"github.com/jolav/codetabs/store"
 	vg "github.com/jolav/codetabs/video2gif"
 	we "github.com/jolav/codetabs/weather"
 )
 
-var version = "0.8.0"
+var version = "0.8.1"
 var when = "undefined"
 
 type Conf struct {
@@ -53,13 +54,22 @@ func main() {
 	}
 	store.MyDB = db
 
-	// Custom Error Log File + Custom Hits Log File
+	//
+	usernow, err := user.Current()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Custom Error Log File
 	var mylog *os.File
+	c.ErrorsLogFile = usernow.HomeDir + c.ErrorsLogFile
 	if c.Mode == "production" {
 		mylog = u.CreateCustomErrorLogFile(c.ErrorsLogFile)
 	}
 	defer mylog.Close()
 
+	// Custom Hits Log File
+	c.HitsLogFile = usernow.HomeDir + c.HitsLogFile
 	c.hitsLog = u.NewHitsFile(c.HitsLogFile)
 	//////////
 
@@ -72,7 +82,6 @@ func main() {
 	weather := we.NewWeather(false)
 	video2gif := vg.NewVideo2Gif(false)
 	stars := st.NewStars(false)
-	proxy := px.NewProxy(false)
 	loc := lo.NewLoc(false)
 
 	mux := http.NewServeMux()
