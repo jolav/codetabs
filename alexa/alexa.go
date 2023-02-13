@@ -23,10 +23,11 @@ const (
 	DATA_FILE_URL       = "https://s3.amazonaws.com/alexa-static/top-1m.csv.zip"
 )
 
+var a alexa
+
 type alexa struct {
 	config    config
 	alexaList map[string]int
-	output    output
 }
 
 type config struct {
@@ -36,12 +37,12 @@ type config struct {
 	DataFileURL  string
 }
 
-type output struct {
+type outputAlexa struct {
 	Web  string `json:"web"`
 	Rank int    `json:"rank"`
 }
 
-func (a *alexa) Router(w http.ResponseWriter, r *http.Request) {
+func Router(w http.ResponseWriter, r *http.Request) {
 	params := strings.Split(strings.ToLower(r.URL.Path), "/")
 	path := params[1:len(params)]
 	if path[len(path)-1] == "" { // remove last empty slot after /
@@ -52,38 +53,41 @@ func (a *alexa) Router(w http.ResponseWriter, r *http.Request) {
 		u.BadRequest(w, r)
 		return
 	}
+	oa := outputAlexa{
+		Web:  "",
+		Rank: 0,
+	}
 	r.ParseForm()
-	web := r.Form.Get("web")
-	if web == "" {
+	oa.Web = r.Form.Get("web")
+	if oa.Web == "" {
 		u.BadRequest(w, r)
 		return
 	}
-	a.doAlexaRequest(w, web)
+	oa.doAlexaRequest(w)
 }
 
-func (a *alexa) doAlexaRequest(w http.ResponseWriter, web string) {
-	a.output.Web = web
-	a.output.Rank = a.alexaList[a.output.Web]
-	if a.output.Rank != 0 {
-		u.SendJSONToClient(w, a.output, 200)
+func (oa *outputAlexa) doAlexaRequest(w http.ResponseWriter) {
+	oa.Rank = a.alexaList[oa.Web]
+	if oa.Rank != 0 {
+		u.SendJSONToClient(w, oa, 200)
 		return
 	}
-	if strings.HasPrefix(a.output.Web, "www.") {
-		a.output.Web = a.output.Web[4:len(a.output.Web)]
-		a.output.Rank = a.alexaList[a.output.Web]
-		if a.output.Rank != 0 {
-			u.SendJSONToClient(w, a.output, 200)
+	if strings.HasPrefix(oa.Web, "www.") {
+		oa.Web = oa.Web[4:len(oa.Web)]
+		oa.Rank = a.alexaList[oa.Web]
+		if oa.Rank != 0 {
+			u.SendJSONToClient(w, oa, 200)
 			return
 		}
 	}
-	if !strings.HasPrefix(a.output.Web, "www.") {
-		a.output.Rank = a.alexaList["www."+a.output.Web]
-		if a.output.Rank != 0 {
-			u.SendJSONToClient(w, a.output, 200)
+	if !strings.HasPrefix(oa.Web, "www.") {
+		oa.Rank = a.alexaList["www."+oa.Web]
+		if oa.Rank != 0 {
+			u.SendJSONToClient(w, oa, 200)
 			return
 		}
 	}
-	msg := fmt.Sprintf("%s not in alexa top 1 million", a.output.Web)
+	msg := fmt.Sprintf("%s not in alexa top 1 million", oa.Web)
 	u.ErrorResponse(w, msg)
 	return
 }
@@ -108,7 +112,8 @@ func (a *alexa) loadDataInMemory() {
 	}
 }
 
-func (a *alexa) OnceADayTask() {
+func OnceADayTask() {
+	a = newAlexa(false)
 	t := time.Now()
 	n := time.Date(t.Year(), t.Month(), t.Day(), 3, 10, 10, 0, t.Location())
 	d := n.Sub(t)
@@ -157,7 +162,7 @@ func (a *alexa) unzipCsv() {
 	}
 }
 
-func NewAlexa(test bool) alexa {
+func newAlexa(test bool) alexa {
 	a := alexa{
 		config: config{
 			DataFilePath: DATA_FILE_PATH,
@@ -166,10 +171,6 @@ func NewAlexa(test bool) alexa {
 			DataFileURL:  DATA_FILE_URL,
 		},
 		alexaList: make(map[string]int),
-		output: output{
-			Web:  "",
-			Rank: 0,
-		},
 	}
 	if test {
 		a.config.DataFilePath = DATA_FILE_PATH_TEST

@@ -10,11 +10,16 @@ import (
 	u "github.com/jolav/codetabs/_utils"
 )
 
+type headersRequest struct {
+	headers
+	domain string
+}
+
 type headers []header
 
 type header map[string]string
 
-func (h *headers) Router(w http.ResponseWriter, r *http.Request) {
+func Router(w http.ResponseWriter, r *http.Request) {
 	params := strings.Split(strings.ToLower(r.URL.Path), "/")
 	path := params[1:len(params)]
 	if path[len(path)-1] == "" { // remove last empty slot after /
@@ -25,17 +30,18 @@ func (h *headers) Router(w http.ResponseWriter, r *http.Request) {
 		u.BadRequest(w, r)
 		return
 	}
+	hr := newHeadersRequest(false)
 	r.ParseForm()
-	domain := r.Form.Get("domain")
-	if domain == "" || len(path) != 2 {
+	hr.domain = r.Form.Get("domain")
+	if hr.domain == "" || len(path) != 2 {
 		u.BadRequest(w, r)
 		return
 	}
-	doHeadersRequest(w, r, domain)
+	hr.doHeadersRequest(w, r)
 }
 
-func doHeadersRequest(w http.ResponseWriter, r *http.Request, domain string) {
-	hs := headers{}
+func (hr *headersRequest) doHeadersRequest(
+	w http.ResponseWriter, r *http.Request) {
 	notMoreRedirections := false
 	count := 0
 	const curl = "curl -fsSI "
@@ -46,28 +52,28 @@ func doHeadersRequest(w http.ResponseWriter, r *http.Request, domain string) {
 	}
 
 	for !notMoreRedirections && count < 10 {
-		rawData, err := u.GenericCommandSH(curl + domain)
+		rawData, err := u.GenericCommandSH(curl + hr.domain)
 		if err != nil {
 			msg := fmt.Sprintf("ERROR %s -> %s %s",
 				r.URL.RequestURI(),
 				curlStatus[err.Error()],
-				domain,
+				hr.domain,
 			)
 			u.ErrorResponse(w, msg)
 			return
 		}
-		parseHeadString(string(rawData), &hs)
-		if hs[count]["Location"] == "" {
+		parseHeadString(string(rawData), &hr.headers)
+		if hr.headers[count]["Location"] == "" {
 			notMoreRedirections = true
 			//fmt.Println(`No more redirections`)
 		} else {
-			domain = hs[count]["Location"]
+			hr.domain = hr.headers[count]["Location"]
 			//fmt.Println(`Redirecting to ... `, domain)
 		}
 		count++
 	}
 
-	u.SendJSONToClient(w, hs, 200)
+	u.SendJSONToClient(w, hr.headers, 200)
 	return
 }
 
@@ -100,7 +106,10 @@ func parseHeadString(rawData string, hs *headers) {
 	*hs = append(*hs, myheader)
 }
 
-func NewHeaders(test bool) headers {
-	h := headers{}
-	return h
+func newHeadersRequest(test bool) headersRequest {
+	hr := headersRequest{
+		headers: []header{},
+		domain:  "",
+	}
+	return hr
 }

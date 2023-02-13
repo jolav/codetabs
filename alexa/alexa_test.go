@@ -16,7 +16,7 @@ func TestAlexaApi(t *testing.T) {
 		validFormat = "Bad request, valid format is 'api.codetabs.com/v1/{service}?{param}=value' .Please read our docs at https://codetabs.com"
 	)
 
-	a := NewAlexa(true)
+	//a := NewAlexa(true)
 
 	type alexaTestOutput struct {
 		Domain     string `json:"domain"`
@@ -65,7 +65,7 @@ func TestAlexaApi(t *testing.T) {
 		}
 		if pass {
 			rr := httptest.NewRecorder()
-			handler := http.HandlerFunc(a.Router)
+			handler := http.HandlerFunc(Router)
 
 			handler.ServeHTTP(rr, req)
 			if rr.Code != test.statusCode {

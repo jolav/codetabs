@@ -54,7 +54,7 @@ type apiData struct {
 	TempF float64 `json:"temp_f"`
 }
 
-func (wt *weather) Router(w http.ResponseWriter, r *http.Request) {
+func Router(w http.ResponseWriter, r *http.Request) {
 	params := strings.Split(strings.ToLower(r.URL.Path), "/")
 	path := params[1:len(params)]
 	if path[len(path)-1] == "" { // remove last empty slot after /
@@ -69,6 +69,7 @@ func (wt *weather) Router(w http.ResponseWriter, r *http.Request) {
 		u.BadRequest(w, r)
 		return
 	}
+	wt := newWeather(false)
 	r.ParseForm()
 	wt.Out.format = strings.ToLower(r.Form.Get("format"))
 	wt.Out.City = strings.ToLower(r.Form.Get("city"))
@@ -184,7 +185,7 @@ func (wt *weather) getGeo(w http.ResponseWriter, r *http.Request) {
 	wt.Out.hasLatLon = true
 }
 
-func NewWeather(test bool) weather {
+func newWeather(test bool) weather {
 	wt := weather{}
 	return wt
 }

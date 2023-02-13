@@ -59,7 +59,7 @@ type sourceReader interface {
 	exceedsSize(http.ResponseWriter, *loc) bool
 }
 
-func (l *loc) Router(w http.ResponseWriter, r *http.Request) {
+func Router(w http.ResponseWriter, r *http.Request) {
 	params := strings.Split(strings.ToLower(r.URL.Path), "/")
 	path := params[1:len(params)]
 	if path[len(path)-1] == "" { // remove last empty slot after /
@@ -70,15 +70,8 @@ func (l *loc) Router(w http.ResponseWriter, r *http.Request) {
 		u.BadRequest(w, r)
 		return
 	}
-	// clean
-	l.repo = ""
-	l.branch = ""
-	l.ignored = []string{}
-	l.source = ""
-	l.date = ""
-	l.size = 0
-	l.languagesIN = []languageIN{}
-	l.languagesOUT = []languageOUT{}
+
+	l := newLoc(false)
 
 	if r.Method == "POST" {
 		l.orderInt++
@@ -349,7 +342,7 @@ func (l *loc) storeData() {
 	//go store.SaveDataLoc(d)
 }
 
-func NewLoc(test bool) loc {
+func newLoc(test bool) loc {
 	l := loc{
 		order:        "0",
 		orderInt:     0,

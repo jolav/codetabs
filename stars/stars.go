@@ -43,7 +43,7 @@ type stars struct {
 	date       string
 }
 
-func (s *stars) Router(w http.ResponseWriter, r *http.Request) {
+func Router(w http.ResponseWriter, r *http.Request) {
 	params := strings.Split(strings.ToLower(r.URL.Path), "/")
 	path := params[1:len(params)]
 	if path[len(path)-1] == "" { // remove last empty slot after /
@@ -58,6 +58,7 @@ func (s *stars) Router(w http.ResponseWriter, r *http.Request) {
 		u.BadRequest(w, r)
 		return
 	}
+	s := newStars(false)
 	s.cleanStarsStruct()
 	r.ParseForm()
 	data := r.Form.Get("repo")
@@ -112,7 +113,7 @@ func (s *stars) cleanStarsStruct() {
 	s.date = time.Now().Format(time.RFC1123)
 }
 
-func NewStars(test bool) stars {
+func newStars(test bool) stars {
 	s := stars{
 		stars:      []*star{},
 		headerLink: "",

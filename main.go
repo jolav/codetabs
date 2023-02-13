@@ -15,18 +15,18 @@ import (
 	"time"
 
 	u "github.com/jolav/codetabs/_utils"
-	ax "github.com/jolav/codetabs/alexa"
-	gl "github.com/jolav/codetabs/geolocation"
-	he "github.com/jolav/codetabs/headers"
-	lo "github.com/jolav/codetabs/loc"
+	"github.com/jolav/codetabs/alexa"
+	"github.com/jolav/codetabs/geolocation"
+	"github.com/jolav/codetabs/headers"
+	"github.com/jolav/codetabs/loc"
 	"github.com/jolav/codetabs/proxy"
-	st "github.com/jolav/codetabs/stars"
+	"github.com/jolav/codetabs/stars"
 	"github.com/jolav/codetabs/store"
-	vg "github.com/jolav/codetabs/video2gif"
-	we "github.com/jolav/codetabs/weather"
+	"github.com/jolav/codetabs/video2gif"
+	"github.com/jolav/codetabs/weather"
 )
 
-var version = "0.8.1"
+var version = "0.8.2"
 var when = "undefined"
 
 type Conf struct {
@@ -75,19 +75,12 @@ func main() {
 
 	cleanTmpFolder()
 
-	alexa := ax.NewAlexa(false)
 	go alexa.OnceADayTask()
-	geoip := gl.NewGeoLocation(false)
-	headers := he.NewHeaders(false)
-	weather := we.NewWeather(false)
-	video2gif := vg.NewVideo2Gif(false)
-	stars := st.NewStars(false)
-	loc := lo.NewLoc(false)
 
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/v1/alexa/", mw(alexa.Router, "alexa", c))
-	mux.HandleFunc("/v1/geolocation/", mw(geoip.Router, "geoip", c))
+	mux.HandleFunc("/v1/geolocation/", mw(geolocation.Router, "geoip", c))
 	mux.HandleFunc("/v1/headers/", mw(headers.Router, "headers", c))
 	mux.HandleFunc("/v1/weather/", mw(weather.Router, "weather", c))
 	mux.HandleFunc("/v1/video2gif/", mw(video2gif.Router, "video2gif", c))

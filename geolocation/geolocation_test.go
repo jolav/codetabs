@@ -12,7 +12,7 @@ import (
 )
 
 func TestGeoipApi(t *testing.T) {
-	g := NewGeoLocation(true)
+	//g := newGeoLocation(true)
 
 	for _, test := range geoipTests {
 		var to = geoipTestOutput{}
@@ -32,7 +32,7 @@ func TestGeoipApi(t *testing.T) {
 		}
 		if pass {
 			rr := httptest.NewRecorder()
-			handler := http.HandlerFunc(g.Router)
+			handler := http.HandlerFunc(Router)
 			handler.ServeHTTP(rr, req)
 			if rr.Code != test.statusCode {
 				t.Errorf("%s got %v want %v\n", test.endpoint, rr.Code, test.statusCode)

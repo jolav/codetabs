@@ -1,11 +1,11 @@
 
-![Version](https://img.shields.io/badge/version-0.8.1-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.8.2-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-**version 0.8.1**
+**version 0.8.2**
 
 1. [Count LOC (lines of code) online from github/gitlab repos or zipped uploaded folder](#count-loc-online)  
 2. [CORS proxy](#cors-proxy)  
@@ -238,9 +238,9 @@ Scale : Set width:height , if one parameter is -1 it will automatically determin
 - [ ] **WWW** clean unused parts, css, etc
 - [ ] **WWW** change web design
 
-- [ ] **ALL** Update Tests  
+- [ ] **ALL** Fix the tests. They are outdated and unusable.
 
-- [ ] **LOC** Save Historical Data  
+- [X] **LOC** Save Historical Data  
 - [X] **LOC** Gitlab  
 - [ ] **LOC** Bitbucket  
 - [X] **LOC** Use same colours for languages as github   
@@ -250,7 +250,7 @@ Scale : Set width:height , if one parameter is -1 it will automatically determin
 - [X] **LOC** box to ignore patterns such as ./vendor  
 - [ ] **LOC** update line count when hiding languages  
 
-- [ ] **STARS** Save Historical Data (unstar = problem)  
+- [X] **STARS** Save Historical Data (unstar = problem)  
 - [X] **STARS** Gitlab  
 - [ ] **STARS** Optimize doing far fewer requests. Extrapolate data  
 

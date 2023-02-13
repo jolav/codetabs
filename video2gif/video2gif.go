@@ -40,7 +40,7 @@ type in struct {
 	scale string
 }
 
-func (vg *video2gif) Router(w http.ResponseWriter, r *http.Request) {
+func Router(w http.ResponseWriter, r *http.Request) {
 	params := strings.Split(strings.ToLower(r.URL.Path), "/")
 	path := params[1:len(params)]
 	if path[len(path)-1] == "" { // remove last empty slot after /
@@ -51,6 +51,7 @@ func (vg *video2gif) Router(w http.ResponseWriter, r *http.Request) {
 		u.BadRequest(w, r)
 		return
 	}
+	vg := newVideo2Gif(false)
 	r.ParseForm()
 	if r.Method == "POST" {
 		vg.orderInt++
@@ -59,16 +60,6 @@ func (vg *video2gif) Router(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	u.BadRequest(w, r)
-}
-
-func NewVideo2Gif(test bool) video2gif {
-	vg := video2gif{
-		order:    "0",
-		orderInt: 0,
-		in:       in{},
-		out:      out{},
-	}
-	return vg
 }
 
 func (vg *video2gif) doVideo2GifRequest(w http.ResponseWriter, r *http.Request, folder string) {
@@ -256,6 +247,16 @@ func rescale(big, small int) (big2, small2 int) {
 	big2 = 480
 	small2 = 480 * small / big
 	return big2, small2
+}
+
+func newVideo2Gif(test bool) video2gif {
+	vg := video2gif{
+		order:    "0",
+		orderInt: 0,
+		in:       in{},
+		out:      out{},
+	}
+	return vg
 }
 
 /*

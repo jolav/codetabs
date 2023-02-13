@@ -39,14 +39,14 @@ type geoData struct {
 	Longitude    float32 `json:"longitude"`
 }
 
-func (g *geoip) Router(w http.ResponseWriter, r *http.Request) {
+func Router(w http.ResponseWriter, r *http.Request) {
 	params := strings.Split(strings.ToLower(r.URL.Path), "/")
 	path := params[1:len(params)]
 	if path[len(path)-1] == "" { // remove last empty slot after /
 		path = path[:len(path)-1]
 	}
 	//log.Printf("Going ....%s %s %d", path, r.Method, len(path))
-	if len(path) < 2 || path[0] != "v1" {
+	if len(path) < 3 || path[0] != "v1" {
 		u.BadRequest(w, r)
 		return
 	}
@@ -55,6 +55,7 @@ func (g *geoip) Router(w http.ResponseWriter, r *http.Request) {
 		u.BadRequest(w, r)
 		return
 	}
+	g := newGeoLocation(false)
 	r.ParseForm()
 	target := strings.ToLower(r.Form.Get("q"))
 	if target == "" {
@@ -64,7 +65,7 @@ func (g *geoip) Router(w http.ResponseWriter, r *http.Request) {
 }
 
 func (g *geoip) doGeoRequest(w http.ResponseWriter, format, target string) {
-	g.cleanGeoData()
+	//g.cleanGeoData()
 	addr, err := net.LookupIP(target)
 	if err != nil {
 		msg := fmt.Sprintf("%s is a unknown host, not a valid IP or hostname", target)
@@ -84,13 +85,13 @@ func (g *geoip) getGeoDataFromDB() {
 	db, err := ip2location.OpenDB(g.config.dbFilePath)
 	if err != nil {
 		log.Println("ERROR GEOIP 1 =", err)
-		g.cleanGeoData()
+		//g.cleanGeoData()
 		return
 	}
 	results, err := db.Get_all(g.geoData.Ip)
 	if err != nil {
 		log.Println("ERROR GEOIP 2 =", err)
-		g.cleanGeoData()
+		//g.cleanGeoData()
 		return
 	}
 	//u.PrettyPrintStruct(results)
@@ -109,7 +110,7 @@ func (g *geoip) cleanGeoData() {
 	g.geoData = geoData{}
 }
 
-func NewGeoLocation(test bool) geoip {
+func newGeoLocation(test bool) geoip {
 	g := geoip{
 		config: config{
 			dbFilePath: DB_FILE_PATH,
