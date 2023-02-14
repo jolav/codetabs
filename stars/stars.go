@@ -62,6 +62,10 @@ func Router(w http.ResponseWriter, r *http.Request) {
 	s.cleanStarsStruct()
 	r.ParseForm()
 	data := r.Form.Get("repo")
+	if data == "" {
+		u.BadRequest(w, r)
+		return
+	}
 	s.source = data[0:2]
 	s.repo = data[2:len(data)]
 	aux := strings.Split(s.repo, "/")

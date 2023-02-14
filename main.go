@@ -26,7 +26,7 @@ import (
 	"github.com/jolav/codetabs/weather"
 )
 
-var version = "0.8.2"
+var version = "0.8.3"
 var when = "undefined"
 
 type Conf struct {

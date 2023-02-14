@@ -3,6 +3,7 @@
 package _utils
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -11,21 +12,29 @@ import (
 )
 
 // AddHit ...
-func AddHit(w http.ResponseWriter, r *http.Request,
-	service, mode string, hLog *log.Logger) {
+func AddHit(w http.ResponseWriter, r *http.Request, service, mode string,
+	hLog *log.Logger) {
 	ip := GetIP(r)
 	sv := strings.ToUpper(service)
-	host := r.Header.Get("Origin")
+	host := r.Header.Get("Host")
 	if host == "" {
-		host = " ? "
+		host = r.Header.Get("Origin")
+		if host == "" {
+			host = r.Header.Get("Referer")
+			if host == "" {
+				host = "???"
+			}
+		}
 	}
-	quest := r.Form.Get("quest")
+
+	askingFor := strings.Trim(fmt.Sprint(r.URL), string(r.URL.Path))
+
 	if mode == "production" {
-		hLog.Println(ip, sv, host, quest)
+		hLog.Println(ip, sv, host, askingFor)
 		hitUrl := "http://localhost:3970/addHit/" + service
 		saveHit(w, hitUrl)
 	} else {
-		log.Println(ip, sv, host, quest)
+		log.Println(ip, sv, host, askingFor)
 	}
 }
 
