@@ -34,6 +34,20 @@
     text-align: center;
   }
 
+  @font-face {
+    font-family: 'Varela';
+    font-style: normal;
+    font-weight: 400;
+    src: url('_public/fonts/Varela.ttf');
+  }
+
+  @font-face {
+    font-family: 'Titillium';
+    font-style: normal;
+    font-weight: 400;
+    src: url('_public/fonts/TitilliumWeb.ttf');
+  }
+
 </style>
 
 <footer class="footer">
@@ -48,14 +62,15 @@
   </span>
   <br>
   <span>You can submit your questions, feedbacks, and feature requests opening a issue on github or
-    <a href=mailto:hi@codetabs.com>
-      <strong>emailing us</strong>
-    </a>
+    <strong>
+      <a class="m" href="#">0f67664f6c606b6a7b6e6d7c216c6062Of989968bbc95bb968a888c9caf968080
+      </a>
+    </strong>
   </span>
   <br>
   <img class="logo" style="max-height:32px; vertical-align:middle" alt="" src="/_public/icons/ct/jolav32.png">
   Jolav
-  &copy; 2023 -
+  &copy; <span id="year"></span> -
   <strong>
     <a href="https://github.com/jolav/codetabs">View on GitHub</a>
   </strong>
@@ -63,3 +78,37 @@
 </footer>
 <br>
 <!-- End -->
+
+<script>
+  function getValue(oldValue) {
+    var value = "";
+    var keyInHex = oldValue.substr(0, 2);
+    var key = parseInt(keyInHex, 16);
+    for (var n = 2; n < oldValue.length; n += 2) {
+      var charInHex = oldValue.substr(n, 2)
+      var char = parseInt(charInHex, 16);
+      var output = char ^ key;
+      value += String.fromCharCode(output);
+    }
+    return value;
+  }
+
+  const ms = document.getElementsByClassName("m");
+
+  for (let i = 0; i < ms.length; i++) {
+    const el = ms[i]
+    const oldValue = el.innerHTML;
+    const aux = oldValue.split("O")[0]
+    const value = getValue(aux);
+    if (i === 0) {
+      el.textContent = "emailing us"
+    }
+    if (i === 1) {
+      el.textContent = value;
+    }
+    el.href = 'mailto:' + value;
+  }
+
+  const year = document.getElementById("year")
+  year.textContent = new Date().getFullYear()
+</script>

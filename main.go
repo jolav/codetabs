@@ -26,7 +26,7 @@ import (
 	"github.com/jolav/codetabs/weather"
 )
 
-var version = "0.8.3"
+var version = "0.8.4"
 var when = "undefined"
 
 type Conf struct {
@@ -34,9 +34,11 @@ type Conf struct {
 	Port          int
 	ErrorsLogFile string
 	HitsLogFile   string
+	BannedLogFile string
 	DevHosts      []string
 	Services      []string
 	hitsLog       *log.Logger
+	bannedLog     *log.Logger
 }
 
 func main() {
@@ -68,6 +70,10 @@ func main() {
 	}
 	defer mylog.Close()
 
+	// Custom Ban Log File
+	c.BannedLogFile = usernow.HomeDir + c.BannedLogFile
+	c.bannedLog = u.NewBanFile(c.BannedLogFile)
+
 	// Custom Hits Log File
 	c.HitsLogFile = usernow.HomeDir + c.HitsLogFile
 	c.hitsLog = u.NewHitsFile(c.HitsLogFile)
@@ -86,6 +92,7 @@ func main() {
 	mux.HandleFunc("/v1/video2gif/", mw(video2gif.Router, "video2gif", c))
 	mux.HandleFunc("/v1/stars/", mw(stars.Router, "stars", c))
 	mux.HandleFunc("/v1/proxy/", mw(proxy.Router, "proxy", c))
+	mux.HandleFunc("/v1/tmp/", mw(proxy.Router, "proxy", c))
 	mux.HandleFunc("/v1/loc/", mw(loc.Router, "loc", c))
 
 	mux.HandleFunc("/", u.BadRequest)
@@ -104,14 +111,14 @@ func main() {
 
 func mw(next http.HandlerFunc, service string, c Conf) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		go u.AddHit(w, r, service, c.Mode, c.hitsLog)
 		if service == "proxy" {
 			if isBanned(r) {
 				http.Error(w, "Unauthorized", http.StatusUnauthorized)
+				go u.AddBanned(w, r, service, c.Mode, c.bannedLog)
 				return
 			}
 		}
-
+		go u.AddHit(w, r, service, c.Mode, c.hitsLog)
 		next.ServeHTTP(w, r)
 	})
 }

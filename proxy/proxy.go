@@ -71,6 +71,11 @@ func (p *proxy) doProxyRequest(w http.ResponseWriter, r *http.Request) {
 
 	if strings.Contains(contentType, "application/xml") {
 		u.SendXMLToClient(w, data, 200)
+		return
+	}
+
+	if strings.Contains(contentType, "text/") {
+		w.Header().Add("Content-type", "text/plain")
 	}
 
 	reader := bufio.NewReader(resp.Body)
