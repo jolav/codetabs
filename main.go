@@ -26,7 +26,7 @@ import (
 	"github.com/jolav/codetabs/weather"
 )
 
-var version = "0.8.4"
+var version = "0.8.5"
 var when = "undefined"
 
 type Conf struct {
@@ -82,6 +82,7 @@ func main() {
 	cleanTmpFolder()
 
 	go alexa.OnceADayTask()
+	index := loc.NewIndex(false)
 
 	mux := http.NewServeMux()
 
@@ -93,7 +94,7 @@ func main() {
 	mux.HandleFunc("/v1/stars/", mw(stars.Router, "stars", c))
 	mux.HandleFunc("/v1/proxy/", mw(proxy.Router, "proxy", c))
 	mux.HandleFunc("/v1/tmp/", mw(proxy.Router, "proxy", c))
-	mux.HandleFunc("/v1/loc/", mw(loc.Router, "loc", c))
+	mux.HandleFunc("/v1/loc/", mw(index.Router, "loc", c))
 
 	mux.HandleFunc("/", u.BadRequest)
 

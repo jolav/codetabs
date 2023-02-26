@@ -87,7 +87,7 @@ body {
   -ms-user-select: none;
   /* IE 10+ */
   user-select: none;
-  background: #eee url('/_public/images/back.png') no-repeat fixed center;
+  background: #eee url('/_public/images/back.webp') no-repeat fixed center;
   background-size: cover;
   /*height: 100vh;*/
 }
@@ -108,7 +108,7 @@ body {
 }
 
 h1 {
-  font-family: 'Titillium Web', 'arial', sans-serif;
+  font-family: 'arial', sans-serif;
   font-weight: bold;
   margin: 0px;
   padding: 0px;

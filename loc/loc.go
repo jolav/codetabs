@@ -22,9 +22,12 @@ const (
 	MAX_SIZE = 500
 )
 
+type index struct {
+	order    string
+	orderInt int
+}
+
 type loc struct {
-	order        string
-	orderInt     int
 	repo         string
 	branch       string
 	source       string
@@ -59,7 +62,7 @@ type sourceReader interface {
 	exceedsSize(http.ResponseWriter, *loc) bool
 }
 
-func Router(w http.ResponseWriter, r *http.Request) {
+func (i *index) Router(w http.ResponseWriter, r *http.Request) {
 	params := strings.Split(strings.ToLower(r.URL.Path), "/")
 	path := params[1:len(params)]
 	if path[len(path)-1] == "" { // remove last empty slot after /
@@ -74,9 +77,9 @@ func Router(w http.ResponseWriter, r *http.Request) {
 	l := newLoc(false)
 
 	if r.Method == "POST" {
-		l.orderInt++
-		l.order = strconv.Itoa(l.orderInt)
-		l.doLocUploadRequest(w, r)
+		i.orderInt++
+		i.order = strconv.Itoa(i.orderInt)
+		l.doLocUploadRequest(w, r, i.order)
 		return
 	}
 
@@ -108,12 +111,12 @@ func Router(w http.ResponseWriter, r *http.Request) {
 	case "gitlab":
 		l.sr = gitlab{}
 	}
-	l.orderInt++
-	l.order = strconv.Itoa(l.orderInt)
-	l.doLocRepoRequest(w, r)
+	i.orderInt++
+	i.order = strconv.Itoa(i.orderInt)
+	l.doLocRepoRequest(w, r, i.order)
 }
 
-func (l *loc) doLocRepoRequest(w http.ResponseWriter, r *http.Request) {
+func (l *loc) doLocRepoRequest(w http.ResponseWriter, r *http.Request, order string) {
 
 	// MOCK
 	/*
@@ -151,7 +154,7 @@ func (l *loc) doLocRepoRequest(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	folder := "_tmp/loc/" + l.order
+	folder := "_tmp/loc/" + order
 	destroyTemporalDir := []string{"rm", "-rf", folder}
 	createTemporalDir := []string{"mkdir", folder}
 
@@ -245,8 +248,8 @@ func (l *loc) countLines(repoPath string) (info []byte, err error) {
 	return info, err
 }
 
-func (l *loc) doLocUploadRequest(w http.ResponseWriter, r *http.Request) {
-	folder := "_tmp/loc/" + l.order
+func (l *loc) doLocUploadRequest(w http.ResponseWriter, r *http.Request, order string) {
+	folder := "_tmp/loc/" + order
 	destroyTemporalDir := []string{"rm", "-rf", folder}
 	createTemporalDir := []string{"mkdir", folder}
 	err := u.GenericCommand(createTemporalDir)
@@ -344,8 +347,6 @@ func (l *loc) storeData() {
 
 func newLoc(test bool) loc {
 	l := loc{
-		order:        "0",
-		orderInt:     0,
 		repo:         "",
 		branch:       "",
 		ignored:      []string{},
@@ -356,4 +357,12 @@ func newLoc(test bool) loc {
 		languagesOUT: []languageOUT{},
 	}
 	return l
+}
+
+func NewIndex(test bool) index {
+	i := index{
+		order:    "0",
+		orderInt: 0,
+	}
+	return i
 }
