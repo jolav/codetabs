@@ -7,8 +7,6 @@ import (
 	"fmt"
 	"log"
 	"time"
-
-	u "github.com/jolav/codetabs/_utils"
 )
 
 type dataStars struct {
@@ -52,7 +50,7 @@ func (d dataStars) LoadDataStars() {
 	if err != nil {
 		log.Printf("ERROR LoadConfig %s\n", err)
 	}
-	u.PrettyPrintStruct(data)
+	//u.PrettyPrintStruct(data)
 }
 
 func NewDataStars() dataStars {

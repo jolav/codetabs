@@ -7,8 +7,6 @@ import (
 	"fmt"
 	"log"
 	"time"
-
-	u "github.com/jolav/codetabs/_utils"
 )
 
 type dataLoc struct {
@@ -54,7 +52,7 @@ func (d dataLoc) LoadDataLoc() {
 	if err != nil {
 		log.Printf("ERROR LoadConfig %s\n", err)
 	}
-	u.PrettyPrintStruct(languagesOUT)
+	//u.PrettyPrintStruct(languagesOUT)
 }
 
 func NewDataLoc() dataLoc {
