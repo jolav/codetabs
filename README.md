@@ -1,11 +1,11 @@
 
-![Version](https://img.shields.io/badge/version-0.8.5-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.9.0-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-**version 0.8.5**
+**version 0.9.0**
 
 1. [Count LOC (lines of code) online from github/gitlab repos or zipped uploaded folder](#count-loc-online)  
 2. [CORS proxy](#cors-proxy)  
@@ -15,6 +15,7 @@
 6. [HTTP Headers](#headers)  
 7. [API weather temp](#weather)  
 8. [Video To Gif](#video2gif)
+9. [Random Data API](#random-data-api)
 
 
 [To Do List](#to-do)
@@ -230,6 +231,43 @@ Scale : Set width:height , if one parameter is -1 it will automatically determin
 > - 480:480 set width = 480 and height = 480  
 > - 380:-1 set width = 380 and height automatically preserving the aspect ratio  
 > - -1:320 set height = 320 and width automatically preserving the aspect ratio  
+
+<hr>
+
+![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/random48.png?raw=true) 
+
+## **RANDOM DATA API**
+
+### **[Demo and Docs online](https://codetabs.com/random-data/random-data.html)**
+
+- Api to generate random data
+- Only suppports GET request.
+- Limit : 10 request per seconds. Once reached subsequent requests will result in error 429 (too many requests) until your quota is cleared.  
+
+
+### **Endpoints**  
+
+- Get Random Integers
+```
+http Request :
+GET https://api.codetabs.com/v1/random/integer?range=X-Y
+```  
+
+Examples
+Get random number between 1-10 both inclusive  
+https://api.codetabs.com/v1/random/integer?min=1&max=10  
+You can also specify how many times you want the result with the parameter times.
+Default is 1 and there is no need to specify it. Max times = 10.000  
+https://api.codetabs.com/v1/random/integer?min=1&max=10&times=50
+
+- List with randomized order  
+```
+http Request :
+GET https://api.codetabs.com/v1/random/list?len=X
+``` 
+Max list elements : 10.000  
+Example: Get random order numbers for a list of 1000 elements  
+https://api.codetabs.com/v1/random/list?len=1000 
 
 <hr>
 

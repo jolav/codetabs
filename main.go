@@ -8,6 +8,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"math/rand"
 	"net/http"
 	"os"
 	"os/user"
@@ -20,13 +21,14 @@ import (
 	"github.com/jolav/codetabs/headers"
 	"github.com/jolav/codetabs/loc"
 	"github.com/jolav/codetabs/proxy"
+	"github.com/jolav/codetabs/random"
 	"github.com/jolav/codetabs/stars"
 	"github.com/jolav/codetabs/store"
 	"github.com/jolav/codetabs/video2gif"
 	"github.com/jolav/codetabs/weather"
 )
 
-var version = "0.8.5"
+var version = "0.9.0"
 var when = "undefined"
 
 type Conf struct {
@@ -42,6 +44,8 @@ type Conf struct {
 }
 
 func main() {
+
+	rand.Seed(time.Now().UnixNano())
 	checkFlags()
 
 	var c Conf
@@ -91,6 +95,7 @@ func main() {
 	mux.HandleFunc("/v1/headers/", mw(headers.Router, "headers", c))
 	mux.HandleFunc("/v1/weather/", mw(weather.Router, "weather", c))
 	mux.HandleFunc("/v1/video2gif/", mw(video2gif.Router, "video2gif", c))
+	mux.HandleFunc("/v1/random/", mw(random.Router, "random", c))
 	mux.HandleFunc("/v1/stars/", mw(stars.Router, "stars", c))
 	mux.HandleFunc("/v1/proxy/", mw(proxy.Router, "proxy", c))
 	mux.HandleFunc("/v1/tmp/", mw(proxy.Router, "proxy", c))

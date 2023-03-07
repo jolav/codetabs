@@ -26,6 +26,16 @@ func SliceContainsString(str string, slice []string) bool {
 	return false
 }
 
+// SliceContainsInteger ... returns true/false
+func SliceContainsInteger(num int, slice []int) bool {
+	for _, v := range slice {
+		if v == num {
+			return true
+		}
+	}
+	return false
+}
+
 // GenericCommandSH ...
 func GenericCommandSH(comm string) (chunk []byte, err error) {
 	chunk, err = exec.Command("sh", "-c", comm).CombinedOutput()
@@ -33,6 +43,16 @@ func GenericCommandSH(comm string) (chunk []byte, err error) {
 		return nil, err
 	}
 	return chunk, err
+}
+
+// RemoveElementFromSliceString
+func RemoveElementFromSliceString(index int, slice []string) []string {
+	return append(slice[:index], slice[index+1:]...)
+}
+
+// RemoveElementFromSliceInt
+func RemoveElementFromSliceInt(index int, slice []int) []int {
+	return append(slice[:index], slice[index+1:]...)
 }
 
 // GenericCommand ...

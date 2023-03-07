@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <title>Random Data API</title>
+
+  <!--Head -->
+  <!--#include file="/_public/templates/head.html" -->
+
+</head>
+
+<body>
+
+  <header class="header">
+    <h1 class="small">
+      <img class="verticalImage" alt="Logo" src="/_public/sprites/random32.png">
+      <span> Random Data</span>
+    </h1>
+    <h1 class="big">
+      <img class="verticalImage" alt="Logo" src="/_public/icons/random48.png">
+      <span> Random Data</span>
+    </h1>
+  </header>
+
+  <h2 class="centerText deprecated" style="border: 5px solid #ff6565;
+  background-color: #ff6565;">NEW</h2>
+
+  <!-- Version -->
+  <!--#include file="/_public/templates/version.html" -->
+
+  <section class="description">
+    <div class="centerText">
+      <strong>Description</strong>
+    </div>
+    <div class="leftText">
+      <span>
+        - Api to generate random data
+        <br>
+      </span>
+      <span>
+        - Only suppports GET request.
+      </span>
+      <br>
+      <span>
+        -
+        <span class="red">Limit</span> : 10 request per seconds. Once reached subsequent requests will result in
+        error 429 (too many requests)
+        until your quota is cleared.
+        <br>
+      </span>
+    </div>
+  </section>
+
+  <section class="endpoint">
+
+    <div class="centerText">
+      <strong>Endpoint - Get Random Integers</strong>
+    </div>
+    <div class="leftText">
+      <strong>http Request : </strong>
+      <br>
+      <code class="red">
+    GET https://api.codetabs.com/v1/random/integer?range=X-Y 
+      </code>
+      <br>
+      <strong>Examples</strong>
+      <br>Get random number between 1-10 both inclusive
+      <br>
+      <span>
+        <code>
+  <a href="https://api.codetabs.com/v1/random/integer?min=1&max=10"> https://api.codetabs.com/v1/random/integer?min=1&max=10</a> 
+        </code>
+      </span><br>
+      <span>You can also specify how many times you want the result with the parameter <code>times</code>.<br>
+        Default is 1 and there is no need to specify it. Max times = 10.000<br>
+        <code>
+  <a href="https://api.codetabs.com/v1/random/integer?min=1&max=10&times=50"> https://api.codetabs.com/v1/random/integer?min=1&max=10&amptimes=50></a> 
+        </code>
+      </span>
+    </div>
+
+  </section>
+
+  <section class="endpoint">
+
+    <div class="centerText">
+      <strong>Endpoint - List with randomized order</strong>
+    </div>
+    <div class="leftText">
+      <strong>http Request : </strong>
+      <br>
+      <code class="red">
+    GET https://api.codetabs.com/v1/random/list?len=X 
+      </code>
+      <br>
+      Max list elements : 10.000<br>
+      <strong>Examples</strong>
+      <br>Get random order numbers for a list of 1000 elements
+      <br>
+      <span>
+        <code>
+  <a href="https://api.codetabs.com/v1/random/list?len=1000"> https://api.codetabs.com/v1/random/list?len=1000</a> 
+        </code>
+      </span><br>
+    </div>
+
+  </section>
+
+  <br>
+
+  <!-- Footer -->
+  <!--#include file="/_public/templates/footer.html" -->
+
+  <!-- CSS -->
+  <link rel="stylesheet" type="text/css" href="./../apis.css">
+
+  <script type='text/javascript' src='./../mode.js'></script>
+  <script async src="./video2gif.js"></script>
+
+</body>
+
+</html>
