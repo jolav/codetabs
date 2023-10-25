@@ -19,11 +19,14 @@ import (
 	u "github.com/jolav/codetabs/_utils"
 )
 
-type video2gif struct {
+type index struct {
 	order    string
 	orderInt int
-	in       in
-	out      out
+}
+
+type video2gif struct {
+	in  in
+	out out
 }
 
 type out struct {
@@ -40,7 +43,7 @@ type in struct {
 	scale string
 }
 
-func Router(w http.ResponseWriter, r *http.Request) {
+func (i *index) Router(w http.ResponseWriter, r *http.Request) {
 	params := strings.Split(strings.ToLower(r.URL.Path), "/")
 	path := params[1:len(params)]
 	if path[len(path)-1] == "" { // remove last empty slot after /
@@ -54,9 +57,9 @@ func Router(w http.ResponseWriter, r *http.Request) {
 	vg := newVideo2Gif(false)
 	r.ParseForm()
 	if r.Method == "POST" {
-		vg.orderInt++
-		vg.order = strconv.Itoa(vg.orderInt)
-		vg.doVideo2GifRequest(w, r, vg.order)
+		i.orderInt++
+		i.order = strconv.Itoa(i.orderInt)
+		vg.doVideo2GifRequest(w, r, i.order)
 		return
 	}
 	u.BadRequest(w, r)
@@ -251,12 +254,18 @@ func rescale(big, small int) (big2, small2 int) {
 
 func newVideo2Gif(test bool) video2gif {
 	vg := video2gif{
-		order:    "0",
-		orderInt: 0,
-		in:       in{},
-		out:      out{},
+		in:  in{},
+		out: out{},
 	}
 	return vg
+}
+
+func NewIndex(test bool) index {
+	i := index{
+		order:    "0",
+		orderInt: 0,
+	}
+	return i
 }
 
 /*
