@@ -1,11 +1,11 @@
 
-![Version](https://img.shields.io/badge/version-0.9.1-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.9.2-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-**version 0.9.1**
+**version 0.9.2**
 
 1. [Count LOC (lines of code) online from github/gitlab repos or zipped uploaded folder](#count-loc-online)  
 2. [CORS proxy](#cors-proxy)  
@@ -173,7 +173,9 @@ Response JSON :
 
 ## **ALEXA**
 
-Tool for know Alexa Ranking Top 1 million about a website.  
+### **Update Feb-23 : Alexa Rank is gone. This file is deprecated and is not being updated anymore.** **This file was last updated on February 1, 2023.**
+  
+**Tool for know Alexa Ranking Top 1 million about a website**  
 
 ### **[Get Alexa Ranking Online](https://codetabs.com/alexa/alexa-ranking.html)**
 

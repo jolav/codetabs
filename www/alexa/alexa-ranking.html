@@ -21,80 +21,85 @@
       <img class="verticalImage" alt="Logo" src="/_public/icons/alexa48.png">
       <span> Alexa Ranking</span>
     </h1>
-  </header>
 
-  <section class="form" id="getForm">
-    <form class="getDomain" onsubmit="return false">
-      <input type="text" required id="domainName" placeholder="domain.tld">
-      <span id="getDomain" class="action">Get Alexa</span>
-    </form>
-  </section>
+    <h2 class="centerText deprecated" style="border: 5px solid #ff6565;
+    background-color: #ff6565;">Update Feb-23 : Alexa Rank is gone<br>.
+      This file is deprecated and is not being updated anymore.<br>
+      This file was last updated on February 1, 2023.</h2>
 
-  <div class="rank centerText">
-    <div id="rankResult">---</div>
-    <div id="rankResult2"></div>
-  </div>
+    <section class="form" id="getForm">
+      <form class="getDomain" onsubmit="return false">
+        <input type="text" required id="domainName" placeholder="domain.tld">
+        <span id="getDomain" class="action">Get Alexa</span>
+      </form>
+    </section>
 
-  <!-- Version -->
-  <!--#include file="/_public/templates/version.html" -->
-
-  <section class="description">
-    <div class="centerText">
-      <strong>Description</strong>
+    <div class="rank centerText">
+      <div id="rankResult">---</div>
+      <div id="rankResult2"></div>
     </div>
-    <div class="leftText">
-      <span>
-        - Tool for know Alexa Ranking Top 1 million about a website.
-      </span>
-      <br>
-      <span>
-        -
-        <span class="red">Limit</span> : 5 requests per second. Once reached subsequent requests will result in error
-        429 (too many requests)
-        until your quota is cleared.
+
+    <!-- Version -->
+    <!--#include file="/_public/templates/version.html" -->
+
+    <section class="description">
+      <div class="centerText">
+        <strong>Description</strong>
+      </div>
+      <div class="leftText">
+        <span>
+          - Tool for know Alexa Ranking Top 1 million about a website.
+        </span>
         <br>
-      </span>
-    </div>
-  </section>
+        <span>
+          -
+          <span class="red">Limit</span> : 5 requests per second. Once reached subsequent requests will result in
+          error
+          429 (too many requests)
+          until your quota is cleared.
+          <br>
+        </span>
+      </div>
+    </section>
 
-  <section class="endpoint">
-    <div class="centerText">
-      <strong>Endpoint - Get Alexa Ranking from a website</strong>
-    </div>
-    <div class="leftText">
-      <strong>http Request : </strong>
-      <code class="red">
+    <section class="endpoint">
+      <div class="centerText">
+        <strong>Endpoint - Get Alexa Ranking from a website</strong>
+      </div>
+      <div class="leftText">
+        <strong>http Request : </strong>
+        <code class="red">
           GET https://api.codetabs.com/v1/alexa?web=domain.tld 
       </code>
-      <br>
-      <strong>examples : </strong>
-      <br>
-      <code>
+        <br>
+        <strong>examples : </strong>
+        <br>
+        <code>
           <a href="https://api.codetabs.com/v1/alexa?web=github.com"> https://api.codetabs.com/v1/alexa?web=github.com</a> 
           <br>
           <a href="https://api.codetabs.com/v1/alexa?web=expressjs.com"> https://api.codetabs.com/v1/alexa?web=expressjs.com</a> 
           </code>
-      <br>
-      <strong>response : </strong>
-      <pre class="marginLeft">
+        <br>
+        <strong>response : </strong>
+        <pre class="marginLeft">
   {
     "domain": "github.com",
     "rank"  : "63"
   }       
           </pre>
-    </div>
-  </section>
+      </div>
+    </section>
 
-  <br>
+    <br>
 
-  <!-- Footer -->
-  <!--#include file="/_public/templates/footer.html" -->
+    <!-- Footer -->
+    <!--#include file="/_public/templates/footer.html" -->
 
-  <!-- CSS -->
-  <link rel="stylesheet" type="text/css" href="./../apis.css">
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="./../apis.css">
 
-  <script type='text/javascript' src='./../mode.js'></script>
-  <script async src="./alexa.js"></script>
+    <script type='text/javascript' src='./../mode.js'></script>
+    <script async src="./alexa.js"></script>
 
 </body>
 

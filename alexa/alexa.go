@@ -10,7 +10,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"time"
+	//"time"
 
 	u "github.com/jolav/codetabs/_utils"
 )
@@ -114,7 +114,7 @@ func (a *alexa) loadDataInMemory() {
 
 func OnceADayTask() {
 	a = newAlexa(false)
-	t := time.Now()
+	/*t := time.Now()
 	n := time.Date(t.Year(), t.Month(), t.Day(), 3, 10, 10, 0, t.Location())
 	d := n.Sub(t)
 	if d < 0 {
@@ -125,10 +125,11 @@ func OnceADayTask() {
 		time.Sleep(d)
 		d = 24 * time.Hour
 		a.downloadDataFile()
-	}
-}
+	}*/
+	a.loadDataInMemory()
+} 
 
-func (a *alexa) downloadDataFile() {
+/*func (a *alexa) downloadDataFile() {
 	a.deleteZip()
 	err := u.DownloadFile(a.config.ZipFilePath, a.config.DataFileURL)
 	if err != nil {
@@ -160,7 +161,7 @@ func (a *alexa) unzipCsv() {
 	if err != nil {
 		log.Printf("ERROR unzipping data %s\n", err)
 	}
-}
+}*/
 
 func newAlexa(test bool) alexa {
 	a := alexa{
