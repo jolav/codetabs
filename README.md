@@ -22,7 +22,7 @@
 
 In order to run this program you need installed
 
-`apt install curl git p7zip zip unzip ffmepg gifsicle`
+`apt install curl git p7zip zip unzip ffmpeg gifsicle`
 
 <hr>
 
