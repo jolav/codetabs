@@ -6,7 +6,7 @@
   <title>Count LOC online</title>
 
   <!--Head -->
-  <!--#include file="/_public/templates/head.html" -->
+  <span id="head"></span>
 
 </head>
 
@@ -63,7 +63,7 @@
   </div>
 
   <!-- Version -->
-  <!--#include file="/_public/templates/version.html" -->
+  <span id="version"></span>
 
   <div class="news">
     <span class="centerText update">UPDATE:<br>
@@ -181,17 +181,20 @@
   <br>
 
   <!-- Footer -->
-  <!--#include file="/_public/templates/footerLoc.html" -->
+  <span id="footerLoc"></span>
 
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="./count.css">
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"
-    integrity="sha512-vBmx0N/uQOXznm/Nbkp7h0P1RfLSj0HQrFSzV8m7rOGyj30fYAOKHYvCNez+yM8IrfnW0TCodDEjRqf6fodf/Q=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-  <script type='text/javascript' src='./../mode.js'></script>
-  <script async src="./count.js"></script>
+  <script type="module">
+    import { head, footerLoc, version, data } from "./../templates.js"
+    document.getElementById("head").innerHTML = head
+    document.getElementById("version").innerHTML = version
+    document.getElementById("footerLoc").innerHTML = footerLoc
+    data.init()
+    import { init } from './count.js';
+    init();
+  </script>
 
 </body>
 

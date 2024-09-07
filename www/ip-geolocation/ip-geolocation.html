@@ -6,7 +6,7 @@
   <title>IP GeoLocation</title>
 
   <!--Head -->
-  <!--#include file="/_public/templates/head.html" -->
+  <span id="head"></span>
 
 </head>
 
@@ -69,7 +69,7 @@
   <br>
 
   <!-- Version -->
-  <!--#include file="/_public/templates/version.html" -->
+  <span id="version"></span>
 
   <section class="description">
     <div class="centerText">
@@ -150,8 +150,6 @@
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="./ip-geolocation.css">
 
-  <script defer src="./ipGeolocation.js"></script>
-
   <script defer src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
     integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
     crossorigin=""></script>
@@ -161,14 +159,20 @@
     crossorigin="" />
 
   <!-- Footer -->
-  <!--#include file="/_public/templates/footerIP.html" -->
+  <span id="footerIP"></span>
 
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="./ip-geolocation.css">
 
-  <script type='text/javascript' src='./../mode.js'></script>
-  <script async src="./ipGeolocation.js"></script>
-
+  <script type="module">
+    import { head, footerIP, version, data } from "./../templates.js"
+    document.getElementById("head").innerHTML = head
+    document.getElementById("version").innerHTML = version
+    document.getElementById("footerIP").innerHTML = footerIP
+    data.init()
+    import { init } from './ipGeolocation.js';
+    init();
+  </script>
 </body>
 
 </html>

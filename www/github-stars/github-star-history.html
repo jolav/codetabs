@@ -6,7 +6,7 @@
   <title>GitHub/Gitlab Star History</title>
 
   <!--Head -->
-  <!--#include file="/_public/templates/head.html" -->
+  <span id="head"></span>
 
 </head>
 
@@ -66,7 +66,7 @@
   <br>
 
   <!-- Version -->
-  <!--#include file="/_public/templates/version.html" -->
+  <span id="version"></span>
 
   <section class="description">
     <div class="centerText">
@@ -95,16 +95,22 @@
   <br>
 
   <!-- Footer -->
-  <!--#include file="/_public/templates/footer.html" -->
+  <span id="footer"></span>
 
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="./stars.css">
 
-  <!-- 2.6.0 -->
   <script async src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
 
-  <script type='text/javascript' src='./../mode.js'></script>
-  <script async src="./stars.js"></script>
+  <script type="module">
+    import { head, footer, version, data } from "./../templates.js"
+    document.getElementById("head").innerHTML = head
+    document.getElementById("version").innerHTML = version
+    document.getElementById("footer").innerHTML = footer
+    data.init()
+    import { init } from './stars.js';
+    init();
+  </script>
 
 </body>
 

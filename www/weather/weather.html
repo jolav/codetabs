@@ -6,7 +6,7 @@
   <title>Weather docs</title>
 
   <!--Head -->
-  <!--#include file="/_public/templates/head.html" -->
+  <span id="head"></span>
 
 </head>
 
@@ -24,7 +24,7 @@
   </header>
 
   <!-- Version -->
-  <!--#include file="/_public/templates/version.html" -->
+  <span id="version"></span>
 
   <section class="description">
     <div class="centerText">
@@ -129,10 +129,18 @@
   <br>
 
   <!-- Footer -->
-  <!--#include file="/_public/templates/footer.html" -->
+  <span id="footer"></span>
 
   <!-- CSS -->
   <link rel="stylesheet " type="text/css " href="./../apis.css ">
+
+  <script type="module">
+    import { head, footer, version, data } from "./../templates.js"
+    document.getElementById("head").innerHTML = head
+    document.getElementById("version").innerHTML = version
+    document.getElementById("footer").innerHTML = footer
+    data.init()
+  </script>
 
 </body>
 

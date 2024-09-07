@@ -1,187 +1,187 @@
-/* global Chart */
+/* */
 
-const loc = (function () {
-  'use strict';
-  /* code here */
+//import chartJs from 'https://cdn.jsdelivr.net/npm/chart.js@2.9.3/+esm';
+import chartJs from "./../_public/chart.js";
 
-  let urlBase = 'https://api.codetabs.com/v1/loc/';
-  if (window.mode === "dev") {
-    urlBase = 'http://localhost:3000/v1/loc/';
+let urlBase = 'https://api.codetabs.com/v1/loc/';
+const where = window.location.hostname;
+if (where === "localhost" || where === "127.0.0.1") {
+  urlBase = 'http://localhost:3000/v1/loc/';
+}
+
+const ctx = document.getElementById('myPie');
+let myChart;
+let repo = '';
+let addComments = false;
+let jsonData = [];
+
+function init() {
+  console.log('Init Count Loc');
+  document.getElementById('addRepo').addEventListener('click', addRepo);
+  document.getElementById('upload').addEventListener('click', upload);
+  document.getElementById("toggle").addEventListener('click', toggle);
+  document.getElementById("toggle").style.display = "none";
+  document.getElementsByClassName('pie')[0].style.display = 'none';
+  hideLoader();
+}
+
+function addRepo(e) {
+  repo = document.getElementById('repoName').value;
+  const select = document.getElementsByName("source")[0];
+  const source = select.options[select.selectedIndex].value;
+  const branch = document.getElementById("branch").value;
+  const ignored = document.getElementById("ignored").value;
+  //console.log('branch=', branch, "  ignored=", ignored);
+  if (repo === '') {
+    alert('user/repo cannot be empty');
+    return;
   }
-
-  const ctx = document.getElementById('myPie');
-  let myChart;
-  let repo = '';
-  let addComments = false;
-  let jsonData = [];
-
-  function init() {
-    console.log('Init Count Loc');
-    document.getElementById('addRepo').addEventListener('click', addRepo);
-    document.getElementById('upload').addEventListener('click', upload);
-    document.getElementById("toggle").addEventListener('click', toggle);
-    document.getElementById("toggle").style.display = "none";
-    document.getElementsByClassName('pie')[0].style.display = 'none';
-    hideLoader();
+  showLoader();
+  let urlData = urlBase + '?' + source + '=' + repo;
+  if (branch) {
+    urlData += "&branch=" + branch;
   }
-
-  function addRepo(e) {
-    repo = document.getElementById('repoName').value;
-    const select = document.getElementsByName("source")[0];
-    const source = select.options[select.selectedIndex].value;
-    const branch = document.getElementById("branch").value;
-    const ignored = document.getElementById("ignored").value;
-    //console.log('branch=', branch, "  ignored=", ignored);
-    if (repo === '') {
-      alert('user/repo cannot be empty');
-      return;
-    }
-    showLoader();
-    let urlData = urlBase + '?' + source + '=' + repo;
-    if (branch) {
-      urlData += "&branch=" + branch;
-    }
-    if (ignored) {
-      urlData += "&ignored=" + ignored;
-    }
-    console.log(urlData);
-    // console.log('1', myChart)
-    if (myChart !== undefined) {
-      myChart.destroy();
-      document.getElementById("totalResume").innerHTML = "";
-    }
-    getAjaxData(urlData, prepareData);
+  if (ignored) {
+    urlData += "&ignored=" + ignored;
   }
-
-  function upload(e) {
-    showLoader();
-    e.preventDefault();
-    let urlData = urlBase;
-    console.log(urlData);
-    // console.log('2', myChart)
-    if (myChart !== undefined) {
-      myChart.destroy();
-      document.getElementById("totalResume").innerHTML = "";
-    }
-    let formData = new FormData();
-    let inputFile = document.getElementById('inputFile');
-    if (inputFile.files.length === 0) {
-      alert('file input cannot be empty');
-      return;
-    }
-    formData.append('inputFile', inputFile.files[0]);
-    //console.log('REQUEST => ', urlData, prepareData, formData);
-    makeAjaxRequest(urlData, 'POST', prepareData, formData);
-  }
-
-  function hideLoader() {
-    document.getElementsByClassName('loader')[0].style.visibility = 'hidden';
-    document.getElementsByClassName('loader')[0].style.display = 'none';
-  }
-
-  function showLoader() {
-    document.getElementsByClassName('loader')[0].style.visibility = 'visible';
-    document.getElementsByClassName('loader')[0].style.display = 'block';
-    document.getElementById("toggle").style.display = "block";
-  }
-
-  function showError(dataError) {
-    hideLoader();
-    if (dataError.Error) {
-      alert(dataError.Error);
-    } else {
-      alert('An error has ocurred while fetching data');
-    }
-  }
-
-  function limitExceeded() {
-    hideLoader();
-    alert('Rate limit exceeded, wait a few seconds');
-  }
-
-  function toggle() {
+  console.log(urlData);
+  // console.log('1', myChart)
+  if (myChart !== undefined) {
     myChart.destroy();
-    let text = document.getElementById("toggle");
-    if (addComments) {
-      addComments = false;
-      text.innerHTML = "Include Comments in Pie Chart";
-    } else {
-      addComments = true;
-      text.innerHTML = "Exclude Comments from Pie Chart";
+    document.getElementById("totalResume").innerHTML = "";
+  }
+  getAjaxData(urlData, prepareData);
+}
+
+function upload(e) {
+  showLoader();
+  e.preventDefault();
+  let urlData = urlBase;
+  console.log(urlData);
+  // console.log('2', myChart)
+  if (myChart !== undefined) {
+    myChart.destroy();
+    document.getElementById("totalResume").innerHTML = "";
+  }
+  let formData = new FormData();
+  let inputFile = document.getElementById('inputFile');
+  if (inputFile.files.length === 0) {
+    alert('file input cannot be empty');
+    return;
+  }
+  formData.append('inputFile', inputFile.files[0]);
+  //console.log('REQUEST => ', urlData, prepareData, formData);
+  makeAjaxRequest(urlData, 'POST', prepareData, formData);
+}
+
+function hideLoader() {
+  document.getElementsByClassName('loader')[0].style.visibility = 'hidden';
+  document.getElementsByClassName('loader')[0].style.display = 'none';
+}
+
+function showLoader() {
+  document.getElementsByClassName('loader')[0].style.visibility = 'visible';
+  document.getElementsByClassName('loader')[0].style.display = 'block';
+  document.getElementById("toggle").style.display = "block";
+}
+
+function showError(dataError) {
+  hideLoader();
+  if (dataError.Error) {
+    alert(dataError.Error);
+  } else {
+    alert('An error has ocurred while fetching data');
+  }
+}
+
+function limitExceeded() {
+  hideLoader();
+  alert('Rate limit exceeded, wait a few seconds');
+}
+
+function toggle() {
+  myChart.destroy();
+  let text = document.getElementById("toggle");
+  if (addComments) {
+    addComments = false;
+    text.innerHTML = "Include Comments in Pie Chart";
+  } else {
+    addComments = true;
+    text.innerHTML = "Exclude Comments from Pie Chart";
+  }
+  prepareData(jsonData);
+}
+
+function prepareData(dataRepo) {
+  jsonData = dataRepo;
+  console.log('RECEIVE => ', dataRepo);
+  if (dataRepo.length === 1) {
+    if (dataRepo[0].linesOfCode === 0 || dataRepo[0].linesOfCode === undefined) {
+      alert('Not a valid file');
+      return;
     }
-    prepareData(jsonData);
+  }
+  hideLoader();
+  let data = [];
+  if (addComments) {
+    data = locWithComments(dataRepo);
+  } else {
+    data = locNotComments(dataRepo);
+  }
+  const linesOfCode = data[0];
+  const labels = data[1];
+  drawChart(linesOfCode, labels);
+  showTotal(dataRepo);
+}
+
+function locWithComments(dataRepo) {
+  let linesOfCode = [];
+  let labels = [];
+  for (let i = 0; i < dataRepo.length - 1; i++) { // -1 avoid "Total" line
+    linesOfCode.push(dataRepo[i].linesOfCode + dataRepo[i].comments);
+    labels.push(dataRepo[i].language);
+  }
+  return [linesOfCode, labels];
+}
+
+function locNotComments(dataRepo) {
+  let linesOfCode = [];
+  let labels = [];
+  for (let i = 0; i < dataRepo.length - 1; i++) {
+    //if (dataRepo[i].language !== 'Total') {
+    linesOfCode.push(dataRepo[i].linesOfCode);
+    labels.push(dataRepo[i].language);
+    //}
+  }
+  return [linesOfCode, labels];
+}
+
+function drawChart(loc, langs) {
+  document.getElementsByClassName('pie')[0].style.display = 'block';
+  let colors = [];
+  //let data = [];
+  for (let i = 0; i < loc.length; i++) {
+    colors.push(languageToColor[langs[i]]);
   }
 
-  function prepareData(dataRepo) {
-    jsonData = dataRepo;
-    console.log('RECEIVE => ', dataRepo);
-    if (dataRepo.length === 1) {
-      if (dataRepo[0].linesOfCode === 0 || dataRepo[0].linesOfCode === undefined) {
-        alert('Not a valid file');
-        return;
-      }
-    }
-    hideLoader();
-    let data = [];
-    if (addComments) {
-      data = locWithComments(dataRepo);
-    } else {
-      data = locNotComments(dataRepo);
-    }
-    const linesOfCode = data[0];
-    const labels = data[1];
-    drawChart(linesOfCode, labels);
-    showTotal(dataRepo);
-  }
-
-  function locWithComments(dataRepo) {
-    let linesOfCode = [];
-    let labels = [];
-    for (let i = 0; i < dataRepo.length - 1; i++) { // -1 avoid "Total" line
-      linesOfCode.push(dataRepo[i].linesOfCode + dataRepo[i].comments);
-      labels.push(dataRepo[i].language);
-    }
-    return [linesOfCode, labels];
-  }
-
-  function locNotComments(dataRepo) {
-    let linesOfCode = [];
-    let labels = [];
-    for (let i = 0; i < dataRepo.length - 1; i++) {
-      //if (dataRepo[i].language !== 'Total') {
-      linesOfCode.push(dataRepo[i].linesOfCode);
-      labels.push(dataRepo[i].language);
-      //}
-    }
-    return [linesOfCode, labels];
-  }
-
-  function drawChart(loc, langs) {
-    document.getElementsByClassName('pie')[0].style.display = 'block';
-    let colors = [];
-    //let data = [];
-    for (let i = 0; i < loc.length; i++) {
-      colors.push(languageToColor[langs[i]]);
-    }
-
-    myChart = new Chart(ctx, {
-      type: 'pie',
-      data: {
-        datasets: [{
-          data: loc,
-          backgroundColor: colors
-        }],
-        labels: langs
-      },
-      options: {
-        legend: {
-          labels: {
-            fontSize: 12,
-            padding: 3,
-            boxWidth: 10
-          },
-          // https://github.com/chartjs/Chart.js/issues/2437
-          /*onClick: (e, item) => {
+  myChart = new chartJs(ctx, {
+    type: 'pie',
+    data: {
+      datasets: [{
+        data: loc,
+        backgroundColor: colors
+      }],
+      labels: langs
+    },
+    options: {
+      legend: {
+        labels: {
+          fontSize: 12,
+          padding: 3,
+          boxWidth: 10
+        },
+        // https://github.com/chartjs/Chart.js/issues/2437
+        /*onClick: (e, item) => {
             const original = myChart.defaults.global.legend.onClick;
             myChart.defaults.global.legend.onClick = function (e, legendItem) {
               // do custom stuff here 
@@ -189,21 +189,21 @@ const loc = (function () {
               original.call(this, e, legendItem);
             };
           },*/
-        },
-        onClick: function (e) {
-          const element = this.getElementAtEvent(e);
-          if (element[0]) {
-            const order = element[0]._index;
-            let line = this.active[0]._chart.config.data.datasets[0];
-            line.backgroundColor[order] = getRandomColor();
-            //const newColor = line.backgroundColor[order];
-            //this.config.options.tooltips.legendColorBackground = newColor;
-            //this.config.options.tooltips.callbacks.legendColor(this, myChart);
-            //this.config.options.tooltips.updateLegendColor(newColor);
-            myChart.update();
-          }
-        },
-        /*onClick: function (e, element) {
+      },
+      onClick: function (e) {
+        const element = this.getElementAtEvent(e);
+        if (element[0]) {
+          const order = element[0]._index;
+          let line = this.active[0]._chart.config.data.datasets[0];
+          line.backgroundColor[order] = getRandomColor();
+          //const newColor = line.backgroundColor[order];
+          //this.config.options.tooltips.legendColorBackground = newColor;
+          //this.config.options.tooltips.callbacks.legendColor(this, myChart);
+          //this.config.options.tooltips.updateLegendColor(newColor);
+          myChart.update();
+        }
+      },
+      /*onClick: function (e, element) {
         if (element[0]) {
           const order = element[0]._index;
           let line = this.active[0]._chart.config.data.datasets[0];
@@ -211,8 +211,8 @@ const loc = (function () {
           myChart.update();
         }
       },*/
-        tooltips: {
-          /*callbacks: {
+      tooltips: {
+        /*callbacks: {
             legendColor: function (tooltipItem, chart) {
               const helper = chart.config.options.tooltips.legendColorBackground;
               return {
@@ -220,37 +220,37 @@ const loc = (function () {
               };
             },
           },*/
-          /*updateLegendColor: function (color) {
+        /*updateLegendColor: function (color) {
           return {
             legendColorBackground: color,
           };
         },*/
-          displayColors: false,
-          //legendColorBackground: "blue",
-        }
-      },
-    });
-  }
-
-  function showTotal(dataRepo) {
-    //const total = dataRepo[dataRepo.length - 1];
-    const data = {
-      files: 0,
-      lines: 0,
-      blanks: 0,
-      comments: 0,
-      linesOfCode: 0,
-    };
-    for (let v in dataRepo) {
-      if (dataRepo[v].language !== "Total") {
-        data.files += dataRepo[v].files;
-        data.lines += dataRepo[v].lines;
-        data.blanks += dataRepo[v].blanks;
-        data.comments += dataRepo[v].comments;
-        data.linesOfCode += dataRepo[v].linesOfCode;
+        displayColors: false,
+        //legendColorBackground: "blue",
       }
+    },
+  });
+}
+
+function showTotal(dataRepo) {
+  //const total = dataRepo[dataRepo.length - 1];
+  const data = {
+    files: 0,
+    lines: 0,
+    blanks: 0,
+    comments: 0,
+    linesOfCode: 0,
+  };
+  for (let v in dataRepo) {
+    if (dataRepo[v].language !== "Total") {
+      data.files += dataRepo[v].files;
+      data.lines += dataRepo[v].lines;
+      data.blanks += dataRepo[v].blanks;
+      data.comments += dataRepo[v].comments;
+      data.linesOfCode += dataRepo[v].linesOfCode;
     }
-    let res = `
+  }
+  let res = `
         <table class="table">
           <thead class="thead">
             <tr>
@@ -272,73 +272,70 @@ const loc = (function () {
             </tbody>
         </table>
     `;
-    document.getElementById("totalResume").innerHTML = res;
+  document.getElementById("totalResume").innerHTML = res;
 
+}
+
+function getRandomColor() {
+  var letters = '0123456789ABCDEF'.split('');
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
   }
+  return color;
+}
 
-  function getRandomColor() {
-    var letters = '0123456789ABCDEF'.split('');
-    var color = '#';
-    for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  }
-
-  function getAjaxData(urlData, callback) {
-    const xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) { // 4 = "DONE"
-        if (xhr.status === 200) { // 200 ="OK"
-          callback(JSON.parse(xhr.responseText));
-        } else if (xhr.status === 429) { // 200 ="OK"
-          limitExceeded();
+function getAjaxData(urlData, callback) {
+  const xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) { // 4 = "DONE"
+      if (xhr.status === 200) { // 200 ="OK"
+        callback(JSON.parse(xhr.responseText));
+      } else if (xhr.status === 429) { // 200 ="OK"
+        limitExceeded();
+      } else {
+        if (xhr.status === 0) {
+          // Error usually about fetching github API
+          showError(xhr.responseText);
         } else {
-          if (xhr.status === 0) {
-            // Error usually about fetching github API
-            showError(xhr.responseText);
-          } else {
-            // Error parsed from backend myError
-            console.log(xhr.responseText);
-            showError(JSON.parse(xhr.responseText));
-          }
-        }
-      }
-    };
-    xhr.open('GET', urlData); // add false to synchronous request
-    xhr.send();
-  }
-
-  function makeAjaxRequest(url, action, callback, params) {
-    const xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) { // 4 = "DONE"
-        if (xhr.status === 200) { // 200 ="OK"
-          const data = JSON.parse(xhr.responseText);
-          callback(data);
-        } else if (xhr.status === 429) {
-          limitExceeded();
-        } else {
-          console.log('AINSS Error : ' + xhr.status + xhr.response);
+          // Error parsed from backend myError
+          console.log(xhr.responseText);
           showError(JSON.parse(xhr.responseText));
         }
       }
-    };
-    xhr.open(action, url);
-    if (action === 'GET') {
-      xhr.send();
-    } else if (action !== 'GET') {
-      //xhr.setRequestHeader('Content-Type', 'multipart/form-data');
-      xhr.send(params);
     }
-  }
-
-  return {
-    init: init
   };
-}());
+  xhr.open('GET', urlData); // add false to synchronous request
+  xhr.send();
+}
 
-window.addEventListener('load', loc.init);
+function makeAjaxRequest(url, action, callback, params) {
+  const xhr = new XMLHttpRequest();
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState === 4) { // 4 = "DONE"
+      if (xhr.status === 200) { // 200 ="OK"
+        const data = JSON.parse(xhr.responseText);
+        callback(data);
+      } else if (xhr.status === 429) {
+        limitExceeded();
+      } else {
+        console.log('AINSS Error : ' + xhr.status + xhr.response);
+        showError(JSON.parse(xhr.responseText));
+      }
+    }
+  };
+  xhr.open(action, url);
+  if (action === 'GET') {
+    xhr.send();
+  } else if (action !== 'GET') {
+    //xhr.setRequestHeader('Content-Type', 'multipart/form-data');
+    xhr.send(params);
+  }
+}
+
+export {
+  init
+};
 
 // https://github.com/LeeReindeer/github-colors/blob/go/color.json
 const languageToColor =

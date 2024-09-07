@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!--Head -->
-  <!--#include file="/_public/templates/head.html" -->
+  <span id="head"></span>
 
 </head>
 
@@ -133,20 +133,6 @@
     </div>
 
     <div class="tool service">
-      <a href="/video2gif/video-to-gif.html">
-        <div class="toolTile">
-          <div class="title centerText">
-            <div class="gif32 verticalImage"></div>
-            <strong>Video to GIF</strong>
-          </div>
-          <p>
-            Convert Videos to animated gifs
-          </p>
-        </div>
-      </a>
-    </div>
-
-    <div class="tool service">
       <a href="/alexa/alexa-ranking.html">
         <div class="toolTile">
           <div class="title centerText">
@@ -207,12 +193,17 @@
   </section>
 
   <!-- Footer -->
-  <!--#include file="/_public/templates/footer.html" -->
+  <span id="footer"></span>
 
   <!-- CSS -->
   <link rel="stylesheet" type="text/css" href="./index.css">
 
-
+  <script type="module">
+    import { head, footer, data } from "./templates.js"
+    document.getElementById("head").innerHTML = head
+    document.getElementById("footer").innerHTML = footer
+    data.init()
+  </script>
 
 </body>
 
