@@ -1,11 +1,11 @@
 
-![Version](https://img.shields.io/badge/version-0.9.2-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.10.0-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-**version 0.9.2**
+**version 0.10.0**
 
 1. [Count LOC (lines of code) online from github/gitlab repos or zipped uploaded folder](#count-loc-online)  
 2. [CORS proxy](#cors-proxy)  
@@ -14,8 +14,7 @@
 5. [Alexa Ranking](#alexa)  
 6. [HTTP Headers](#headers)  
 7. [API weather temp](#weather)  
-8. [Video To Gif](#video2gif)
-9. [Random Data API](#random-data-api)
+8. [Random Data API](#random-data-api)
 
 
 [To Do List](#to-do)
@@ -209,35 +208,6 @@ Tool to get list of response headers including redirect chain of a HTTP connecti
 
 ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/gif48.png?raw=true) 
 
-## **VIDEO2GIF**
-
-### **[Video2Gif Converter online](https://codetabs.com/video2gif/video-to-gif.html)**
-
-- Tool for converting videos to animated gifs
-- File max size 100mb
-- Limit : 1 request every 30 seconds. Once reached subsequent requests will result in error 429 (too many requests) until your quota is cleared.
-
-**Parameters** 
-
-Frames : Set frame rate (frames per second). Max value 10, default 5.
-
-Start : Seek to given time position in seconds. "hh:mm:ss" syntax is also supported. Default is from start
-> - 100 - begin from second 100   
-> - 01:40 - begin from minute 1 and second 40  
-
-Duration : Restrict the captured video sequence to the duration specified in seconds. "hh:mm:ss" syntax is also supported. Default is all duration
-> - 200 - take 200 seconds from start  
-> - 03:20 - take 3 minutes and 20 seconds from start  
-
-Scale : Set width:height , if one parameter is -1 it will automatically determine the other while preserving the aspect ratio. Default is 320:160. Max 480.
-> - 480:480 set width = 480 and height = 480  
-> - 380:-1 set width = 380 and height automatically preserving the aspect ratio  
-> - -1:320 set height = 320 and width automatically preserving the aspect ratio  
-
-<hr>
-
-![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/random48.png?raw=true) 
-
 ## **RANDOM DATA API**
 
 ### **[Demo and Docs online](https://codetabs.com/random-data/random-data.html)**
@@ -262,7 +232,7 @@ You can also specify how many times you want the result with the parameter times
 Default is 1 and there is no need to specify it. Max times = 10.000  
 https://api.codetabs.com/v1/random/integer?min=1&max=10&times=50
 
-- List with randomized order  
+- Integers List with randomized order  
 ```
 http Request :
 GET https://api.codetabs.com/v1/random/list?len=X
@@ -270,6 +240,12 @@ GET https://api.codetabs.com/v1/random/list?len=X
 Max list elements : 10.000  
 Example: Get random order numbers for a list of 1000 elements  
 https://api.codetabs.com/v1/random/list?len=1000 
+
+- Get Random Name among 90k  
+```
+http Request :
+GET https://api.codetabs.com/v1/random/name
+```
 
 <hr>
 

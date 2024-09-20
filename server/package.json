@@ -1,0 +1,32 @@
+{
+  "name": "codetabs",
+  "version": "0.10.0",
+  "description": "server for codetabs",
+  "main": "codetabs.js",
+  "scripts": {
+    "start": "node codetabs.js",
+    "dev": "nodemon codetabs.js",
+    "test": "sh test/test.sh",
+    "testAll": "mocha test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jolav/codetabs.git"
+  },
+  "author": "Jolav",
+  "license": "AGPL-3.0-only",
+  "bugs": {
+    "url": "https://github.com/jolav/codetabs/issues"
+  },
+  "homepage": "https://github.com/jolav/codetabs#readme",
+  "dependencies": {
+    "body-parser": "^2.0.0-beta.2",
+    "express": "^5.0.0",
+    "helmet": "^7.1.0"
+  },
+  "type": "module",
+  "devDependencies": {
+    "chai": "^5.1.1",
+    "chai-http": "^5.0.0"
+  }
+}

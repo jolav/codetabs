@@ -5,6 +5,7 @@ node_modules/
 tmp/
 _tmp/
 _data/
+data/
 
 #Ignore these files
 .air.conf

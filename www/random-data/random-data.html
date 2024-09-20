@@ -77,7 +77,26 @@
         <code>
   <a href="https://api.codetabs.com/v1/random/integer?min=1&max=10&times=50"> https://api.codetabs.com/v1/random/integer?min=1&max=10&amptimes=50></a> 
         </code>
-      </span>
+      </span><br>
+      <strong>response</strong>
+      <pre class="marginLeft">
+        {
+          "quest": "Random Integer between 1-10",
+          "data": [
+           10
+          ]
+         }      
+        
+         {
+          "quest": "50 Random Integers between 1-10",
+          "data": [
+           7,
+           8,
+           ...
+           4
+          ]
+         }
+            </pre>
     </div>
 
   </section>
@@ -103,6 +122,51 @@
   <a href="https://api.codetabs.com/v1/random/list?len=1000"> https://api.codetabs.com/v1/random/list?len=1000</a> 
         </code>
       </span><br>
+      <strong>response</strong>
+      <pre class="marginLeft">
+        {
+          "quest": "Randomized order list with 1000 elements",
+          "data": [
+           612,
+           422,
+           ...
+           820
+           ]
+        }
+            </pre>
+    </div>
+
+  </section>
+
+  <section class="endpoint">
+
+    <div class="centerText">
+      <strong>Endpoint - Get Random Name</strong>
+    </div>
+    <div class="leftText">
+      <strong>http Request : </strong>
+      <br>
+      <code class="red">
+    GET https://api.codetabs.com/v1/random/name 
+      </code>
+      <br>
+      <strong>Examples</strong>
+      <br>Get random name from a list of nearly 90.000
+      <br>
+      <span>
+        <code>
+  <a href="https://api.codetabs.com/v1/random/name"> https://api.codetabs.com/v1/random/name</a> 
+        </code>
+      </span><br>
+      <strong>response</strong>
+      <pre class="marginLeft">
+        {
+          "quest": "Random Name",
+          "data": [
+           "MCBRIEN"
+          ]
+         }      
+           </pre>
     </div>
 
   </section>
