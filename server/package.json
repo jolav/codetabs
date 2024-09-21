@@ -1,6 +1,6 @@
 {
   "name": "codetabs",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "description": "server for codetabs",
   "main": "codetabs.js",
   "scripts": {

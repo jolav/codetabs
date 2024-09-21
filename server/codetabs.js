@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 import { config } from "./_config.js";
 import { mw } from "./middlewares.js";
 import { randomRouter } from "./random.js";
+import { headersRouter } from "./headers.js";
 
 const app = express();
 app.use(helmet());
@@ -25,6 +26,7 @@ app.get("/v1/version", function (req, res) {
   res.status(200).json({ version: config.version });
 });
 app.use(randomRouter);
+app.use(headersRouter);
 
 app.use(mw.notFound);
 app.use(mw.errorHandler);

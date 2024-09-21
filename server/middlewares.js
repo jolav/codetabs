@@ -1,6 +1,7 @@
 /* */
 
 import { config } from "./_config.js";
+import { exec } from "child_process";
 
 const mw = {
   manager: function (req, res, next) {
@@ -103,6 +104,23 @@ const aux = {
   randomInt: function (min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   },
+  runCommand: function (command) {
+    return new Promise(function (resolve, reject) {
+      exec(command, function (err, stdout, stderr) {
+        if (err) {
+          //console.error(`Error executing "${command}":`, err);
+          reject(new Error(`Execution failed: ${stderr || stdout}`));
+          return;
+        }
+        if (stderr) {
+          //console.warn(`Warning executing "${command}":`, stderr);
+          resolve(stderr);
+          return;
+        }
+        resolve(stdout);
+      });
+    });
+  }
 };
 
 export {

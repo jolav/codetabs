@@ -18,7 +18,6 @@ import (
 	u "github.com/jolav/codetabs/_utils"
 	"github.com/jolav/codetabs/alexa"
 	"github.com/jolav/codetabs/geolocation"
-	"github.com/jolav/codetabs/headers"
 	"github.com/jolav/codetabs/loc"
 	"github.com/jolav/codetabs/proxy"
 	"github.com/jolav/codetabs/stars"
@@ -90,7 +89,7 @@ func main() {
 
 	mux.HandleFunc("/v1/alexa/", mw(alexa.Router, "alexa", c))
 	mux.HandleFunc("/v1/geolocation/", mw(geolocation.Router, "geoip", c))
-	mux.HandleFunc("/v1/headers/", mw(headers.Router, "headers", c))
+	//mux.HandleFunc("/v1/headers/", mw(headers.Router, "headers", c))
 	mux.HandleFunc("/v1/weather/", mw(weather.Router, "weather", c))
 	//mux.HandleFunc("/v1/video2gif/", mw(index2.Router, "video2gif", c))
 	//mux.HandleFunc("/v1/random/", mw(random.Router, "random", c))
