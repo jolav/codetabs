@@ -21,7 +21,7 @@ describe('CODETABS TEST ', function () {
         expect(res).to.have.status(400);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('Error', t);
+        expect(res.body).to.have.property('msg', t);
         done();
       });
   });
@@ -36,7 +36,7 @@ describe('CODETABS TEST ', function () {
         expect(res).to.have.status(400);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('Error', t);
+        expect(res.body).to.have.property('msg', t);
         done();
       });
   });
@@ -51,7 +51,7 @@ describe('CODETABS TEST ', function () {
         expect(res).to.have.status(400);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('Error', t);
+        expect(res.body).to.have.property('msg', t);
         done();
       });
   });
@@ -66,13 +66,13 @@ describe('CODETABS TEST ', function () {
         expect(res).to.have.status(400);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('Error', t);
+        expect(res.body).to.have.property('msg', t);
         done();
       });
   });
 
   it('bad service', function (done) {
-    const t = aux.badRequest;//"Bad request : Service badservice doesnt exists";
+    const t = aux.badRequest;
     chai
       .request.execute(url)
       .get('/v1/badservice')
@@ -81,13 +81,13 @@ describe('CODETABS TEST ', function () {
         expect(res).to.have.status(400);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('Error', t);
+        expect(res.body).to.have.property('msg', t);
         done();
       });
   });
 
   it('not valid url 1', function (done) {
-    const t = "Bad request : /v1/&(%/&%%/ is not a valid url";
+    const t = aux.badRequest;
     chai
       .request.execute(url)
       .get('/v1/&(%/&%%/')
@@ -96,13 +96,13 @@ describe('CODETABS TEST ', function () {
         expect(res).to.have.status(400);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('Error', t);
+        expect(res.body).to.have.property('msg', t);
         done();
       });
   });
 
   it('not valid url 2', function (done) {
-    const t = "Bad request : /&(%/&%%/ is not a valid url";
+    const t = aux.badRequest;
     chai
       .request.execute(url)
       .get('/&(%/&%%/')
@@ -111,7 +111,7 @@ describe('CODETABS TEST ', function () {
         expect(res).to.have.status(400);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('Error', t);
+        expect(res.body).to.have.property('msg', t);
         done();
       });
   });
@@ -126,7 +126,7 @@ describe('CODETABS TEST ', function () {
         expect(res).to.have.status(400);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('Error', t);
+        expect(res.body).to.have.property('msg', t);
         done();
       });
   });*/

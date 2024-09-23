@@ -3,6 +3,8 @@ import { use, expect } from "chai";
 import chaiHttp from "chai-http";
 const chai = use(chaiHttp);
 
+import { aux } from "../middlewares.js";
+
 const url = "http://localhost:3000";
 
 describe("RANDOM API TESTS", () => {
@@ -16,6 +18,26 @@ describe("RANDOM API TESTS", () => {
           expect(res).to.have.status(200);
           expect(res.body).to.have.property("quest", "Random Name");
           expect(res.body.data).to.be.an("array").with.lengthOf(1);
+          done();
+        });
+    });
+    it("should return a bad request if only service is ok ", (done) => {
+      chai
+        .request.execute(url)
+        .get("/v1/random")
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body).to.have.property("msg", aux.badRequest);
+          done();
+        });
+    });
+    it("should return a bad request if service is ok but not the rest", (done) => {
+      chai
+        .request.execute(url)
+        .get("/v1/random/inte")
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          expect(res.body).to.have.property("msg", aux.badRequest);
           done();
         });
     });
@@ -47,7 +69,17 @@ describe("RANDOM API TESTS", () => {
         });
     });
 
-    it("should return a 400 error if min is invalid", (done) => {
+    it("should return bad request if times <1 ", (done) => {
+      chai
+        .request.execute(url)
+        .get("/v1/random/integer?min=1&max=10&times=-5")
+        .end((err, res) => {
+          expect(res).to.have.status(400);
+          done();
+        });
+    });
+
+    it("should return bad request if min is invalid", (done) => {
       chai
         .request.execute(url)
         .get("/v1/random/integer?min=-1&max=10")
@@ -57,7 +89,7 @@ describe("RANDOM API TESTS", () => {
         });
     });
 
-    it("should return a 400 error if max is less than min", (done) => {
+    it("should return bad request if max is less than min", (done) => {
       chai
         .request.execute(url)
         .get("/v1/random/integer?min=10&max=1")
@@ -82,7 +114,7 @@ describe("RANDOM API TESTS", () => {
         });
     });
 
-    it("should return a 400 error if list length is too small", (done) => {
+    it("should return bad request if list length is too small", (done) => {
       chai
         .request.execute(url)
         .get("/v1/random/list?len=1")
@@ -92,7 +124,7 @@ describe("RANDOM API TESTS", () => {
         });
     });
 
-    it("should return a 400 error if list length is too large", (done) => {
+    it("should return bad request if list length is too large", (done) => {
       chai
         .request.execute(url)
         .get("/v1/random/list?len=10001")

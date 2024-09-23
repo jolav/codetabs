@@ -5,9 +5,10 @@ import helmet from 'helmet';
 import bodyParser from "body-parser";
 
 import { config } from "./_config.js";
-import { mw } from "./middlewares.js";
+import { mw, aux } from "./middlewares.js";
 import { randomRouter } from "./random.js";
 import { headersRouter } from "./headers.js";
+import { weatherRouter } from "./weather.js";
 
 const app = express();
 app.use(helmet());
@@ -19,21 +20,31 @@ app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
 
 console.log("process.env.pm.id => ", process.env.pm_id);
 console.log("process.pid => ", process.pid);
+
 app.use(mw.manager.bind(mw)); // avoid this undefined inside mw
 
 // routes
 app.get("/v1/version", function (req, res) {
   res.status(200).json({ version: config.version });
 });
+
 app.use(randomRouter);
 app.use(headersRouter);
+app.use(weatherRouter);
 
-app.use(mw.notFound);
-app.use(mw.errorHandler);
+app.use(function notFound(req, res, next) {
+  mw.sendResult(res, 400, { "msg": aux.badRequest }, false);
+});
+
+app.use(function errorHandler(err, req, res, next) {
+  console.error(err.message);
+  mw.sendResult(res, 500, { "msg": err.message }, false);
+});
 
 app.listen(config.port, function () {
   console.log(
-    'Server', config.name.toUpperCase(), "version", config.version,
+    'Server', config.name.toUpperCase(),
+    "version", config.version,
     "running on port", config.port
   );
 });

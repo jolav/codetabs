@@ -1,13 +1,14 @@
 {
   "name": "codetabs",
-  "version": "0.10.1",
+  "version": "0.10.2",
   "description": "server for codetabs",
   "main": "codetabs.js",
   "scripts": {
     "start": "node codetabs.js",
     "dev": "nodemon codetabs.js",
     "test": "sh test/test.sh",
-    "testAll": "mocha test/*.js"
+    "testAll": "mocha test/*.js",
+    "live": "cd ./../www && live-server --no-css-inject --host=localhost"
   },
   "repository": {
     "type": "git",

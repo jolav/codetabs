@@ -4,6 +4,7 @@ import { use, expect } from "chai";
 import chaiHttp from "chai-http";
 const chai = use(chaiHttp);
 
+import { aux } from "../middlewares.js";
 const url = "http://localhost:3000";
 
 describe('HEADERS TEST ', function () {
@@ -19,7 +20,7 @@ describe('HEADERS TEST ', function () {
         expect(res).to.have.status(400);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('Error', 'Domain is empty');
+        expect(res.body).to.have.property('msg', aux.badRequest);
         done();
       });
   });
@@ -32,21 +33,21 @@ describe('HEADERS TEST ', function () {
         expect(res).to.have.status(400);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('Error', 'Domain is empty');
+        expect(res.body).to.have.property('msg', aux.badRequest);
         done();
       });
   });
   it('not registered valid domain name', function (done) {
-    const t1 = 'Execution failed: curl: (6) Could not resolve host: sure-this-is-not-registered.com';
+    const t1 = 'Execution failed: curl: (6) Could not resolve host: sure-this-is-not-registered.com\n';
     chai.request.execute(url)
       .get('/v1/headers?domain=sure-this-is-not-registered.com')
       .end(function (err, res) {
         // console.log('PATH=> ', res.req.path)
         expect(err).to.be.null;
-        expect(res).to.have.status(400);
+        expect(res).to.have.status(500);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('Error', t1);
+        expect(res.body).to.have.property('msg', t1);
         done();
       });
   });
@@ -60,35 +61,35 @@ describe('HEADERS TEST ', function () {
         expect(res).to.have.status(400);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('Error', t2);
+        expect(res.body).to.have.property('msg', aux.badRequest);
         done();
       });
   });
   it('Unavailable', function (done) {
-    const t2 = 'Execution failed: curl: (22) The requested URL returned error: 503';
+    const t2 = `Execution failed: curl: (22) The requested URL returned error: 503\n`;
     chai.request.execute(url)
       .get('/v1/headers?domain=www.amazon.com')
       .end(function (err, res) {
         // console.log('PATH=> ', res.req.path)
         expect(err).to.be.null;
-        expect(res).to.have.status(400);
+        expect(res).to.have.status(500);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('Error', t2);
+        expect(res.body).to.have.property('msg', t2);
         done();
       });
   });
   it('not a valid domain name', function (done) {
-    const t2 = `Execution failed: curl: (6) Could not resolve host: code%25%25tabs.com`;
+    const t2 = `Execution failed: curl: (6) Could not resolve host: code%25%25tabs.com\n`;
     chai.request.execute(url)
       .get('/v1/headers?domain=code%25%25tabs.com')
       .end(function (err, res) {
         // console.log('PATH=> ', res.req.path)
         expect(err).to.be.null;
-        expect(res).to.have.status(400);
+        expect(res).to.have.status(500);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('Error', t2);
+        expect(res.body).to.have.property('msg', t2);
         done();
       });
   });
@@ -116,7 +117,7 @@ describe('HEADERS TEST ', function () {
   });
   it('domain with redirection 1', function (done) {
     chai.request.execute(url)
-      .get('/v1/headers?domain=www.codetabs.com')
+      .get('/v1/headers?domain=microsoft.com')
       .end(function (err, res) {
         expect(err).to.be.null;
         expect(res).to.have.status(200);

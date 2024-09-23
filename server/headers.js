@@ -1,17 +1,23 @@
 /* */
 
 import express from "express";
-import { aux } from "./../server/middlewares.js";
+import { aux, mw } from "./../server/middlewares.js";
 
 const headersRouter = express.Router();
-headersRouter.get("/v1/headers", function (req, res, next) {
-  if (req.query.domain) {
-    headers.getHeaders(req, res, next);
-  } else {
-    const error = new Error("Domain is empty");
-    error.code = 400;
-    next(error);
+headersRouter.get("/v1/headers", async function (req, res, next) {
+  if (!req.query.domain) {
+    mw.sendResult(res, 400, { "msg": aux.badRequest }, false);
     return;
+  }
+  const response = await headers.getHeaders(req);
+  try {
+    if (!response) {
+      mw.sendResult(res, 400, { "msg": aux.badRequest }, false);
+      return;
+    }
+    mw.sendResult(res, 200, response, false);
+  } catch (err) {
+    next(err);
   }
 });
 
@@ -20,34 +26,27 @@ export {
 };
 
 const headers = {
-  getHeaders: async function (req, res, next) {
+  getHeaders: async function (req) {
     let url = req.query.domain;
     const headers = [];
     let count = 0; // avoid infinite loop
     const maxRedirections = 10;
 
-    try {
-      while (count < maxRedirections) {
-        const header = await aux.runCommand(`curl -fsSI ${url}`);
-        headers.push(this.parseHeadString(header));
-        if (header.indexOf("Location") === -1 &&
-          header.indexOf("location") === -1) {
-          break;
-        }
-        if (header.indexOf("Location") !== -1) {
-          url = header.split("Location: ")[1].split("\n")[0].trim();
-        } else {
-          url = header.split("location: ")[1].split("\n")[0].trim();
-        }
-        count++;
+    while (count < maxRedirections) {
+      const header = await aux.runCommand(`curl -fsSI ${url}`);
+      headers.push(this.parseHeadString(header));
+      if (header.indexOf("Location") === -1 &&
+        header.indexOf("location") === -1) {
+        break;
       }
-      res.status(200).json(headers);
-    } catch (err) {
-      //console.error("Error => ", err);
-      const error = new Error(err.message.trim());
-      error.code = 400;
-      next(error);
+      if (header.indexOf("Location") !== -1) {
+        url = header.split("Location: ")[1].split("\n")[0].trim();
+      } else {
+        url = header.split("location: ")[1].split("\n")[0].trim();
+      }
+      count++;
     }
+    return headers;
   },
   parseHeadString: function (str) {
     const res = {};

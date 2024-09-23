@@ -1,37 +1,32 @@
 /* */
 
 import express from "express";
-import { aux } from "./middlewares.js";
+import { aux, mw } from "./middlewares.js";
 
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 const surnames = require("./data/surnames.json");
 
 const randomRouter = express.Router();
-randomRouter.get("/v1/random/name", function (req, res) {
+randomRouter.get("/v1/random/name", function (req, res, next) {
   const response = random.name();
-  //console.log(response);
-  res.status(200).json(response);
+  mw.sendResult(res, 200, response, false);
 });
 randomRouter.get("/v1/random/integer", function (req, res, next) {
   const response = random.integer(req);
   if (!response) {
-    const error = new Error(aux.badRequest);
-    error.code = 400;
-    next(error);
+    mw.sendResult(res, 400, { "msg": aux.badRequest }, false);
     return;
   }
-  res.status(200).json(response);
+  mw.sendResult(res, 200, response, false);
 });
 randomRouter.get("/v1/random/list", function (req, res, next) {
   const response = random.list(req);
   if (!response) {
-    const error = new Error(aux.badRequest);
-    error.code = 400;
-    next(error);
+    mw.sendResult(res, 400, { "msg": aux.badRequest }, false);
     return;
   }
-  res.status(200).json(response);
+  mw.sendResult(res, 200, response, false);
 });
 
 export {
@@ -53,7 +48,7 @@ const random = {
     this.response.data.push(surnames[aux.randomInt(0, surnames.length - 1)]);
     return this.response;
   },
-  integer: function (req, res, next) {
+  integer: function (req) {
     const min = parseInt(req.query.min);
     const max = parseInt(req.query.max);
     const times = parseInt(req.query.times) || 1;
@@ -65,7 +60,7 @@ const random = {
     if (!max || min > max || max > 10000000000) {
       return undefined;
     }
-    if (times > 10000) {
+    if (times > 10000 || times < 1) {
       return undefined;
     }
 

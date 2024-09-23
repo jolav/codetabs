@@ -1,11 +1,11 @@
 
-![Version](https://img.shields.io/badge/version-0.10.1-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.10.2-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-**version 0.10.1**
+**version 0.10.2**
 
 1. [Count LOC (lines of code) online from github/gitlab repos or zipped uploaded folder](#count-loc-online)  
 2. [CORS proxy](#cors-proxy)  
@@ -202,7 +202,7 @@ Tool to get list of response headers including redirect chain of a HTTP connecti
 
 - Petitions are limited to 5 per sec. You will get a 429 error if you exceed 
 - CORS is enabled allowing Javascript make requests across domain boundaries
-- Supported formats, json and xml  
+- JSON Supported   
 
 <hr>
 

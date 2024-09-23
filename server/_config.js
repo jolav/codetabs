@@ -12,10 +12,14 @@ const config = {
   "name": packageJSON.name,
   "mode": "dev",
   "port": 3000,
+  "portOLD": 3000,
   "services": [
     "random",
     "headers",
+    "weather",
   ],
+  "banned": [],
+  "weather": {}
 };
 
 function checkMode() {
@@ -24,8 +28,10 @@ function checkMode() {
   if (!_config.devHosts.includes(serverName)) {
     config.mode = _config.mode;
     config.port = _config.port;
+    config.portOLD = _config.portOLD;
   }
   config.banned = _config.banned;
+  config.weather = _config.weather;
 }
 
 checkMode();

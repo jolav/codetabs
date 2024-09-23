@@ -22,7 +22,6 @@ import (
 	"github.com/jolav/codetabs/proxy"
 	"github.com/jolav/codetabs/stars"
 	"github.com/jolav/codetabs/store"
-	"github.com/jolav/codetabs/weather"
 )
 
 var version = "0.9.2"
@@ -90,7 +89,7 @@ func main() {
 	mux.HandleFunc("/v1/alexa/", mw(alexa.Router, "alexa", c))
 	mux.HandleFunc("/v1/geolocation/", mw(geolocation.Router, "geoip", c))
 	//mux.HandleFunc("/v1/headers/", mw(headers.Router, "headers", c))
-	mux.HandleFunc("/v1/weather/", mw(weather.Router, "weather", c))
+	//mux.HandleFunc("/v1/weather/", mw(weather.Router, "weather", c))
 	//mux.HandleFunc("/v1/video2gif/", mw(index2.Router, "video2gif", c))
 	//mux.HandleFunc("/v1/random/", mw(random.Router, "random", c))
 	mux.HandleFunc("/v1/stars/", mw(stars.Router, "stars", c))
