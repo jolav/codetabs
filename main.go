@@ -86,7 +86,7 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/v1/alexa/", mw(alexa.Router, "alexa", c))
+	//mux.HandleFunc("/v1/alexa/", mw(alexa.Router, "alexa", c))
 	mux.HandleFunc("/v1/geolocation/", mw(geolocation.Router, "geoip", c))
 	//mux.HandleFunc("/v1/headers/", mw(headers.Router, "headers", c))
 	//mux.HandleFunc("/v1/weather/", mw(weather.Router, "weather", c))

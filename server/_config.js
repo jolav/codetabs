@@ -17,6 +17,7 @@ const config = {
     "random",
     "headers",
     "weather",
+    "alexa",
   ],
   "banned": [],
   "weather": {}

@@ -1,7 +1,7 @@
 /* */
 
 import express from "express";
-import { aux, mw } from "./../server/middlewares.js";
+import { aux, mw } from "./middlewares.js";
 
 const headersRouter = express.Router();
 headersRouter.get("/v1/headers", async function (req, res, next) {

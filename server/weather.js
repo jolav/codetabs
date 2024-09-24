@@ -1,7 +1,7 @@
 /* */
 
 import express from "express";
-import { aux, mw } from "./../server/middlewares.js";
+import { aux, mw } from "./middlewares.js";
 import { config } from "./_config.js";
 
 const weatherRouter = express.Router();
