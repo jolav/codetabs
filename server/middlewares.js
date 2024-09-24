@@ -30,9 +30,6 @@ const mw = {
       msg = aux.badRequest;
     }
     if (msg) {
-      if (config.services.includes(service)) {
-        res.locals.info.service = service;
-      }
       res.locals.info.resource = req.originalUrl;
       this.sendResult(res, 400, { "msg": msg }, false);
       return;
@@ -141,19 +138,34 @@ const aux = {
     };
     try {
       const response = await fetch(url, options);
-      if (response.ok) {
-        const data = await response.json();
-        return [data, null];
-      } else {
-        throw new Error(response.status + " " + response.statusText);
+      if (!response.ok) {
+        throw new AppError(
+          500, `HTTP Error: ${response.status} ${response.statusText}`
+        );
       }
+      const data = await response.json();
+      return [data, null];
     } catch (err) {
+      if (err.name === "AbortError") {
+        return [null, new AppError(500, "Request timed out")];
+      }
       return [null, err];
     }
   },
 };
 
+class AppError extends Error {
+  constructor(status, message) {
+    super(message);
+    this.name = 'AppError';
+    this.status = status;
+    this.isOperational = true;
+    Error.captureStackTrace(this, AppError);
+  }
+}
+
 export {
   mw,
   aux,
+  AppError,
 };

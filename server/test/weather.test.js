@@ -59,6 +59,7 @@ describe('WEATHER TEST ', function () {
     });
   }
   it('unavailable city', function (done) {
+    const t2 = "Weather Service Error: HTTP Error: 400 Bad Request";
     chai.request.execute(url)
       .get('/v1/weather?city=unavailablecity')
       .query({})
@@ -67,7 +68,7 @@ describe('WEATHER TEST ', function () {
         expect(err).to.be.null;
         expect(res).to.have.status(500);
         expect(res).to.be.json;
-        expect(res.body).to.have.property('msg', '400 Bad Request');
+        expect(res.body).to.have.property('msg', t2);
         done();
       });
   });

@@ -1,7 +1,7 @@
 /* */
 
 import express from "express";
-import { aux, mw } from "./middlewares.js";
+import { aux, mw, AppError } from "./middlewares.js";
 
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
@@ -15,7 +15,7 @@ randomRouter.get("/v1/random/name", function (req, res, next) {
 randomRouter.get("/v1/random/integer", function (req, res, next) {
   const response = random.integer(req);
   if (!response) {
-    mw.sendResult(res, 400, { "msg": aux.badRequest }, false);
+    next(new AppError(400, aux.badRequest));
     return;
   }
   mw.sendResult(res, 200, response, false);
@@ -23,7 +23,7 @@ randomRouter.get("/v1/random/integer", function (req, res, next) {
 randomRouter.get("/v1/random/list", function (req, res, next) {
   const response = random.list(req);
   if (!response) {
-    mw.sendResult(res, 400, { "msg": aux.badRequest }, false);
+    next(new AppError(400, aux.badRequest));
     return;
   }
   mw.sendResult(res, 200, response, false);

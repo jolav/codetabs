@@ -1,18 +1,18 @@
 /* */
 
 import express from "express";
-import { aux, mw } from "./middlewares.js";
+import { aux, mw, AppError } from "./middlewares.js";
 
 const headersRouter = express.Router();
 headersRouter.get("/v1/headers", async function (req, res, next) {
   if (!req.query.domain) {
-    mw.sendResult(res, 400, { "msg": aux.badRequest }, false);
+    next(new AppError(400, "Domain is empty"));
     return;
   }
   const response = await headers.getHeaders(req);
   try {
     if (!response) {
-      mw.sendResult(res, 400, { "msg": aux.badRequest }, false);
+      next(new AppError(400, aux.badRequest));
       return;
     }
     mw.sendResult(res, 200, response, false);

@@ -1,21 +1,20 @@
 /* */
 
 import express from "express";
-import { mw } from "./middlewares.js";
+import { mw, AppError } from "./middlewares.js";
 
 import { createRequire } from "module";
 
 const alexaRouter = express.Router();
 alexaRouter.get('/v1/alexa', function (req, res, next) {
   if (!req.query.web) {
-    const e = { "Error": "Domain is empty" };
-    mw.sendResult(res, 400, e, false);
+    next(new AppError(400, "Domain is empty"));
     return;
   }
   const [response, err] = alexa.position(req, res, next);
   try {
     if (err) {
-      mw.sendResult(res, 400, err, false);
+      mw.sendResult(res, 200, err, false);
       return;
     }
     mw.sendResult(res, 200, response, false);

@@ -1,7 +1,7 @@
 /* */
 
 import express from "express";
-import { aux, mw } from "./middlewares.js";
+import { aux, mw, AppError } from "./middlewares.js";
 import { config } from "./_config.js";
 
 const weatherRouter = express.Router();
@@ -15,7 +15,7 @@ weatherRouter.get("/v1/weather", async function (req, res, next) {
       data = await weather.getFromGeo(req);
     }
     if (!data) {
-      mw.sendResult(res, 400, { "msg": aux.badRequest }, false);
+      next(new AppError(400, aux.badRequest));
       return;
     }
     mw.sendResult(res, 200, data, false);
@@ -37,17 +37,21 @@ const weather = {
     let getCityByIP = this.auxUrl + aux.getIP(req);
     const [data, err] = await aux.fetchData(getCityByIP);
     if (err) {
-      throw new Error(err.message);
+      throw new AppError(500, `Weather Service Error: ${err.message}`);
     }
     if (data.city !== '') {
       return this.cityToTemp(data.city);
     }
+    throw new AppError(500, "Invalid Data Response");
   },
   cityToTemp: async function (city) {
     const url = this.base + config.weather.apiKey1 + "&q=" + city + "&aqi=no";
     const [data, err] = await aux.fetchData(url);
     if (err) {
-      throw new Error(err.message);
+      throw new AppError(500, `Weather Service Error: ${err.message}`);
+    }
+    if (!data) {
+      throw new AppError(500, "Invalid Data Response");
     }
     this.data = {};
     this.data.city = city;

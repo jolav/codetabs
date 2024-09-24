@@ -20,7 +20,7 @@ describe('HEADERS TEST ', function () {
         expect(res).to.have.status(400);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('msg', aux.badRequest);
+        expect(res.body).to.have.property('msg', "Domain is empty");
         done();
       });
   });
@@ -33,7 +33,7 @@ describe('HEADERS TEST ', function () {
         expect(res).to.have.status(400);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('msg', aux.badRequest);
+        expect(res.body).to.have.property('msg', "Domain is empty");
         done();
       });
   });
@@ -47,7 +47,7 @@ describe('HEADERS TEST ', function () {
         expect(res).to.have.status(500);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('msg', t1);
+        expect(res.body).to.have.property('msg', "Internal Server Error");
         done();
       });
   });
@@ -75,7 +75,7 @@ describe('HEADERS TEST ', function () {
         expect(res).to.have.status(500);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('msg', t2);
+        expect(res.body).to.have.property('msg', "Internal Server Error");
         done();
       });
   });
@@ -89,7 +89,7 @@ describe('HEADERS TEST ', function () {
         expect(res).to.have.status(500);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('msg', t2);
+        expect(res.body).to.have.property('msg', "Internal Server Error");
         done();
       });
   });
@@ -134,6 +134,20 @@ describe('HEADERS TEST ', function () {
         expect(res).to.have.status(200);
         expect(res).to.be.json;
         expect(res.body).to.be.an('array').to.have.lengthOf(3);
+        done();
+      });
+  });
+  it('params instead query 1', function (done) {
+    const t = "Route Not Found";
+    chai.request.execute(url)
+      .get('/v1/headers/codetabs.com')
+      .end(function (err, res) {
+        // console.log('PATH=> ', res.req.path)
+        expect(err).to.be.null;
+        expect(res).to.have.status(404);
+        expect(res).to.be.json;
+        expect(res.body).to.be.an('object');
+        expect(res.body).to.have.property('msg', t);
         done();
       });
   });

@@ -5,7 +5,7 @@ import helmet from 'helmet';
 import bodyParser from "body-parser";
 
 import { config } from "./_config.js";
-import { mw, aux } from "./middlewares.js";
+import { mw, aux, AppError } from "./middlewares.js";
 import { randomRouter } from "./random.js";
 import { headersRouter } from "./headers.js";
 import { weatherRouter } from "./weather.js";
@@ -32,12 +32,19 @@ app.use(weatherRouter);
 app.use(alexaRouter);
 
 app.use(function notFound(req, res, next) {
-  mw.sendResult(res, 400, { "msg": aux.badRequest }, false);
+  next(new AppError(404, "Route Not Found"));
 });
 
 app.use(function errorHandler(err, req, res, next) {
-  console.error(err.message);
-  mw.sendResult(res, 500, { "msg": err.message }, false);
+  if (!err.isOperational) {
+    console.error("Unexpected Error:", err.stack || err);
+  }
+  const status = err.status || 500;
+  let message = "Internal Server Error";
+  if (err.isOperational) {
+    message = err.message;
+  }
+  mw.sendResult(res, status, { "msg": message }, false);
 });
 
 app.listen(config.port, function () {

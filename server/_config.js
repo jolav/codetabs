@@ -18,6 +18,7 @@ const config = {
     "headers",
     "weather",
     "alexa",
+    "geolocation",
   ],
   "banned": [],
   "weather": {}

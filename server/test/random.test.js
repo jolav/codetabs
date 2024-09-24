@@ -21,13 +21,13 @@ describe("RANDOM API TESTS", () => {
           done();
         });
     });
-    it("should return a bad request if only service is ok ", (done) => {
+    it("should return a 404 if only service is ok ", (done) => {
       chai
         .request.execute(url)
         .get("/v1/random")
         .end((err, res) => {
-          expect(res).to.have.status(400);
-          expect(res.body).to.have.property("msg", aux.badRequest);
+          expect(res).to.have.status(404);
+          expect(res.body).to.have.property("msg", "Route Not Found");
           done();
         });
     });
@@ -36,8 +36,8 @@ describe("RANDOM API TESTS", () => {
         .request.execute(url)
         .get("/v1/random/inte")
         .end((err, res) => {
-          expect(res).to.have.status(400);
-          expect(res.body).to.have.property("msg", aux.badRequest);
+          expect(res).to.have.status(404);
+          expect(res.body).to.have.property("msg", "Route Not Found");
           done();
         });
     });

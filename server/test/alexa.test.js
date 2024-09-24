@@ -20,7 +20,7 @@ describe('ALEXA TEST ', function () {
         expect(res).to.have.status(400);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('Error', 'Domain is empty');
+        expect(res.body).to.have.property('msg', 'Domain is empty');
         done();
       });
   });
@@ -45,7 +45,7 @@ describe('ALEXA TEST ', function () {
       .end(function (err, res) {
         // console.log('PATH=> ', res.req.path)
         expect(err).to.be.null;
-        expect(res).to.have.status(400);
+        expect(res).to.have.status(200);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('Error', t);
@@ -59,7 +59,7 @@ describe('ALEXA TEST ', function () {
       .end(function (err, res) {
         // console.log('PATH=> ', res.req.path)
         expect(err).to.be.null;
-        expect(res).to.have.status(400);
+        expect(res).to.have.status(200);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('Error', t);
@@ -130,7 +130,7 @@ describe('ALEXA TEST ', function () {
       .end(function (err, res) {
         // console.log('PATH=> ', res.req.path)
         expect(err).to.be.null;
-        expect(res).to.have.status(400);
+        expect(res).to.have.status(200);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
         expect(res.body).to.have.property('Error', t);
@@ -216,30 +216,30 @@ describe('ALEXA TEST ', function () {
       });
   });
   it('params instead query 1', function (done) {
-    const t = "Domain is empty";
+    const t = "Route Not Found";
     chai.request.execute(url)
       .get('/v1/alexa/codetabs.com')
       .end(function (err, res) {
         // console.log('PATH=> ', res.req.path)
         expect(err).to.be.null;
-        expect(res).to.have.status(400);
+        expect(res).to.have.status(404);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('msg', aux.badRequest);
+        expect(res.body).to.have.property('msg', t);
         done();
       });
   });
   it('params instead query 2', function (done) {
-    const t = "Domain is empty";
+    const t = "Route Not Found";
     chai.request.execute(url)
       .get('/v1/alexa/get/codetabs.com')
       .end(function (err, res) {
         // console.log('PATH=> ', res.req.path)
         expect(err).to.be.null;
-        expect(res).to.have.status(400);
+        expect(res).to.have.status(404);
         expect(res).to.be.json;
         expect(res.body).to.be.an('object');
-        expect(res.body).to.have.property('msg', aux.badRequest);
+        expect(res.body).to.have.property('msg', t);
         done();
       });
   });
