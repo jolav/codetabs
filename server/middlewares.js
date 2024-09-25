@@ -77,7 +77,10 @@ const hits = {
       }
     };
     try {
-      const service = res.locals.info.service;
+      let service = res.locals.info.service;
+      if (service === "geolocation") {
+        service = "geoip";
+      }
       const targetUrl = "http://localhost:3970/addHit/" + service;
       const response = await fetch(targetUrl, options);
       if (!response.ok) {
@@ -152,6 +155,34 @@ const aux = {
       return [null, err];
     }
   },
+  isValidIP: function (ip) {
+    const ip4 = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+    const ip6 = /(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))/;
+    if (ip4.test(ip)) {
+      return true;
+    }
+    if (ip6.test(ip)) {
+      return true;
+    }
+    return false;
+  },
+  isValidHostname: function (hostname) {
+    if (!hostname || hostname.length > 255) {
+      return false;
+    }
+    const ipv4Pattern = /^(\d{1,3}\.){3}\d{1,3}$/;
+    if (ipv4Pattern.test(hostname)) {
+      return false;  // is a IP
+    }
+    const condition = /^(?!-)[A-Za-z0-9-]{1,63}(?<!-)$/;
+    const parts = hostname.split('.');
+    for (let part of parts) {
+      if (!condition.test(part)) {
+        return false;
+      }
+    }
+    return true;
+  }
 };
 
 class AppError extends Error {

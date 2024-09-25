@@ -1,6 +1,6 @@
 {
   "name": "codetabs",
-  "version": "0.10.4",
+  "version": "0.10.5",
   "description": "server for codetabs",
   "main": "codetabs.js",
   "scripts": {
@@ -23,7 +23,8 @@
   "dependencies": {
     "body-parser": "^2.0.0-beta.2",
     "express": "^5.0.0",
-    "helmet": "^7.1.0"
+    "helmet": "^7.1.0",
+    "ip2location-nodejs": "^9.6.1"
   },
   "type": "module",
   "devDependencies": {

@@ -1,11 +1,11 @@
 
-![Version](https://img.shields.io/badge/version-0.10.4-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.10.5-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-**version 0.10.4**
+**version 0.10.5**
 
 1. [Count LOC (lines of code) online from github/gitlab repos or zipped uploaded folder](#count-loc-online)  
 2. [CORS proxy](#cors-proxy)  
@@ -137,7 +137,7 @@ You can use to prevent mixed content of images and JSON data proxying the resour
 - Free service that provides a public secure API (CORS enabled) to retrieve geolocation from any IP or hostname.  
 - 10 request per second. Once reached subsequent requests will result in error 429 until your quota is cleared.  
 - This API requires no key or signup.  
-- JSON and XML supported
+- JSON supported
 - IPv4 and IPv6 supported  
 - CORS support out of the box makes this perfect to your front end apps or webs  
 
@@ -146,8 +146,6 @@ Examples
 
 https://api.codetabs.com/v1/geolocation/json  
 https://api.codetabs.com/v1/geolocation/json?q=codetabs.com  
-https://api.codetabs.com/v1/geolocation/xml?q=8.8.8.8  
-https://api.codetabs.com/v1/geolocation/xml?q=2a00:1450:4006:803::200e  
 
 Response JSON :
 

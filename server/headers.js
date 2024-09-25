@@ -9,8 +9,8 @@ headersRouter.get("/v1/headers", async function (req, res, next) {
     next(new AppError(400, "Domain is empty"));
     return;
   }
-  const response = await headers.getHeaders(req);
   try {
+    const response = await headers.getHeaders(req);
     if (!response) {
       next(new AppError(400, aux.badRequest));
       return;

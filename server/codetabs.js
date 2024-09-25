@@ -10,6 +10,7 @@ import { randomRouter } from "./random.js";
 import { headersRouter } from "./headers.js";
 import { weatherRouter } from "./weather.js";
 import { alexaRouter } from "./alexa.js";
+import { geolocationRouter } from "./geolocation.js";
 
 const app = express();
 app.use(helmet());
@@ -30,6 +31,7 @@ app.use(randomRouter);
 app.use(headersRouter);
 app.use(weatherRouter);
 app.use(alexaRouter);
+app.use(geolocationRouter);
 
 app.use(function notFound(req, res, next) {
   next(new AppError(404, "Route Not Found"));

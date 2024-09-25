@@ -6,13 +6,14 @@ import { mw, AppError } from "./middlewares.js";
 import { createRequire } from "module";
 
 const alexaRouter = express.Router();
+//  GET https://api.codetabs.com/v1/geolocation/json?q=ip4|ip6|hostname 
 alexaRouter.get('/v1/alexa', function (req, res, next) {
   if (!req.query.web) {
     next(new AppError(400, "Domain is empty"));
     return;
   }
-  const [response, err] = alexa.position(req, res, next);
   try {
+    const [response, err] = alexa.position(req, res, next);
     if (err) {
       mw.sendResult(res, 200, err, false);
       return;
