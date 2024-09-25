@@ -14,14 +14,15 @@
 5. [Alexa Ranking](#alexa)  
 6. [HTTP Headers](#headers)  
 7. [API weather temp](#weather)  
-8. [Random Data API](#random-data-api)
+8. [Video To Gif](#video2gif)
+9. [Random Data API](#random-data-api)
 
 
 [To Do List](#to-do)
 
 In order to run this program you need installed
 
-`apt install curl git p7zip zip unzip ffmpeg gifsicle`
+`apt install curl git p7zip zip unzip ffmepg gifsicle`
 
 <hr>
 
@@ -137,7 +138,7 @@ You can use to prevent mixed content of images and JSON data proxying the resour
 - Free service that provides a public secure API (CORS enabled) to retrieve geolocation from any IP or hostname.  
 - 10 request per second. Once reached subsequent requests will result in error 429 until your quota is cleared.  
 - This API requires no key or signup.  
-- JSON supported
+- JSON and XML supported
 - IPv4 and IPv6 supported  
 - CORS support out of the box makes this perfect to your front end apps or webs  
 
@@ -146,6 +147,8 @@ Examples
 
 https://api.codetabs.com/v1/geolocation/json  
 https://api.codetabs.com/v1/geolocation/json?q=codetabs.com  
+https://api.codetabs.com/v1/geolocation/xml?q=8.8.8.8  
+https://api.codetabs.com/v1/geolocation/xml?q=2a00:1450:4006:803::200e  
 
 Response JSON :
 
@@ -200,11 +203,40 @@ Tool to get list of response headers including redirect chain of a HTTP connecti
 
 - Petitions are limited to 5 per sec. You will get a 429 error if you exceed 
 - CORS is enabled allowing Javascript make requests across domain boundaries
-- JSON Supported   
+- Supported formats, json and xml  
 
 <hr>
 
 ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/gif48.png?raw=true) 
+
+## **VIDEO2GIF**
+
+### **[Video2Gif Converter online](https://codetabs.com/video2gif/video-to-gif.html)**
+
+- Tool for converting videos to animated gifs
+- File max size 100mb
+- Limit : 1 request every 30 seconds. Once reached subsequent requests will result in error 429 (too many requests) until your quota is cleared.
+
+**Parameters** 
+
+Frames : Set frame rate (frames per second). Max value 10, default 5.
+
+Start : Seek to given time position in seconds. "hh:mm:ss" syntax is also supported. Default is from start
+> - 100 - begin from second 100   
+> - 01:40 - begin from minute 1 and second 40  
+
+Duration : Restrict the captured video sequence to the duration specified in seconds. "hh:mm:ss" syntax is also supported. Default is all duration
+> - 200 - take 200 seconds from start  
+> - 03:20 - take 3 minutes and 20 seconds from start  
+
+Scale : Set width:height , if one parameter is -1 it will automatically determine the other while preserving the aspect ratio. Default is 320:160. Max 480.
+> - 480:480 set width = 480 and height = 480  
+> - 380:-1 set width = 380 and height automatically preserving the aspect ratio  
+> - -1:320 set height = 320 and width automatically preserving the aspect ratio  
+
+<hr>
+
+![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/random48.png?raw=true) 
 
 ## **RANDOM DATA API**
 
@@ -230,7 +262,7 @@ You can also specify how many times you want the result with the parameter times
 Default is 1 and there is no need to specify it. Max times = 10.000  
 https://api.codetabs.com/v1/random/integer?min=1&max=10&times=50
 
-- Integers List with randomized order  
+- List with randomized order  
 ```
 http Request :
 GET https://api.codetabs.com/v1/random/list?len=X
@@ -238,12 +270,6 @@ GET https://api.codetabs.com/v1/random/list?len=X
 Max list elements : 10.000  
 Example: Get random order numbers for a list of 1000 elements  
 https://api.codetabs.com/v1/random/list?len=1000 
-
-- Get Random Name among 90k  
-```
-http Request :
-GET https://api.codetabs.com/v1/random/name
-```
 
 <hr>
 

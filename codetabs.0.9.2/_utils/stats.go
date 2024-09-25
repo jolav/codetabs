@@ -30,9 +30,11 @@ func AddHit(w http.ResponseWriter, r *http.Request, service, mode string,
 
 	if mode == "production" {
 		hLog.Println(ip, sv, host, askingFor)
+		saveHit2(ip, sv, host, askingFor)
 		hitUrl := "http://localhost:3970/addHit/" + service
 		saveHit(w, hitUrl)
 	} else {
+		saveHit2(ip, sv, host, askingFor)
 		log.Println(ip, sv, host, askingFor)
 	}
 }
