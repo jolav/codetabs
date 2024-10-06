@@ -10,8 +10,8 @@ import (
 	"strings"
 	"time"
 
-	u "github.com/jolav/codetabs/_utils"
-	"github.com/jolav/codetabs/store"
+	u "github.com/jolav/codetabs.0.9.2/_utils"
+	"github.com/jolav/codetabs.0.9.2/store"
 )
 
 type star struct {

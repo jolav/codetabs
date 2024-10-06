@@ -1,4 +1,4 @@
-module github.com/jolav/codetabs
+module github.com/jolav/codetabs.0.9.2
 
 go 1.14
 

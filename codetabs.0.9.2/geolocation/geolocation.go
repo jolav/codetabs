@@ -10,7 +10,7 @@ import (
 	"strings"
 
 	"github.com/ip2location/ip2location-go/v9"
-	u "github.com/jolav/codetabs/_utils"
+	u "github.com/jolav/codetabs.0.9.2/_utils"
 )
 
 const (

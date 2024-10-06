@@ -16,6 +16,8 @@ _private.json
 a_private.go
 banned.list
 codetabsData.db3
+*.db*
+*.db3*
 *.db3
 # 
 

@@ -12,7 +12,7 @@ import (
 
 func TestLocApi(t *testing.T) {
 
-	l := NewLoc(true)
+	i := NewIndex(true)
 
 	type locTestOutput struct {
 		Domain     string `json:"domain"`
@@ -55,7 +55,7 @@ func TestLocApi(t *testing.T) {
 		}
 		if pass {
 			rr := httptest.NewRecorder()
-			handler := http.HandlerFunc(l.Router)
+			handler := http.HandlerFunc(i.Router)
 			handler.ServeHTTP(rr, req)
 			if rr.Code != test.statusCode {
 				t.Errorf("%s got %v want %v\n", test.endpoint, rr.Code, test.statusCode)

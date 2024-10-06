@@ -11,7 +11,7 @@ import (
 	"strings"
 	"time"
 
-	u "github.com/jolav/codetabs/_utils"
+	u "github.com/jolav/codetabs.0.9.2/_utils"
 )
 
 type proxy struct {
