@@ -1,5 +1,5 @@
 
-![Version](https://img.shields.io/badge/version-0.9.2-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.11.0-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 

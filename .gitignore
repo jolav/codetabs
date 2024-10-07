@@ -9,6 +9,7 @@ data/
 
 #Ignore these files
 .air.conf
+.air.toml
 .env
 .DS_Store
 _private.js
