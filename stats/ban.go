@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"strings"
 
-	h "github.com/jolav/codetabs/internal"
+	h "github.com/jolav/codetabs/_utils"
 )
 
 var list []string
@@ -18,7 +18,7 @@ func init() {
 }
 
 func loadList() []string {
-	list, err := h.ReadFileLineByLine("stats/banned.list")
+	list, err := h.ReadFileLineByLine("_data/banned.list")
 	if err != nil {
 		log.Println("ERROR loading Banned.list => ", err)
 		return []string{}

@@ -1,16 +1,17 @@
 /* */
 
-package internal
+package utils
 
 import (
 	"encoding/json"
 	"log"
 	"net/http"
 	"strings"
+	"time"
 )
 
 const (
-	validFormat = "Bad request, valid format is 'api.codetabs.com/v1/{service}?{param}=value' .Please read our docs at https://codetabs.com"
+	validFormat = "Bad request, valid format is 'api.codetabs.com/v1/{service}?{param}=value'. Please read our docs at https://codetabs.com"
 )
 
 func SendResponse(w http.ResponseWriter, d interface{}, s int) {
@@ -37,6 +38,28 @@ func SendResponse(w http.ResponseWriter, d interface{}, s int) {
 	if err != nil {
 		log.Printf("ERROR writing JSON response: %v\n", err)
 	}
+}
+
+func FetchGET(path string, d interface{}) error {
+	client := &http.Client{
+		Timeout: 10 * time.Second,
+	}
+
+	resp, err := client.Get(path)
+	if err != nil {
+		log.Printf("ERROR: Request %s => %v", path, err)
+		return err
+	}
+	defer resp.Body.Close()
+
+	decoder := json.NewDecoder(resp.Body)
+	err = decoder.Decode(&d)
+	if err != nil {
+		log.Printf("ERROR unnmarshalling => %v", err)
+		return err
+	}
+
+	return nil
 }
 
 func GetIP(r *http.Request) string {

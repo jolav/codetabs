@@ -1,6 +1,6 @@
 /* */
 
-package internal
+package utils
 
 import (
 	"bufio"

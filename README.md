@@ -1,11 +1,11 @@
 
-![Version](https://img.shields.io/badge/version-0.11.0-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.11.1-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-**version 0.9.2**
+**version 0.11.1**
 
 1. [Count LOC (lines of code) online from github/gitlab repos or zipped uploaded folder](#count-loc-online)  
 2. [CORS proxy](#cors-proxy)  
@@ -239,40 +239,21 @@ Max list elements : 10.000
 Example: Get random order numbers for a list of 1000 elements  
 https://api.codetabs.com/v1/random/list?len=1000 
 
+
 - Get Random Name among 90k  
+**SOON - NOT YET**
+
 ```
 http Request :
 GET https://api.codetabs.com/v1/random/name
 ```
 
+Example   
+Get random name  
+https://api.codetabs.com/v1/random/name
+
+
 <hr>
-
-## TO DO
-
-- [ ] **WWW** clean unused parts, css, etc
-- [ ] **WWW** change web design
-
-- [ ] **ALL** Fix the tests. They are outdated and unusable.
-
-- [X] **LOC** Save Historical Data  
-- [X] **LOC** Gitlab  
-- [ ] **LOC** Bitbucket  
-- [X] **LOC** Use same colours for languages as github   
-- [X] **LOC** Change cgag/loc  
-- [X] **LOC** Select different branch than master  
-- [X] **LOC** toggle pie chart to showing non blank lines  
-- [X] **LOC** box to ignore patterns such as ./vendor  
-- [ ] **LOC** update line count when hiding languages  
-
-- [X] **STARS** Save Historical Data (unstar = problem)  
-- [X] **STARS** Gitlab  
-- [ ] **STARS** Optimize doing far fewer requests. Extrapolate data  
-
-- [ ] **GEOLOCATION** Use csv data instead bin for remove dependency and load all data in memory ???   
-
-- [X] **WEATHER** Search more sources for weather data
-
-- [X] **VIDEO2GIF** Get better compression
 
 ## **Acknowledgment**
 

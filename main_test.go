@@ -13,7 +13,7 @@ func TestMainApi(t *testing.T) {
 	const (
 		serverURL = "http://localhost:3000"
 
-		validFormat = "Bad request, valid format is 'api.codetabs.com/v1/{service}?{param}=value' .Please read our docs at https://codetabs.com"
+		validFormat = "Bad request, valid format is 'api.codetabs.com/v1/{service}?{param}=value'. Please read our docs at https://codetabs.com"
 	)
 
 	type mainTestOutput struct {

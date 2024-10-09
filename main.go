@@ -12,11 +12,12 @@ import (
 	"time"
 
 	"github.com/jolav/codetabs/stats"
+	"github.com/jolav/codetabs/weather"
 
-	h "github.com/jolav/codetabs/internal"
+	h "github.com/jolav/codetabs/_utils"
 )
 
-var version = "0.11.0"
+var version = "0.11.1"
 var when = "undefined"
 
 type config struct {
@@ -46,7 +47,7 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	//mux.HandleFunc("/v1/service", mw(service.Router, "proxy", c))
+	mux.HandleFunc("/v1/weather", mw(weather.Router, "weather", c))
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		go stats.LogHit(r, "?????", c.mode, c.hitLog)
 		h.SendResponse(w, nil, http.StatusBadRequest)
@@ -59,7 +60,8 @@ func main() {
 		MaxHeaderBytes: 1 << 20,
 	}
 
-	log.Printf("Server up listening %s in mode %s", server.Addr, c.mode)
+	log.Printf("Server up  v%s listening %s in mode %s",
+		version, server.Addr, c.mode)
 	server.ListenAndServe()
 }
 

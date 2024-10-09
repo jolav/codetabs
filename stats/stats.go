@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	h "github.com/jolav/codetabs/internal"
+	h "github.com/jolav/codetabs/_utils"
 )
 
 var netClient = &http.Client{ //reuse, instead creating new client
