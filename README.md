@@ -1,11 +1,11 @@
 
-![Version](https://img.shields.io/badge/version-0.11.1-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.11.2-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-**version 0.11.1**
+**version 0.11.2**
 
 1. [Count LOC (lines of code) online from github/gitlab repos or zipped uploaded folder](#count-loc-online)  
 2. [CORS proxy](#cors-proxy)  
@@ -21,7 +21,7 @@
 
 In order to run this program you need installed
 
-`apt install curl git p7zip zip unzip ffmpeg gifsicle`
+`apt install curl git p7zip zip unzip`
 
 <hr>
 
@@ -29,44 +29,19 @@ In order to run this program you need installed
 
 ## **COUNT LOC ONLINE** 
 
-### **[DEMO and DOCS online](https://codetabs.com/count-loc/count-loc-online.html)**
+### **[DEMO and API DOCS online](https://codetabs.com/count-loc/count-loc-online.html)**
 
-- Enter user/repo , then click add or select a zipped folder and upload it  
+- Count lines of code, blank lines, comment lines, and physical lines of source code in many programming languages.
+- Enter user/repo , then click add 
 - Can count GitHub and GitLab repos  
 - Max GitHub/GitLab Repo size : 500 mb, greater repos will not work.  
-- File max size for upload 200mb;  
 - Can select a branch different than master using &branch=branchName  
 - Can ignore files or directories writing them separated by commas in the ignoreBox.  
-- Petitions are limited to 1 every 5 secs. You will get a 429 error if you exceed  
 - Default colors are the same as github.  
 - You can edit the colors of the segments by clicking on any point of it.
 Segment will randomly change color as it is clicked.  
 
 ![Example](https://github.com/jolav/codetabs/blob/master/www/_public/images/locExample.png?raw=true)
-
-**API LOC**
-
-* curl Request  
-add -L flag  
-`curl -L https://api.codetabs.com/v1/loc?source=username/reponame`
-
-*  Make a GET HTTP Request   
-`https://api.codetabs.com/v1/loc?github=USERNAME/REPONAME`  
-`https://api.codetabs.com/v1/loc?gitlab=USERNAME/REPONAME`  
-
-If you want a different branch than master  
-`https://api.codetabs.com/v1/loc?SOURCE=USERNAME/REPONAME&branch=branchName`  
-
-Ignore files or directories  
-`https://api.codetabs.com/v1/loc?SOURCE=USERNAME/REPONAME&ignored=DIRNAME1,DIRNAME2,FILENAME`
-
-
-Example :   
-https://api.codetabs.com/v1/loc?github=jolav/betazone  
-https://api.codetabs.com/v1/loc?gitlab=jolav/chuletas  
-https://api.codetabs.com/v1/loc?github=imageMagick/imageMagick&branch=gh-pages  
-https://api.codetabs.com/v1/loc?github=jolav/betazone&ignored=www,main.go   
-
 
 Response (JSON) :
 
@@ -98,15 +73,10 @@ Response (JSON) :
 
 ## **CORS-PROXY**
 
-
-### **[Read DOCS online](https://codetabs.com/cors-proxy/cors-proxy.html)**
+### **[API DOCS online](https://codetabs.com/cors-proxy/cors-proxy.html)**
 
 - Free CORS proxy server to bypass same-origin policy related to performing standard AJAX requests to 3rd party services.
 You can use to prevent mixed content of images and JSON data proxying the resources to serve them under https.
-- API URL => append the url with the resource you want to "https://api.codetabs.com/v1/proxy/"
-- Each request is limited to 5mb size download to avoid abuse.
-- Only suppports GET request.
-- Limit : 5 request per second. Once reached subsequent requests will result in error 429 (too many requests) until your quota is cleared. 
 
 <hr>
 
@@ -114,11 +84,10 @@ You can use to prevent mixed content of images and JSON data proxying the resour
 
 ## **GITHUB GITLAB STARS GRAPHICAL HISTORY**
 
-### **[DEMO online](https://codetabs.com/github-stars/github-star-history.html)**
+### **[DEMO and API DOCS online](https://codetabs.com/github-stars/github-star-history.html)**
 
 - Select Github or GitLab source.  
 - Enter user/repo , then click add.
-- Petitions are limited to 1 every 5 secs. You will get a 429 error if you exceed  
 - You can edit the colors of the lines by clicking on any point of it. Line will randomly change color as it is clicked.  
 
 ![Example2](https://github.com/jolav/codetabs/blob/master/www/_public/images/starExample2.png?raw=true)
@@ -131,23 +100,14 @@ You can use to prevent mixed content of images and JSON data proxying the resour
 
 ## **IP GEOLOCATION**
 
-### **[Demo and Docs online](https://codetabs.com/ip-geolocation/ip-geolocation.html)**
+### **[DEMO and API Docs online](https://codetabs.com/ip-geolocation/ip-geolocation.html)**
 
 
 - Free service that provides a public secure API (CORS enabled) to retrieve geolocation from any IP or hostname.  
-- 10 request per second. Once reached subsequent requests will result in error 429 until your quota is cleared.  
 - This API requires no key or signup.  
 - JSON supported
 - IPv4 and IPv6 supported  
 - CORS support out of the box makes this perfect to your front end apps or webs  
-
-
-Examples
-
-https://api.codetabs.com/v1/geolocation/json  
-https://api.codetabs.com/v1/geolocation/json?q=codetabs.com  
-
-Response JSON :
 
 ```json
 {   
@@ -170,13 +130,9 @@ Response JSON :
 
 ## **ALEXA**
 
-### **Update Feb-23 : Alexa Rank is gone. This file is deprecated and is not being updated anymore.** **This file was last updated on February 1, 2023.**
-  
-**Tool for know Alexa Ranking Top 1 million about a website**  
+### **[DEMO and API DOCS online](https://codetabs.com/alexa/alexa-ranking.html)**
 
-### **[Get Alexa Ranking Online](https://codetabs.com/alexa/alexa-ranking.html)**
-
-- Petitions are limited to 5 per second. You will get a 429 error if you exceed  
+ - Tool for know Alexa Ranking Top 1 million about a website.Alexa ranking is deprecated. Last Update on February 1, 2023  
 
 <hr>
 
@@ -184,11 +140,9 @@ Response JSON :
 
 ## **HEADERS**
 
-Tool to get list of response headers including redirect chain of a HTTP connection
+### **[DEMO and API DOCS online](https://codetabs.com/http-headers/headers.html)**  
 
-### **[DEMO and DOCS online](https://codetabs.com/http-headers/headers.html)**
-
-- Petitions are limited to 5 per second. You will get a 429 error if you exceed
+ - Tool to get list of response headers including redirect chain of a HTTP connection
 
 <hr>
 
@@ -196,11 +150,9 @@ Tool to get list of response headers including redirect chain of a HTTP connecti
 
 ## **WEATHER** 
 
-### **[Read DOCS online](https://codetabs.com/weather/weather.html)**
+### **[API DOCS online](https://codetabs.com/weather/weather.html)**
 
-- Petitions are limited to 5 per sec. You will get a 429 error if you exceed 
-- CORS is enabled allowing Javascript make requests across domain boundaries
-- JSON Supported   
+ - Retrieve actual temp (ºC and ºF) based on your public IP geolocation or a city passed as a parameter 
 
 <hr>
 
@@ -208,50 +160,11 @@ Tool to get list of response headers including redirect chain of a HTTP connecti
 
 ## **RANDOM DATA API**
 
-### **[Demo and Docs online](https://codetabs.com/random-data/random-data.html)**
+### **[API Docs online](https://codetabs.com/random-data/random-data.html)**
 
-- Api to generate random data
-- Only suppports GET request.
-- Limit : 10 request per seconds. Once reached subsequent requests will result in error 429 (too many requests) until your quota is cleared.  
-
-
-### **Endpoints**  
-
-- Get Random Integers
-```
-http Request :
-GET https://api.codetabs.com/v1/random/integer?range=X-Y
-```  
-
-Examples
-Get random number between 1-10 both inclusive  
-https://api.codetabs.com/v1/random/integer?min=1&max=10  
-You can also specify how many times you want the result with the parameter times.
-Default is 1 and there is no need to specify it. Max times = 10.000  
-https://api.codetabs.com/v1/random/integer?min=1&max=10&times=50
-
-- Integers List with randomized order  
-```
-http Request :
-GET https://api.codetabs.com/v1/random/list?len=X
-``` 
-Max list elements : 10.000  
-Example: Get random order numbers for a list of 1000 elements  
-https://api.codetabs.com/v1/random/list?len=1000 
-
-
-- Get Random Name among 90k  
-**SOON - NOT YET**
-
-```
-http Request :
-GET https://api.codetabs.com/v1/random/name
-```
-
-Example   
-Get random name  
-https://api.codetabs.com/v1/random/name
-
+ - Random Integers
+ - Lists of integers with randomized order  
+ - Random Names   
 
 <hr>
 

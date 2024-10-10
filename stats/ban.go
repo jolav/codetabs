@@ -13,12 +13,16 @@ import (
 
 var list []string
 
+const (
+	bannedListPath = "_data/banned.list"
+)
+
 func init() {
 	list = loadList()
 }
 
 func loadList() []string {
-	list, err := h.ReadFileLineByLine("_data/banned.list")
+	list, err := h.ReadFileLineByLine(bannedListPath)
 	if err != nil {
 		log.Println("ERROR loading Banned.list => ", err)
 		return []string{}

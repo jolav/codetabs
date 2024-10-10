@@ -23,8 +23,8 @@
     </h1>
   </header>
 
-  <h2 class="centerText deprecated" style="border: 5px solid #ff6565;
-  background-color: #ff6565;">NEW</h2>
+  <!--<h2 class="centerText deprecated" style="border: 5px solid #ff6565;
+  background-color: #ff6565;">NEW</h2>-->
 
   <!-- Version -->
   <span id="version"></span>
@@ -72,7 +72,8 @@
   <a href="https://api.codetabs.com/v1/random/integer?min=1&max=10"> https://api.codetabs.com/v1/random/integer?min=1&max=10</a> 
         </code>
       </span><br>
-      <span>You can also specify how many times you want the result with the parameter <code>times</code>.<br>
+      <span>Valid Range: 0 - 10.000.000.000<br>
+        You can also specify how many times you want the result with the parameter <code>times</code>.<br>
         Default is 1 and there is no need to specify it. Max times = 10.000<br>
         <code>
   <a href="https://api.codetabs.com/v1/random/integer?min=1&max=10&times=50"> https://api.codetabs.com/v1/random/integer?min=1&max=10&amptimes=50></a> 
@@ -113,9 +114,9 @@
     GET https://api.codetabs.com/v1/random/list?len=X 
       </code>
       <br>
-      Max list elements : 10.000<br>
+      Min list elements = 2. Max list elements : 10.000<br>
       <strong>Examples</strong>
-      <br>Get random order numbers for a list of 1000 elements
+      <br>Get randomized order list with 1000 elements
       <br>
       <span>
         <code>
@@ -162,11 +163,9 @@
       <pre class="marginLeft">
         {
           "quest": "Random Name",
-          "data": [
-           "MCBRIEN"
-          ]
-         }      
-           </pre>
+          "name": "POETKER"
+        }
+             </pre>
     </div>
 
   </section>

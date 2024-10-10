@@ -26,6 +26,7 @@ codetabsData.db3
 
 # ignore binaries
 codetabs
+codetabs-0.1*
 
 
 

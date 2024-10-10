@@ -9,6 +9,9 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
+
+	"golang.org/x/exp/rand"
 )
 
 func Includes(slice []string, item string) bool {
@@ -18,6 +21,20 @@ func Includes(slice []string, item string) bool {
 		}
 	}
 	return false
+}
+
+func IncludesInt(slice []int, num int) bool {
+	for _, v := range slice {
+		if v == num {
+			return true
+		}
+	}
+	return false
+}
+
+func RandomInt(min, max int) int {
+	r := rand.New(rand.NewSource(uint64(time.Now().UnixNano())))
+	return r.Intn(max-min+1) + min
 }
 
 func PrettyPrintStruct(s interface{}) {
