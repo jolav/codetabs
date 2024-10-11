@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/jolav/codetabs/_utils/stats"
+	geo "github.com/jolav/codetabs/geolocation"
 	"github.com/jolav/codetabs/headers"
 	"github.com/jolav/codetabs/random"
 	"github.com/jolav/codetabs/ranking"
@@ -20,7 +21,7 @@ import (
 	h "github.com/jolav/codetabs/_utils"
 )
 
-var version = "0.11.4"
+var version = "0.11.5"
 var when = "undefined"
 
 type config struct {
@@ -50,6 +51,7 @@ func main() {
 
 	mux := http.NewServeMux()
 
+	mux.HandleFunc("GET /v1/geolocation/{format}", mw(geo.Router, "geoip", c))
 	mux.HandleFunc("GET /v1/headers", mw(headers.Router, "headers", c))
 	mux.HandleFunc("GET /v1/random/{action}", mw(random.Router, "random", c))
 	mux.HandleFunc("GET /v1/ranking", mw(ranking.Router, "ranking", c))

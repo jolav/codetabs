@@ -1,2 +1,6 @@
+github.com/ip2location/ip2location-go/v9 v9.7.0 h1:ipwl67HOWcrw+6GOChkEXcreRQR37NabqBd2ayYa4Q0=
+github.com/ip2location/ip2location-go/v9 v9.7.0/go.mod h1:MPLnsKxwQlvd2lBNcQCsLoyzJLDBFizuO67wXXdzoyI=
 golang.org/x/exp v0.0.0-20241009180824-f66d83c29e7c h1:7dEasQXItcW1xKJ2+gg5VOiBnqWrJc+rq0DPKyvvdbY=
 golang.org/x/exp v0.0.0-20241009180824-f66d83c29e7c/go.mod h1:NQtJDoLvd6faHhE7m4T/1IY708gDefGGjR/iUW8yQQ8=
+lukechampine.com/uint128 v1.2.0 h1:mBi/5l91vocEN8otkC5bDLhi2KdCticRiwbdB0O+rjI=
+lukechampine.com/uint128 v1.2.0/go.mod h1:c4eWIwlEGaxC/+H1VguhU4PHXNWDCDMUlWdIWl2j1gk=
