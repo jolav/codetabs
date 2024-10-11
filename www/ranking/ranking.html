@@ -3,7 +3,7 @@
 
 <head>
 
-  <title>Alexa Ranking</title>
+  <title>Web Ranking</title>
 
   <!--Head -->
   <span id="head"></span>
@@ -14,18 +14,18 @@
 
   <header class="header">
     <h1 class="small">
-      <img class="verticalImage" alt="Logo" src="/_public/sprites/alexa32.png">
-      <span> Alexa Ranking</span>
+      <img class="verticalImage" alt="Logo" src="/_public/sprites/ranking32.png">
+      <span> Web Ranking</span>
     </h1>
     <h1 class="big">
-      <img class="verticalImage" alt="Logo" src="/_public/icons/alexa48.png">
-      <span> Alexa Ranking</span>
+      <img class="verticalImage" alt="Logo" src="/_public/icons/ranking48.png">
+      <span> Web Ranking</span>
     </h1>
 
-    <h2 class="centerText deprecated" style="border: 5px solid #ff6565;
+    <!--<h2 class="centerText deprecated" style="border: 5px solid #ff6565;
     background-color: #ff6565;">Update Feb-23 : Alexa Rank is gone<br>.
       This file is deprecated and is not being updated anymore.<br>
-      This file was last updated on February 1, 2023.</h2>
+      This file was last updated on February 1, 2023.</h2>-->
 
     <section class="form" id="getForm">
       <form class="getDomain" onsubmit="return false">
@@ -69,15 +69,16 @@
       <div class="leftText">
         <strong>http Request : </strong>
         <code class="red">
-          GET https://api.codetabs.com/v1/alexa?web=domain.tld 
-      </code>
+          GET https://api.codetabs.com/v1/ranking?alexa=domain.tld 
+      </code><br>
+        Rank = 0 if web not included in top million
         <br>
         <strong>examples : </strong>
         <br>
         <code>
-          <a href="https://api.codetabs.com/v1/alexa?web=github.com"> https://api.codetabs.com/v1/alexa?web=github.com</a> 
+          <a href="https://api.codetabs.com/v1/ranking?alexa=github.com"> https://api.codetabs.com/v1/ranking?alexa=github.com</a> 
           <br>
-          <a href="https://api.codetabs.com/v1/alexa?web=expressjs.com"> https://api.codetabs.com/v1/alexa?web=expressjs.com</a> 
+          <a href="https://api.codetabs.com/v1/ranking?alexa=expressjs.com"> https://api.codetabs.com/v1/ranking?alexa=expressjs.com</a> 
           </code>
         <br>
         <strong>response : </strong>
@@ -104,7 +105,7 @@
       document.getElementById("version").innerHTML = version
       document.getElementById("footer").innerHTML = footer
       data.init()
-      import { init } from './alexa.js';
+      import { init } from './ranking.js';
       init();
     </script>
 

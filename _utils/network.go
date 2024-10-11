@@ -91,6 +91,6 @@ func GetRequestOrigin(r *http.Request) string {
 	case r.Header.Get("Referer") != "":
 		return r.Header.Get("Referer")
 	default:
-		return "?????"
+		return "-----"
 	}
 }

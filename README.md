@@ -1,17 +1,17 @@
 
-![Version](https://img.shields.io/badge/version-0.11.2-orange.svg)  
+![Version](https://img.shields.io/badge/version-0.11.3-orange.svg)  
 ![Maintained YES](https://img.shields.io/badge/Maintained%3F-yes-green.svg)  
 ![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)  
 
 # ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/ct/ct64r.png?raw=true) **ONLINE TOOLS ([codetabs.com](https://codetabs.com))** 
 
-**version 0.11.2**
+**version 0.11.3**
 
 1. [Count LOC (lines of code) online from github/gitlab repos or zipped uploaded folder](#count-loc-online)  
 2. [CORS proxy](#cors-proxy)  
 3. [Github Gitlab Stars graphical history](#github-gitlab-stars-graphical-history)  
 4. [IP GeoLocation](#ip-geolocation)  
-5. [Alexa Ranking](#alexa)  
+5. [Web Ranking](#ranking)  
 6. [HTTP Headers](#headers)  
 7. [API weather temp](#weather)  
 8. [Random Data API](#random-data-api)
@@ -128,7 +128,7 @@ You can use to prevent mixed content of images and JSON data proxying the resour
 
 ![logo](https://github.com/jolav/codetabs/blob/master/www/_public/icons/alexa48.png?raw=true) 
 
-## **ALEXA**
+## **RANKING**
 
 ### **[DEMO and API DOCS online](https://codetabs.com/alexa/alexa-ranking.html)**
 

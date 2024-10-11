@@ -16,15 +16,15 @@ import (
 var surnameList []string
 
 const (
-	namesListPath = "_data/surnames.txt"
+	SURNAMES_FILE_PATH = "_data/surnames.txt"
 )
 
 func init() {
 	fmt.Println("init Random")
 	var err error
-	surnameList, err = h.ReadFileLineByLine(namesListPath)
+	surnameList, err = h.ReadFileLineByLine(SURNAMES_FILE_PATH)
 	if err != nil {
-		log.Print("Surnames files not found")
+		log.Print("INIT ERROR => Surnames files not found")
 		surnameList = []string{}
 	}
 	fmt.Sprintln(surnameList)

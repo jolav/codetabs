@@ -57,10 +57,10 @@ func LogBanned(r *http.Request, service, mode string, bLog *log.Logger) {
 	quest := strings.Trim(fmt.Sprint(r.URL), string(r.URL.Path))
 
 	if mode == "production" {
-		bLog.Println(ip, sv, host, quest)
+		bLog.Println(ip, host, sv, quest)
 	} else {
-		log.Println(ip, sv, host, quest)
+		log.Println(ip, host, sv, quest)
 	}
-	// ????
+	// ?
 	sendToHitCounter(strings.ToLower(service))
 }
