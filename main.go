@@ -12,6 +12,7 @@ import (
 	"time"
 
 	"github.com/jolav/codetabs/_utils/stats"
+	"github.com/jolav/codetabs/headers"
 	"github.com/jolav/codetabs/random"
 	"github.com/jolav/codetabs/ranking"
 	"github.com/jolav/codetabs/weather"
@@ -19,7 +20,7 @@ import (
 	h "github.com/jolav/codetabs/_utils"
 )
 
-var version = "0.11.3"
+var version = "0.11.4"
 var when = "undefined"
 
 type config struct {
@@ -49,6 +50,7 @@ func main() {
 
 	mux := http.NewServeMux()
 
+	mux.HandleFunc("GET /v1/headers", mw(headers.Router, "headers", c))
 	mux.HandleFunc("GET /v1/random/{action}", mw(random.Router, "random", c))
 	mux.HandleFunc("GET /v1/ranking", mw(ranking.Router, "ranking", c))
 	mux.HandleFunc("GET /v1/weather", mw(weather.Router, "weather", c))

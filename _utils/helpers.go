@@ -7,6 +7,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"os/exec"
 	"time"
 
 	"golang.org/x/exp/rand"
@@ -49,4 +50,12 @@ func CheckFlags(version, when string) {
 		fmt.Printf("Date   :\t: %s\n", when)
 		os.Exit(0)
 	}
+}
+
+func ExecCommand(comm string) (chunk []byte, err error) {
+	chunk, err = exec.Command("sh", "-c", comm).CombinedOutput()
+	if err != nil {
+		return nil, err
+	}
+	return chunk, err
 }
