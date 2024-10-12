@@ -1,96 +1,76 @@
 /* */
 
-package utils
+package _utils
 
 import (
 	"encoding/json"
+	"io"
+	"io/ioutil"
 	"log"
+	"net"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 )
 
-const (
-	validFormat = "Bad request, valid format is 'api.codetabs.com/v1/{service}?{param}=value'. Please read our docs at https://codetabs.com"
-)
+// MakeGetRequest ...
+func MakeGetRequest(w http.ResponseWriter, url string, d interface{}) {
+	var netClient = &http.Client{
+		Timeout: time.Second * 10,
+	}
+	resp, err := netClient.Get(url)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-func SendResponse(w http.ResponseWriter, d interface{}, s int) {
-	if s == http.StatusBadRequest {
-		d = struct {
-			Message string `json:"Error"`
-		}{
-			Message: validFormat,
-		}
-	}
-	if d == nil {
-		w.WriteHeader(s)
+	if resp.StatusCode != 200 {
+		log.Fatal(err)
 		return
 	}
-	dataJSON, err := json.MarshalIndent(d, "", " ")
+
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		log.Printf("ERROR Marshaling %v\n", err)
-		http.Error(w, "Internal Server Error", http.StatusInternalServerError)
-		return
+		log.Fatal(err)
 	}
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(s)
-	_, err = w.Write(dataJSON)
+	// body is a string, for use we must Unmarshal over a struct
+	err = json.Unmarshal(body, &d)
 	if err != nil {
-		log.Printf("ERROR writing JSON response: %v\n", err)
+		log.Fatalln(err)
 	}
 }
 
-func FetchGET(path string, d interface{}) error {
-	client := &http.Client{
-		Timeout: 10 * time.Second,
-	}
-
-	resp, err := client.Get(path)
+// DownloadFile ...
+func DownloadFile(filePath string, url string) (err error) {
+	// Create the file
+	out, err := os.Create(filePath)
 	if err != nil {
-		log.Printf("ERROR: Request %s => %v", path, err)
+		return err
+	}
+	defer out.Close()
+	// Get the data
+	resp, err := http.Get(url)
+	if err != nil {
 		return err
 	}
 	defer resp.Body.Close()
-
-	decoder := json.NewDecoder(resp.Body)
-	err = decoder.Decode(&d)
+	// Writer the body to file
+	_, err = io.Copy(out, resp.Body)
 	if err != nil {
-		log.Printf("ERROR unnmarshalling => %v", err)
 		return err
 	}
-
 	return nil
 }
 
+// GetIP ...
 func GetIP(r *http.Request) string {
-	headers := []string{
-		"X-Forwarded-For",
-		"X-Real-IP",
-		"CF-Connecting-IP",
+	ip := r.Header.Get("X-Forwarded-For")
+	ip = strings.Split(ip, ",")[0]
+	if len(ip) > 0 {
+		return ip
 	}
-	for _, header := range headers {
-		ips := r.Header.Get(header)
-		if ips != "" {
-			return strings.TrimSpace(strings.Split(ips, ",")[0])
-		}
-	}
-	ip := r.RemoteAddr
-	colon := strings.LastIndex(ip, ":")
-	if colon != -1 {
-		ip = ip[:colon]
-	}
-	return strings.TrimSpace(ip)
-}
-
-func GetRequestOrigin(r *http.Request) string {
-	switch {
-	case r.Header.Get("Host") != "":
-		return r.Header.Get("Host")
-	case r.Header.Get("Origin") != "":
-		return r.Header.Get("Origin")
-	case r.Header.Get("Referer") != "":
-		return r.Header.Get("Referer")
-	default:
-		return "-----"
-	}
+	ip, _, _ = net.SplitHostPort(r.RemoteAddr)
+	ip = strings.Split(ip, ",")[0]
+	return ip
 }

@@ -1,9 +1,9 @@
 /* */
 
-let baseUrl = 'https://api.codetabs.com/v1/ranking';
+let baseUrl = 'https://api.codetabs.com/v1/alexa';
 const where = window.location.hostname;
 if (where === "localhost" || where === "127.0.0.1") {
-  baseUrl = 'http://localhost:3000/v1/ranking';
+  baseUrl = 'http://localhost:3000/v1/alexa';
 }
 
 function init() {
@@ -21,7 +21,7 @@ function getDomain(e) {
     alert('domain is not a valid hostname');
     return;
   }
-  let urlData = baseUrl + '?alexa=' + domain;
+  let urlData = baseUrl + '?web=' + domain;
   console.log('Request ......', urlData);
   getAjaxData(urlData, showData);
 }

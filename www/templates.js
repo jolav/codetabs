@@ -243,7 +243,7 @@ const version = `
 <h2 class="centerText">
   API doc
   <small>
-    <small>(version 0.11.5)</small>
+    <small>(version 0.9.3)</small>
   </small>
 </h2>
 <!-- End  -->`;

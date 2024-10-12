@@ -16,7 +16,7 @@ func TestHeadersApi(t *testing.T) {
 		validFormat = "Bad request, valid format is 'api.codetabs.com/v1/{service}?{param}=value' .Please read our docs at https://codetabs.com"
 	)
 
-	//h := NewHeaders(true)
+	//h := HeadersRequest(true)
 
 	type headersTestOutput struct {
 		StatusCode int    // `json:"statusCode"`

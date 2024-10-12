@@ -3,7 +3,6 @@
 package geolocation
 
 import (
-	"errors"
 	"fmt"
 	"log"
 	"net"
@@ -11,11 +10,12 @@ import (
 	"strings"
 
 	"github.com/ip2location/ip2location-go/v9"
-	h "github.com/jolav/codetabs/_utils"
+	u "github.com/jolav/codetabs/_utils"
 )
 
 const (
-	DB_FILE_PATH = "./_data/geoDB.bin"
+	DB_FILE_PATH      = "./_data/geolocation/geoDB.bin"
+	DB_FILE_PATH_TEST = "../_data/geolocation/geoDB.bin"
 )
 
 type geoip struct {
@@ -40,61 +40,85 @@ type geoData struct {
 }
 
 func Router(w http.ResponseWriter, r *http.Request) {
-	gd := geoData{}
-	format := strings.ToLower(r.PathValue("format"))
-	switch format {
-	case "json":
-		err := gd.doGeoRequest(r)
-		if err != nil {
-			http.Error(w, err.Error(), http.StatusNotAcceptable)
-			return
-		}
-		h.SendResponse(w, gd, http.StatusOK)
+	params := strings.Split(strings.ToLower(r.URL.Path), "/")
+	path := params[1:len(params)]
+	if path[len(path)-1] == "" { // remove last empty slot after /
+		path = path[:len(path)-1]
+	}
+	//log.Printf("Going ....%s %s %d", path, r.Method, len(path))
+	if len(path) < 3 || path[0] != "v1" {
+		u.BadRequest(w, r)
 		return
 	}
-	h.SendResponse(w, nil, http.StatusBadRequest)
+	format := strings.ToLower(path[2])
+	if format != "json" && format != "xml" {
+		u.BadRequest(w, r)
+		return
+	}
+	g := newGeoLocation(false)
+	r.ParseForm()
+	target := strings.ToLower(r.Form.Get("q"))
+	if target == "" {
+		target = u.GetIP(r)
+	}
+	g.doGeoRequest(w, format, target)
 }
 
-func (gd *geoData) doGeoRequest(r *http.Request) error {
-	hostname := r.URL.Query().Get("q")
-	if hostname == "" {
-		hostname = h.GetIP(r)
-	}
-	addr, err := net.LookupIP(hostname)
+func (g *geoip) doGeoRequest(w http.ResponseWriter, format, target string) {
+	//g.cleanGeoData()
+	addr, err := net.LookupIP(target)
 	if err != nil {
-		msg := fmt.Sprintf("%s is a unknown/not_valid hostname/IP", hostname)
-		log.Println(err)
-		return errors.New(msg)
+		msg := fmt.Sprintf("%s is a unknown host, not a valid IP or hostname", target)
+		u.ErrorResponse(w, msg)
+		return
 	}
-	gd.Ip = addr[0].String()
-	err = gd.readDB()
-	if err != nil {
-		log.Println(err)
-		msg := fmt.Sprintln("Geolocation DB Error")
-		return errors.New(msg)
+	g.geoData.Ip = addr[0].String()
+	g.getGeoDataFromDB()
+	if format == "xml" {
+		u.SendXMLToClient(w, g.geoData, 200)
+		return
 	}
-	return nil
+	u.SendJSONToClient(w, g.geoData, 200)
 }
 
-func (gd *geoData) readDB() error {
-	db, err := ip2location.OpenDB(DB_FILE_PATH)
+func (g *geoip) getGeoDataFromDB() {
+	db, err := ip2location.OpenDB(g.config.dbFilePath)
 	if err != nil {
-		log.Println(err)
-		return err
+		log.Println("ERROR GEOIP 1 =", err)
+		//g.cleanGeoData()
+		return
 	}
-	results, err := db.Get_all(gd.Ip)
+	results, err := db.Get_all(g.geoData.Ip)
 	if err != nil {
-		log.Println(err)
-		return err
+		log.Println("ERROR GEOIP 2 =", err)
+		//g.cleanGeoData()
+		return
 	}
+	//u.PrettyPrintStruct(results)
+	g.geoData.Country_code = results.Country_short
+	g.geoData.Country_name = results.Country_long
+	g.geoData.Region_name = results.Region
+	g.geoData.City = results.City
+	g.geoData.Zip_code = results.Zipcode
+	g.geoData.Time_zone = results.Timezone
+	g.geoData.Latitude = results.Latitude
+	g.geoData.Longitude = results.Longitude
 	db.Close()
-	gd.Country_code = results.Country_short
-	gd.Country_name = results.Country_long
-	gd.Region_name = results.Region
-	gd.City = results.City
-	gd.Zip_code = results.Zipcode
-	gd.Time_zone = results.Timezone
-	gd.Latitude = results.Latitude
-	gd.Longitude = results.Longitude
-	return nil
+}
+
+func (g *geoip) cleanGeoData() {
+	g.geoData = geoData{}
+}
+
+func newGeoLocation(test bool) geoip {
+	g := geoip{
+		config: config{
+			dbFilePath: DB_FILE_PATH,
+		},
+		geoData: geoData{},
+	}
+	if test {
+		g.config.dbFilePath = DB_FILE_PATH_TEST
+	}
+	return g
 }

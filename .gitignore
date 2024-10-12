@@ -5,11 +5,9 @@ node_modules/
 tmp/
 _tmp/
 _data/
-data/
 
 #Ignore these files
 .air.conf
-.air.toml
 .env
 .DS_Store
 _private.js
@@ -24,10 +22,10 @@ codetabsData.db3
 
 # 
 
+
 # ignore binaries
 codetabs
-codetabs-0.1*
-
+codetabs-0.*
 
 
 

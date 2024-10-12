@@ -1,57 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+  <!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
 
-
-<url>
-  <loc>https://codetabs.com/</loc>
-  <lastmod>2024-10-11T08:57:03+00:00</lastmod>
-  <priority>1.00</priority>
-</url>
-<url>
-  <loc>https://codetabs.com/github-stars/github-star-history.html</loc>
-  <lastmod>2024-09-07T10:18:59+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://codetabs.com/count-loc/count-loc-online.html</loc>
-  <lastmod>2024-09-07T10:18:59+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://codetabs.com/random-data/random-data.html</loc>
-  <lastmod>2024-10-10T10:37:53+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://codetabs.com/ip-geolocation/ip-geolocation.html</loc>
-  <lastmod>2024-09-25T05:42:06+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://codetabs.com/cors-proxy/cors-proxy.html</loc>
-  <lastmod>2024-09-25T14:07:51+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://codetabs.com/ranking/ranking.html</loc>
-  <lastmod>2024-10-11T08:56:54+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://codetabs.com/http-headers/headers.html</loc>
-  <lastmod>2024-09-21T09:23:00+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
-<url>
-  <loc>https://codetabs.com/weather/weather.html</loc>
-  <lastmod>2024-09-23T16:22:44+00:00</lastmod>
-  <priority>0.80</priority>
-</url>
+  <url>
+    <loc>https://codetabs.com/</loc>
+    <lastmod>2020-04-09T20:42:39+00:00</lastmod>
+    <priority>1.00</priority>
+  </url>
+  <url>
+    <loc>https://codetabs.com/github-stars/github-star-history.html</loc>
+    <lastmod>2020-04-09T20:42:39+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://codetabs.com/count-loc/count-loc-online.html</loc>
+    <lastmod>2020-04-09T20:42:39+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://codetabs.com/cors-proxy/cors-proxy.html</loc>
+    <lastmod>2020-04-09T20:42:39+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://codetabs.com/ip-geolocation/ip-geolocation.html</loc>
+    <lastmod>2020-04-09T20:42:39+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://codetabs.com/alexa/alexa-ranking.html</loc>
+    <lastmod>2020-04-09T20:42:39+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://codetabs.com/http-headers/headers.html</loc>
+    <lastmod>2020-04-09T20:42:39+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://codetabs.com/weather/weather.html</loc>
+    <lastmod>2020-04-09T20:42:39+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://codetabs.com/video2gif/video-to-gif.html</loc>
+    <lastmod>2020-04-09T20:42:39+00:00</lastmod>
+    <priority>0.80</priority>
+  </url>
 
 
 </urlset>

@@ -8,7 +8,6 @@ import (
 	"encoding/base64"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -16,7 +15,7 @@ import (
 	"strings"
 	"time"
 
-	u "github.com/jolav/codetabs.0.9.2/_utils"
+	u "github.com/jolav/codetabs/_utils"
 )
 
 type index struct {
@@ -45,7 +44,7 @@ type in struct {
 
 func (i *index) Router(w http.ResponseWriter, r *http.Request) {
 	params := strings.Split(strings.ToLower(r.URL.Path), "/")
-	path := params[1:len(params)]
+	path := params[1:]
 	if path[len(path)-1] == "" { // remove last empty slot after /
 		path = path[:len(path)-1]
 	}
@@ -54,7 +53,7 @@ func (i *index) Router(w http.ResponseWriter, r *http.Request) {
 		u.BadRequest(w, r)
 		return
 	}
-	vg := newVideo2Gif(false)
+	vg := newVideo2Gif()
 	r.ParseForm()
 	if r.Method == "POST" {
 		i.orderInt++
@@ -145,7 +144,7 @@ func (vg *video2gif) doVideo2GifRequest(w http.ResponseWriter, r *http.Request, 
 	}
 	defer gifFileData.Close()
 	reader := bufio.NewReader(gifFileData)
-	content, err := ioutil.ReadAll(reader)
+	content, err := io.ReadAll(reader)
 	if err != nil {
 		log.Printf("ERROR reading gif %s\n", err)
 		msg := "Error reading file " + outputPath
@@ -252,7 +251,7 @@ func rescale(big, small int) (big2, small2 int) {
 	return big2, small2
 }
 
-func newVideo2Gif(test bool) video2gif {
+func newVideo2Gif() video2gif {
 	vg := video2gif{
 		in:  in{},
 		out: out{},

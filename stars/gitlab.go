@@ -12,7 +12,7 @@ import (
 	"strings"
 	"time"
 
-	u "github.com/jolav/codetabs.0.9.2/_utils"
+	u "github.com/jolav/codetabs/_utils"
 )
 
 func (s *stars) doGLStarsRequest(w http.ResponseWriter, r *http.Request) {

@@ -3,36 +3,45 @@
 package headers
 
 import (
-	"errors"
 	"fmt"
-	"log"
 	"net/http"
 	"strings"
 
-	h "github.com/jolav/codetabs/_utils"
+	u "github.com/jolav/codetabs/_utils"
 )
 
 type headersRequest struct {
-	headers []map[string]string
-	domain  string
+	headers
+	domain string
 }
+
+type headers []header
+
+type header map[string]string
 
 func Router(w http.ResponseWriter, r *http.Request) {
-	hr := newHeadersRequest()
-	hr.domain = r.URL.Query().Get("domain")
-	if hr.domain == "" {
-		h.SendResponse(w, nil, http.StatusBadRequest)
+	params := strings.Split(strings.ToLower(r.URL.Path), "/")
+	path := params[1:len(params)]
+	if path[len(path)-1] == "" { // remove last empty slot after /
+		path = path[:len(path)-1]
+	}
+	//log.Printf("Going ....%s %s %d", path, r.Method, len(path))
+	if len(path) < 2 || path[0] != "v1" {
+		u.BadRequest(w, r)
 		return
 	}
-	err := hr.doHeadersRequest(r)
-	if err != nil {
-		h.SendResponse(w, err.Error(), http.StatusInternalServerError)
+	hr := newHeadersRequest(false)
+	r.ParseForm()
+	hr.domain = r.Form.Get("domain")
+	if hr.domain == "" || len(path) != 2 {
+		u.BadRequest(w, r)
 		return
 	}
-	h.SendResponse(w, hr.headers, http.StatusOK)
+	hr.doHeadersRequest(w, r)
 }
 
-func (hr *headersRequest) doHeadersRequest(r *http.Request) error {
+func (hr *headersRequest) doHeadersRequest(
+	w http.ResponseWriter, r *http.Request) {
 	notMoreRedirections := false
 	count := 0
 	const curl = "curl -fsSI "
@@ -43,30 +52,35 @@ func (hr *headersRequest) doHeadersRequest(r *http.Request) error {
 	}
 
 	for !notMoreRedirections && count < 10 {
-		rawData, err := h.ExecCommand(curl + hr.domain)
+		rawData, err := u.GenericCommandSH(curl + hr.domain)
 		if err != nil {
-			msg := fmt.Sprintf("ERROR Curl Headers %s => %s %s",
+			msg := fmt.Sprintf("ERROR %s -> %s %s",
 				r.URL.RequestURI(),
 				curlStatus[err.Error()],
 				hr.domain,
 			)
-			log.Println(msg)
-			return errors.New(curlStatus[err.Error()])
+			u.ErrorResponse(w, msg)
+			return
 		}
-		hr.headers = append(hr.headers, parseHeadString(string(rawData)))
+		parseHeadString(string(rawData), &hr.headers)
 		if hr.headers[count]["Location"] == "" {
 			notMoreRedirections = true
+			//fmt.Println(`No more redirections`)
 		} else {
 			hr.domain = hr.headers[count]["Location"]
+			//fmt.Println(`Redirecting to ... `, domain)
 		}
 		count++
 	}
-	return nil
+
+	u.SendJSONToClient(w, hr.headers, 200)
+	return
 }
 
-func parseHeadString(rawData string) map[string]string {
+func parseHeadString(rawData string, hs *headers) {
 	last := ""
 	myheader := make(map[string]string)
+	//fmt.Println("PARSE => \n", rawData)
 	lines := strings.Split(rawData, "\r\n")
 	// protocol and status code is the first line
 	name := strings.Split(lines[0], " ")[0]
@@ -74,8 +88,10 @@ func parseHeadString(rawData string) map[string]string {
 	myheader[name] = value
 	for k, v := range lines {
 		if len(v) > 0 && k > 0 {
+			//fmt.Println(k, len(v))
 			name := strings.Split(v, ": ")[0]
 			value := strings.Split(v, ": ")[1]
+			//fmt.Println(`******`, name, value)
 			if name == "Location" || name == "location" {
 				last = value
 			} else {
@@ -87,12 +103,12 @@ func parseHeadString(rawData string) map[string]string {
 			}
 		}
 	}
-	return myheader
+	*hs = append(*hs, myheader)
 }
 
-func newHeadersRequest() *headersRequest {
-	hr := &headersRequest{
-		headers: make([]map[string]string, 0),
+func newHeadersRequest(test bool) headersRequest {
+	hr := headersRequest{
+		headers: []header{},
 		domain:  "",
 	}
 	return hr
