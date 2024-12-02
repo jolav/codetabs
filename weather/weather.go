@@ -116,7 +116,7 @@ func (wt *weather) getWeather(w http.ResponseWriter) {
 	} else if source == 3 {
 		url = "https://api.weatherapi.com/v1/current.json"
 		url += "?key=" + WEATHERAPI_KEY
-		url += "&q=" + wt.Out.City + "&aqui=no"
+		url += "&q=" + wt.Out.City + "&aqi=no"
 	}
 	resp, err := http.Get(url)
 	if err != nil {
@@ -163,7 +163,9 @@ type geoData struct {
 
 func (wt *weather) getGeo(w http.ResponseWriter, r *http.Request) {
 	var geo = geoData{}
-	url := "https://api.codetabs.com/v1/geolocation/json?q=" + u.GetIP(r)
+	//url := "https://api.codetabs.com/v1/geolocation/json?q=" + u.GetIP(r)
+	url := AUX_URL + u.GetIP(r)
+
 	resp, err := http.Get(url)
 	if err != nil {
 		msg := fmt.Sprint("ERROR requesting GetGeo URL")

@@ -24,12 +24,10 @@ import (
 	"github.com/jolav/codetabs/random"
 	"github.com/jolav/codetabs/stars"
 	"github.com/jolav/codetabs/store"
-
-	//"github.com/jolav/codetabs/video2gif"
 	"github.com/jolav/codetabs/weather"
 )
 
-var version = "0.9.3"
+var version = "0.9.4"
 var when = "undefined"
 
 type Conf struct {
@@ -89,7 +87,6 @@ func main() {
 
 	go alexa.OnceADayTask()
 	index := loc.NewIndex(false)
-	//index2 := video2gif.NewIndex(false)
 
 	mux := http.NewServeMux()
 
@@ -97,7 +94,6 @@ func main() {
 	mux.HandleFunc("/v1/geolocation/", mw(geolocation.Router, "geoip", c))
 	mux.HandleFunc("/v1/headers/", mw(headers.Router, "headers", c))
 	mux.HandleFunc("/v1/weather/", mw(weather.Router, "weather", c))
-	//mux.HandleFunc("/v1/video2gif/", mw(index2.Router, "video2gif", c))
 	mux.HandleFunc("/v1/random/", mw(random.Router, "random", c))
 	mux.HandleFunc("/v1/stars/", mw(stars.Router, "stars", c))
 	mux.HandleFunc("/v1/proxy/", mw(proxy.Router, "proxy", c))
@@ -200,7 +196,6 @@ func FAKE__getGlobalConfigJSON() (configjson []byte) {
 			"loc",
 			"proxy",
 			"stars",
-			"video2gif",
 			"weather"
 		]
 	}
