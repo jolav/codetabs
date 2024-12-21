@@ -27,7 +27,10 @@ function getDomain(e) {
 }
 
 function showData(data) {
-  // console.log(data)
+  if (data.Error) {
+    showError(data);
+    return;
+  }
   document.getElementById('rankResult2').innerText = '';
   document.getElementById('rankResult').innerText = data.rank;
 }
@@ -35,7 +38,7 @@ function showData(data) {
 function showError(dataError) {
   // console.log(dataError)
   if (dataError.Error) {
-    // alert(dataError.error)
+    //alert(dataError.error);
     document.getElementById('rankResult').innerText = '';
     document.getElementById('rankResult2').innerText = dataError.Error;
   } else {

@@ -61,7 +61,7 @@ function showError(dataError) {
     // alert(dataError.error)
     document.getElementById('result').innerText = dataError.error;
   } else {
-    alert('An error has ocurred while fetching data');
+    alert('An error has ocurred while fetching data.\n' + dataError.msg);
   }
 }
 

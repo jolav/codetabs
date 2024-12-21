@@ -7,25 +7,17 @@ _tmp/
 _data/
 
 #Ignore these files
-.air.conf
 .env
-.DS_Store
 _private.js
 _private.json
-a_private.go
 banned*.list
+geoDB.bin
+newdb
+
 codetabsData.db3
 *.db*
 *.db3*
 *.db3
-# 
-
-# 
-
-
-# ignore binaries
-codetabs
-codetabs-0.*
 
 
 
