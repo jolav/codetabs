@@ -6,6 +6,7 @@ import (
 	"bufio"
 	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"strings"
@@ -33,6 +34,13 @@ func Router(w http.ResponseWriter, r *http.Request) {
 	p := newProxy(false)
 	r.ParseForm()
 	p.quest = r.Form.Get("quest")
+
+	if r.Method != http.MethodGet {
+		log.Printf("%s -> %s", r.Method, p.quest)
+		u.BadRequest(w, r)
+		return
+	}
+
 	if p.quest == "" || len(path) != 2 {
 		u.BadRequest(w, r)
 		return
@@ -82,6 +90,11 @@ func (p *proxy) doProxyRequest(w http.ResponseWriter, r *http.Request) {
 	for {
 		line, err := reader.ReadBytes('\n')
 		if err != nil {
+			//////
+			if err != io.EOF {
+				log.Printf("Error PROXY-2: %s => %v\n", p.quest, err)
+			}
+			//////
 			w.Write([]byte(fmt.Sprintf("%v", string(line))))
 			return
 		}
