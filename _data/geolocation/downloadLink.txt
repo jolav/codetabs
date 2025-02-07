@@ -1,0 +1,9 @@
+https://www.ip2location.com/download/?token={DOWNLOAD_TOKEN}&file={DATABASE_CODE}
+
+
+BIN
+https://www.ip2location.com/download/?token={DOWNLOAD_TOKEN}&file=DB11LITEBINIPV6
+
+CSV
+https://www.ip2location.com/download/?token={DOWNLOAD_TOKEN}&file=DB11LITECSVIPV6
+

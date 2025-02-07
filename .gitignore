@@ -1,31 +1,26 @@
-# Ignore these directories
-_aux/
-logs/
-node_modules/
-tmp/
-_tmp/
-_data/
+##
+## Ignore list
+##
 
-#Ignore these files
+## dir
+_aux/
+tmp/
+
+## files
 .air.conf
 .env
 .DS_Store
 _private.js
 _private.json
 a_private.go
+*_private.go
 banned*.list
 codetabsData.db3
 *.db*
 *.db3*
 *.db3
-# 
 
-# 
-
-
-# ignore binaries
+## binaries
 codetabs
 codetabs-0.*
-
-
-
+codetabs*
