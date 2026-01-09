@@ -61,25 +61,25 @@ func main() {
 	store.MyDB = db
 
 	//
-	usernow, err := user.Current()
+	_, err = user.Current()
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	// Custom Error Log File
 	var mylog *os.File
-	c.ErrorsLogFile = usernow.HomeDir + c.ErrorsLogFile
+	// c.ErrorsLogFile = usernow.HomeDir + c.ErrorsLogFile
 	if c.Mode == "production" {
 		mylog = u.CreateCustomErrorLogFile(c.ErrorsLogFile)
 	}
 	defer mylog.Close()
 
 	// Custom Ban Log File
-	c.BannedLogFile = usernow.HomeDir + c.BannedLogFile
+	// c.BannedLogFile = usernow.HomeDir + c.BannedLogFile
 	c.bannedLog = u.NewBanFile(c.BannedLogFile)
 
 	// Custom Hits Log File
-	c.HitsLogFile = usernow.HomeDir + c.HitsLogFile
+	// c.HitsLogFile = usernow.HomeDir + c.HitsLogFile
 	c.hitsLog = u.NewHitsFile(c.HitsLogFile)
 	//////////
 
@@ -102,8 +102,15 @@ func main() {
 
 	mux.HandleFunc("/", u.BadRequest)
 
+	// Get port from Zeabur environment variable, default to 8080 if not set
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = fmt.Sprintf("%d", c.Port) // Fallback to config port
+	}
+
 	server := http.Server{
-		Addr:           fmt.Sprintf("localhost:%d", c.Port),
+		// CHANGE THIS: Bind to 0.0.0.0 instead of localhost
+		Addr:           ":" + port,
 		Handler:        mux,
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   30 * time.Second,
@@ -117,11 +124,13 @@ func main() {
 func mw(next http.HandlerFunc, service string, c Conf) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if service == "proxy" {
-			if isBanned(r) {
-				http.Error(w, "Unauthorized", http.StatusUnauthorized)
-				go u.AddBanned(w, r, service, c.Mode, c.bannedLog)
-				return
-			}
+			/*
+				if isBanned(r) {
+					http.Error(w, "Unauthorized", http.StatusUnauthorized)
+					go u.AddBanned(w, r, service, c.Mode, c.bannedLog)
+					return
+				}
+			*/
 		}
 		go u.AddHit(w, r, service, c.Mode, c.hitsLog)
 		next.ServeHTTP(w, r)
@@ -175,30 +184,17 @@ func cleanTmpFolder() {
 	u.GenericCommand([]string{"mkdir", "./_tmp/videos/"})
 }
 
-func FAKE__getGlobalConfigJSON() (configjson []byte) {
-	// real getGlobalConfigJSON() in private.go file
-	configjson = []byte(`
-	{
-		"mode": "production",
-		"port": XXXXX,
-		"errorsLogFile": "path/to/errors.log",
-		"hitsLogFile":"path/to/hits.log",
-		"devHosts" : [
-			"list",
-			"of",
-			"dev",
-			"hosts"
-		],
-		"services" : [
-			"alexa",
-			"geoip",
-			"headers",
-			"loc",
-			"proxy",
-			"stars",
-			"weather"
-		]
-	}
-	`)
-	return
+func getGlobalConfigJSON() (configjson []byte) {
+	// Return a JSON string that works for production
+	return []byte(`
+    {
+        "mode": "production",
+        "port": 8080,
+        "errorsLogFile": "/tmp/errors.log",
+        "hitsLogFile": "/tmp/hits.log",
+        "bannedLogFile": "/tmp/banned.log",
+        "devHosts": [],
+        "services": ["alexa", "geoip", "headers", "loc", "proxy", "stars", "weather"]
+    }
+    `)
 }
