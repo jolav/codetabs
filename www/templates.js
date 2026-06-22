@@ -241,6 +241,8 @@ const footerLoc = `
 const version = `
 <!-- Version -->
 <h2 class="centerText">
+    <div class="deprecated" <>Codetabs will be shut down on June 30, 2026</div>
+    <br>
   API doc
   <small>
     <small>(version 0.9.4a)</small>
