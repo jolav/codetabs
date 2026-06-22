@@ -229,7 +229,7 @@ func (l *loc) doLocRepoRequest(w http.ResponseWriter, r *http.Request, order str
 }
 
 func (l *loc) countLines(repoPath string) (info []byte, err error) {
-	comm := SCC + " "
+	comm := SCC + " --no-gitignore "
 	if len(l.ignored) < 1 {
 		comm += repoPath + " -f json "
 	} else {
